@@ -1,0 +1,14 @@
+
+<%#=form_tag(compra_profiles_path(slug: 999, prezzo:prezzo), :method => "post") do %>
+<%=form_tag compra_profiles_path(pacchetto: pacchetto , periodo:periodo) do %>
+<script
+  src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+  data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+  data-amount="<%= (prezzo*100) %>"
+  data-name="MenuApp"
+  data-description="<%= dettaglio %>"
+  data-currency="eur"
+  data-email="<%= current_user.email  %>"
+  data-locale="auto">
+</script>
+<% end %>

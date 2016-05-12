@@ -1,0 +1,131 @@
+  (Installazione devise)
+https://github.com/plataformatec/devise
+https://github.com/plataformatec/devise/wiki/How-To:-Redirect-back-to-current-page-after-sign-in,-sign-out,-sign-up,-update
+
+gem 'devise'
+rails generate devise:install
+
+(configura il mailer su locale in config/enviroments/development.rb)
+config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+#in produzione settare come segue
+config.action_mailer.default_url_options = { host: 'miosito.com' }
+
+(generare un qualsiasi home controller)
+rails generate controlloer home inex
+
+(definire un root di default in routes.rb)
+root to: "home#index"
+
+(aggiungere flash in layout)
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+
+(generare le view)
+rails g devise:views
+
+(generare il model devise)
+rails generate devise User
+rake db:migrate
+
+
+redirect_to new_user_registration_path
+/users/sign_up
+
+
+
+How To: Require admin to activate account before sign_in
+https://github.com/plataformatec/devise/wiki/How-To:-Require-admin-to-activate-account-before-sign_in
+
+rails g migration add_approved_to_user approved:boolean
+(non andava bene annullo migraizone)
+rake db:rollback
+
+generare controller devise
+rails generate devise:controllers users
+
+
+----------------------------------------------------------------------------------------------------------------
+Aggiunta name ad user
+
+rails g migration Add_Name_To_Users name:string
+rake db:migrate
+
+Strong Parameters (modifica parametri)
+#da aggiungere ad application_controller
+
+class ApplicationController < ActionController::Base
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
+  protected
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:username])
+  end
+end
+
+#creazione risorsa profilo
+rails g scaffold profile user_id:integer tipo:string descrizione:string  --skip-stylesheets
+rake db:migrate
+
+----------------------------------------------------------------------------------------------------------------
+
+modifica registrazione devise
+http://stackoverflow.com/questions/16797558/rails-trouble-adding-belongs-to-relationship-to-devise-user-registration-form
+
+class RegistrationsController < Devise::RegistrationsController
+  def new
+    @things = Thing.all.sort_by{|e| e[:name]}
+    super
+  end
+
+  def create
+    @things = Thing.all.sort_by{|e| e[:name]}
+    @user = User.new(email: params[:user][:email], password: params[:user][:password], password_confirmation: params[:user][:password_confirmation])
+    @user.thing = Thing.find(params[:user][:thing])
+
+    if @user.save
+      if @user.active_for_authentication?
+        set_flash_message :notice, :signed_up if is_navigational_format?
+        sign_up(:user, @user)
+        respond_with @user, :location => after_sign_up_path_for(@user)
+      else
+        set_flash_message :notice, :"signed_up_but_#{@user.inactive_message}" if is_navigational_format?
+        expire_session_data_after_sign_in!
+        respond_with @user, :location => after_inactive_sign_up_path_for(@user)
+      end
+    else
+      clean_up_passwords @user
+      respond_with @user
+    end
+  end
+end
+
+Aggiungere Action a controller esistente
+http://stackoverflow.com/questions/401241/adding-an-action-to-an-existing-controller-ruby-on-rails
+
+26.04.16 Aggiunta Gemma dotenv (distinsione da develop e production)
+https://github.com/bkeepers/dotenv
+touch .env
+
+Aggiunta stripe
+https://stripe.com/docs/checkout/rails
+https://stripe.com/docs/checkout/tutorial
+
+
+comandi byebug
+http://fleeblewidget.co.uk/2014/05/byebug-cheatsheet/
+
+ho dovuto lanciare questo comando per sbloccare errore gemma dopo rubymine
+gem pristine debase --version 0.2.2.beta6
+
+non si blocca il debug va dentro rails
+https://github.com/deivid-rodriguez/byebug/issues/16
+https://github.com/deivid-rodriguez/byebug/issues/16
+
+
+
+Lacermarket Sezione 14 Lettura 56 minuto 7.56
+
+
+istruzioni per code command + shift +p
+ext install

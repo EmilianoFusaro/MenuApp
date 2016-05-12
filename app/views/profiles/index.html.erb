@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Profiles</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Tipo</th>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>Descrizione</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @profiles.each do |profile| %>
+      <tr>
+        <td><%= profile.user_id %></td>
+        <td><%= profile.tipo %></td>
+        <!-- <td><%#= User.find_by_id(profile.user_id).name.nil? %></td>  Non Funziona-->
+        <% unless profile.user.nil? %>
+        <td><%= profile.user.name %></td>
+        <td><%= profile.user.email %></td>
+        <% else %>
+        <td> non assegnato</td>
+        <td> non assegnato</td>
+        <% end %>
+        <td><%= profile.descrizione %></td>
+        <td><%= link_to 'Show', profile %></td>
+        <td><%= link_to 'Edit', edit_profile_path(profile) %></td>
+        <td><%= link_to 'Destroy', profile, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Profile', new_profile_path %>
