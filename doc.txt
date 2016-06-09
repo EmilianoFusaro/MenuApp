@@ -1,0 +1,42 @@
+Layout
+http://stackoverflow.com/questions/10123826/rails-use-different-layouts
+http://stackoverflow.com/questions/5090084/rails-3-how-add-a-view-that-does-not-use-same-layout-as-rest-of-app
+http://stackoverflow.com/questions/5127823/different-layout-for-just-one-certain-page-in-rails
+http://stackoverflow.com/questions/3025784/rails-layouts-per-action
+http://stackoverflow.com/questions/11355149/why-is-layout-nil-not-working
+https://github.com/plataformatec/devise/wiki/How-To:-Create-custom-layouts
+http://liufengyun.chaos-lab.com/prog/2012/08/22/rails-set-layout-in-view.html
+http://guides.rubyonrails.org/v2.3.11/layouts_and_rendering.html
+http://culttt.com/2015/12/23/creating-views-in-ruby-on-rails/
+https://en.wikibooks.org/wiki/Ruby_on_Rails/ActionView/Rendering_and_Redirecting
+https://mattbrictson.com/easier-nested-layouts-in-rails
+http://www.tutorialspoint.com/ruby-on-rails/rails-render.htm
+https://mattbrictson.com/easier-nested-layouts-in-rails
+https://www.leighhalliday.com/building-an-admin-section-in-rails
+
+Materialize
+http://materializecss.com/getting-started.html
+https://github.com/mkhairi/materialize-sass
+http://www.tutorialspoint.com/materialize/materialize_dialogs.htm
+http://stackoverflow.com/questions/33566041/materialize-css-change-position-of-toast-dialog
+
+
+App Rails x chrome e x debug
+https://github.com/dejan/rails_panel
+https://github.com/charliesome/better_errors
+http://blog.honeybadger.io/remote-debugging-with-byebug-rails-and-pow/
+https://github.com/deivid-rodriguez/byebug
+
+
+devise
+https://github.com/plataformatec/devise/wiki/How-To:-Create-custom-layouts
+http://stackoverflow.com/questions/6234045/how-do-you-access-devise-controllers
+http://stackoverflow.com/questions/9325176/devise-custom-messages-when-validation-fails
+
+
+ambiente per testare i framework web
+http://www.codeply.com/go/p/materialize
+
+
+selezione temi ecommerce
+http://webdesignledger.com/30-wordpress-ecommerce-themes-build-stunning-wordpress-shops/

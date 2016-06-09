@@ -1,26 +1,59 @@
-<h2>Log in</h2>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
+  <div class="container" style="margin-top:90px;">
+     <div class="row">
+     <div class="col s12 m6 offset-m3">
+     <div class="card-panel z-depth-5">
+    <div class="center"><img src="/images/logo2.png" height="90px"></div>
+    <!-- <div class="center"><img src="/images/logo1.png" height="90px"></div> -->
+     <!-- <h4 class="center"><strong>Login MenuApp</strong></h4> -->
+  <div class="row">
+   <form class="col s12 m12">
+     <div class="row">
+       <div class="input-field col s12 m12">
+         <i class="material-icons prefix">email</i>
+         <%= f.email_field :email, autofocus: true ,:class => 'vaidate' ,:id =>'icon_email' ,:type =>'email' ,:style=>'font-size:25px;'  %>
+         <!-- <input id="icon_email" type="email" class="validate"> -->
+         <label for="icon_email">La Tua Email</label>
+       </div>
+         <div class="input-field col s12 m12">
+         <i class="material-icons prefix">vpn_key</i>
+         <!-- <input id="icon_password" type="password" class="validate"> -->
+         <%= f.password_field :password, :class => 'validate' ,:id =>'icon_password' ,:type =>'password' ,:style=>'font-size:25px;' %>
+         <label for="icon_password">La Tua Password</label>
+       </div>
+
+      <div class="input-field col s12 m12">
+       <% if devise_mapping.rememberable? -%>
+         <div class="field" style="padding-left:35px">
+           <%= f.check_box :remember_me %>
+           <%= f.label :"remember_me" ,'ricordami' %>
+         </div>
+       <% end %>
+       </div>
+
+     </div>
+   </form>
+
+  </div>
+  <button class="btn waves-effect waves-light center deep-orange" type="submit" name="action">Entra
+  <i class="material-icons right">done</i>
+  </button>
+
+  <div class="toast_contain">
+  	<%flash.each do |type,message| %>
+  	<script>
+  		 Materialize.toast('<%= alert %>', 4000,'toast_right')
+  	</script>
+  	<% end %>
   </div>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
+
+  </div>
+  </div>
+  </div>
   </div>
 
-  <% if devise_mapping.rememberable? -%>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
-    </div>
-  <% end -%>
+  <% end %>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+  <%#= render "devise/shared/links" %>

@@ -16,9 +16,13 @@ Rails.application.routes.draw do
   get 'home/vietato'
 
 
+  get 'home/testindex'   #route pagina di prova
 
-  #controller per la registrazione
-  devise_for :users, controllers: { registrations: "users/registrations" }
+  #controller per la registrazione (Attenzione devo aggiungere questi controller al route se voglio farli funzionare)
+  #xdevise_for :users, controllers: { registrations: "users/registrations" }
+  devise_for :users, controllers: { registrations: "users/registrations" , sessions: "users/sessions" }
+
+
   #controller per il login
   #devise_for :users, controllers: { sessions: "users/sessions" }
 

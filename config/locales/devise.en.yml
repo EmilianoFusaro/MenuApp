@@ -3,37 +3,37 @@
 en:
   devise:
     confirmations:
-      confirmed: "Your email address has been successfully confirmed."
-      send_instructions: "You will receive an email with instructions for how to confirm your email address in a few minutes."
-      send_paranoid_instructions: "If your email address exists in our database, you will receive an email with instructions for how to confirm your email address in a few minutes."
+      confirmed: "Il tuo indirizzo e-mail è stato confermato con successo."
+      send_instructions: "Riceverai una mail con le istruzioni su come confermare il tuo indirizzo e-mail in pochi minuti."
+      send_paranoid_instructions: "Se il tuo indirizzo e-mail esiste nel nostro database, si riceverà una e-mail con le istruzioni su come confermare il tuo indirizzo e-mail in pochi minuti."
     failure:
-      already_authenticated: "You are already signed in."
-      inactive: "Your account is not activated yet."
-      invalid: "Invalid %{authentication_keys} or password."
-      locked: "Your account is locked."
-      last_attempt: "You have one more attempt before your account is locked."
-      not_found_in_database: "Invalid %{authentication_keys} or password."
-      timeout: "Your session expired. Please sign in again to continue."
-      unauthenticated: "You need to sign in or sign up before continuing."
-      unconfirmed: "You have to confirm your email address before continuing."
+      already_authenticated: "È già effettuato l'accesso."
+      inactive: "Il tuo account non è ancora attivato."
+      invalid: "%{authentication_keys} o password errati"
+      locked: "Il tuo account è bloccato."
+      last_attempt: "Hai un altro tentativo prima di bloccare il tuo account"
+      not_found_in_database: "%{authentication_keys} o password errati"
+      timeout: "La sessione scaduta. Effettua il login per continuare."
+      unauthenticated: "È necessario accedere o registrarsi prima di continuare."
+      unconfirmed: "È necessario confermare il proprio indirizzo e-mail prima di continuare."
     mailer:
       confirmation_instructions:
-        subject: "Confirmation instructions"
+        subject: "Istruzioni di conferma"
       reset_password_instructions:
-        subject: "Reset password instructions"
+        subject: "Ripristinare le istruzioni per la password"
       unlock_instructions:
-        subject: "Unlock instructions"
+        subject: "sblocca le istruzioni"
       password_change:
-        subject: "Password Changed"
+        subject: "Password cambiata"
     omniauth_callbacks:
-      failure: "Could not authenticate you from %{kind} because \"%{reason}\"."
-      success: "Successfully authenticated from %{kind} account."
+      failure: "Non puoi autenticarti da %{kind} perchè \"%{reason}\"."
+      success: "autenticato con successo da %{kind} account."
     passwords:
-      no_token: "You can't access this page without coming from a password reset email. If you do come from a password reset email, please make sure you used the full URL provided."
-      send_instructions: "You will receive an email with instructions on how to reset your password in a few minutes."
-      send_paranoid_instructions: "If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes."
-      updated: "Your password has been changed successfully. You are now signed in."
-      updated_not_active: "Your password has been changed successfully."
+      no_token: "Non è possibile accedere a questa pagina senza reimpostare la password. Se venite da una email di reimpostazione password, si prega di assicurarsi che si è utilizzato l'URL completo fornito."
+      send_instructions: "Riceverai una mail con le istruzioni su come reimpostare la password in pochi minuti."
+      send_paranoid_instructions: "Se il tuo indirizzo e-mail esiste nel nostro database, si riceverà un link di recupero della password al tuo indirizzo e-mail in pochi minuti."
+      updated: "La tua password è stata cambiata con successo. Ora si è effettuato l'accesso."
+      updated_not_active: "La tua password è stata cambiata con successo."
     registrations:
       destroyed: "Bye! Your account has been successfully cancelled. We hope to see you again soon."
       signed_up: "Welcome! You have signed up successfully."

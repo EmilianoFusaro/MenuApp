@@ -8,4 +8,8 @@ class User < ActiveRecord::Base
          :rememberable, :trackable, :validatable
 
   has_one :profile
+
+  #validates_presence_of :email, :message=>"Email Errata!"
+  #validates_presence_of :password, :message=>"Password Errata!"
+
 end

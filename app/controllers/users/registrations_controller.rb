@@ -1,7 +1,10 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-
+  #layout :nil
   #emiliano attivato blocco per non far registrare nessuno autonomamente
   before_filter :configure_sign_up_params, only: [:new]
+
+  #layout :registrazione, :only => :new_user_session
+
   #before_filter :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up

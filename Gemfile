@@ -48,8 +48,13 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  #per utilizzare railspanel su chrome
+  gem 'meta_request'
 end
 
 gem 'dotenv-rails', :groups => [:development, :test]
 
 gem 'stripe'
+
+gem 'materialize-sass'

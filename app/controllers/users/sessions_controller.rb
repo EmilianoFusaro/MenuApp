@@ -1,16 +1,19 @@
 class Users::SessionsController < Devise::SessionsController
 
+  layout 'login', only: [:new]
   #emiliano Questa è il login dell'utente che non deve essere bloccato
-  #before_filter :configure_sign_in_params, only: [:new]
 
   # GET /resource/sign_in
-  # def new
-  #   super
-  # end
+   def new
+    super
+    #anche questa istruzione mi permette di settare il layout
+    #render :layout => 'testindex'
+   end
 
   # POST /resource/sign_in
   # def create
   #   super
+  #   puts "EMILIANO 2"
   # end
 
   # DELETE /resource/sign_out
@@ -24,13 +27,5 @@ class Users::SessionsController < Devise::SessionsController
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.for(:sign_in) << :attribute
   # end
-
-  #emiliano questa procedura di http autenticazione semplice è stata commentata non serve in fase di registrazione
-  #protected
-  #def configure_sign_in_params
-  #  authenticate_or_request_with_http_basic("Home") do |username,password|
-  #  username == "admin" && password == "340693"
-  #  end
-  #end
 
 end

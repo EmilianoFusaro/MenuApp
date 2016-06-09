@@ -32,7 +32,8 @@ rake db:migrate
 redirect_to new_user_registration_path
 /users/sign_up
 
-
+in iniztializers devise.rb x poter modificare le viste dell'user
+config.scoped_views = true
 
 How To: Require admin to activate account before sign_in
 https://github.com/plataformatec/devise/wiki/How-To:-Require-admin-to-activate-account-before-sign_in
@@ -129,3 +130,17 @@ Lacermarket Sezione 14 Lettura 56 minuto 7.56
 
 istruzioni per code command + shift +p
 ext install
+
+---Aggiunta MAterialize
+
+ gem 'materialize-sass' in gemfile
+
+ https://github.com/mkhairi/materialize-sass
+
+ @import "materialize";
+
+ rinominare application.css in application.scss
+
+ inserire
+//= require jquery
+//= require materialize-sprockets

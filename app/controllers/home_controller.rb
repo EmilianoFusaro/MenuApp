@@ -5,6 +5,7 @@ class HomeController < ApplicationController
   def index
   end
 
+
   def vietato
     #reinderizzo ad una pagina statica in public
     #render :file => "public/401.html", :status => :unauthorized, :layout => false

@@ -15,14 +15,15 @@ class ProfilesController < ApplicationController
 
   #Get Visualizza Il Dettaglio Utente
   def detail
-      byebug
+      #byebug
       #debugger
-      if current_user
+    if current_user
       #vai alla vista detail
-      byebug
+      #byebug
     else
       redirect_to root_url, alert: "Scusa ma non hai accesso a questo contenuto"
     end
+    puts "ciao"
   end
 
   def payment
@@ -30,6 +31,7 @@ class ProfilesController < ApplicationController
     @pacchetto = params[:pacchetto]
     @periodo = params[:periodo]
     attiva_pacchetto(@pacchetto,@periodo)
+    #---procedura x stripe
     #token = params[:stripeToken]
     #begin
     #  charge = Stripe::Charge.create(

@@ -1,0 +1,65 @@
+@import "materialize";
+
+
+  /*cambia colore inputbox selezionate
+  /* label focus color */
+   .input-field input:focus + label {
+     color: #EE6E73  !important;
+   }
+   /* label underline focus color */
+   .row .input-field input:focus {
+     border-bottom: 1px solid #EE6E73  !important;
+     box-shadow: 0 1px 0 0 #EE6E73  !important
+   }
+
+
+   //colore icone
+   .material-icons.active {
+    color: #EE6E73  !important;
+    }
+    //i.icon-blue {
+    //  color: blue;
+    //}
+
+
+   //colore bottone
+   .btn, .btn-large {
+   //color: #EE6E73;
+   background-color: #EE6E73 !important;
+   }
+   //xxx:focus{}
+
+   .sfondoresize_a {
+     background: url("/images/pizza1.jpeg") no-repeat center center fixed;
+     background-size: cover;
+     -moz-background-size: cover;
+     -o-background-size: cover;
+     -webkit-background-size: cover;
+   }
+
+   .sfondosemplice_a {
+     background: url("/images/pizza1.jpeg");
+   }
+
+
+  // .fonta {
+  //   // font-weight: 400;
+  //   //font-size: 5px;
+  // }
+
+  .toast_right {
+    color: red;
+    font-size: 22px;
+    font-weight: bold;
+    //position: fixed !important;
+    //bottom: 0px !important;
+    //top: 0px !important;
+    //left: 0px !important;
+    //right: 0px !important;
+    //bottom: -50px !important;
+    // position: absolute !important;
+    // position: absolute !important;
+    // position: fixed !important;
+      //  top: 100px !important;
+      //  left: 50% !important;
+        }
