@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
 
+  resources :allergens do
+    collection do
+      get 'lista'
+    end
+  end
+
+  resources :ingredients
+  resources :dishes
   resources :profiles do
     collection do
       get 'detail'
@@ -14,6 +22,8 @@ Rails.application.routes.draw do
   root to: "home#index"
   get 'home/index'
   get 'home/vietato'
+
+  get 'allergeni/gestione'
 
 
   get 'home/testindex'   #route pagina di prova

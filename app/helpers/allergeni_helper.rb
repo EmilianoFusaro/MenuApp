@@ -1,0 +1,2 @@
+module AllergeniHelper
+end

@@ -79,4 +79,6 @@ Rails.application.configure do
 
 
   config.action_mailer.default_url_options = { host: 'miosito.com' }
+
+  config.assets.precompile += %w( gestione_prodotti.js )  #aggiunge un altro asset javascript
 end

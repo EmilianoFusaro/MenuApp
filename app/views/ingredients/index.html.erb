@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Ingredients</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Descrizione</th>
+      <th>Img</th>
+      <th>Img1</th>
+      <th>Img2</th>
+      <th>Allergen</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ingredients.each do |ingredient| %>
+      <tr>
+        <td><%= ingredient.nome %></td>
+        <td><%= ingredient.descrizione %></td>
+        <td><%= ingredient.img %></td>
+        <td><%= ingredient.img1 %></td>
+        <td><%= ingredient.img2 %></td>
+        <td><%= ingredient.allergen_id %></td>
+        <td><%= link_to 'Show', ingredient %></td>
+        <td><%= link_to 'Edit', edit_ingredient_path(ingredient) %></td>
+        <td><%= link_to 'Destroy', ingredient, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Ingredient', new_ingredient_path %>

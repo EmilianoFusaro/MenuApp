@@ -40,3 +40,18 @@ http://www.codeply.com/go/p/materialize
 
 selezione temi ecommerce
 http://webdesignledger.com/30-wordpress-ecommerce-themes-build-stunning-wordpress-shops/
+
+
+------------------------------------------------------------------------------------------------------------------------Soluzioni per includere file javascript
+http://brandonhilkert.com/blog/page-specific-javascript-in-rails/
+
+
+jquery utilizzato
+http://stackoverflow.com/questions/9285533/how-to-change-css-property-using-jquery-with-this-code
+http://stackoverflow.com/questions/13571706/how-to-add-white-spaces-in-html-paragraph
+http://html5doctor.com/the-contenteditable-attribute/
+http://stackoverflow.com/questions/20830353/how-to-make-an-elements-content-editable-with-javascript-or-jquery
+https://www.w3.org/TR/html-markup/input.hidden.html
+https://davidwalsh.name/html5-hidden
+http://stackoverflow.com/questions/2979772/set-value-of-hidden-field-in-a-form-using-jquerys-val-doesnt-work
+http://stackoverflow.com/questions/4376664/jquery-access-input-hidden-value

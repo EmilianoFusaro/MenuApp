@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nome:</strong>
+  <%= @ingredient.nome %>
+</p>
+
+<p>
+  <strong>Descrizione:</strong>
+  <%= @ingredient.descrizione %>
+</p>
+
+<p>
+  <strong>Img:</strong>
+  <%= @ingredient.img %>
+</p>
+
+<p>
+  <strong>Img1:</strong>
+  <%= @ingredient.img1 %>
+</p>
+
+<p>
+  <strong>Img2:</strong>
+  <%= @ingredient.img2 %>
+</p>
+
+<p>
+  <strong>Allergen:</strong>
+  <%= @ingredient.allergen_id %>
+</p>
+
+<%= link_to 'Edit', edit_ingredient_path(@ingredient) %> |
+<%= link_to 'Back', ingredients_path %>

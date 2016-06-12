@@ -1,0 +1,37 @@
+<%= form_for(@allergen) do |f| %>
+  <% if @allergen.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@allergen.errors.count, "error") %> prohibited this allergen from being saved:</h2>
+
+      <ul>
+      <% @allergen.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nome %><br>
+    <%= f.text_field :nome %>
+  </div>
+  <div class="field">
+    <%= f.label :descrizione %><br>
+    <%= f.text_area :descrizione %>
+  </div>
+  <div class="field">
+    <%= f.label :img %><br>
+    <%= f.text_field :img %>
+  </div>
+  <div class="field">
+    <%= f.label :img1 %><br>
+    <%= f.text_field :img1 %>
+  </div>
+  <div class="field">
+    <%= f.label :img2 %><br>
+    <%= f.text_field :img2 %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

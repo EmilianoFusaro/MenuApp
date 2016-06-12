@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Allergens</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Descrizione</th>
+      <th>Img</th>
+      <th>Img1</th>
+      <th>Img2</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @allergens.each do |allergen| %>
+      <tr>
+        <td><%= allergen.nome %></td>
+        <td><%= allergen.descrizione %></td>
+        <td><%= allergen.img %></td>
+        <td><%= allergen.img1 %></td>
+        <td><%= allergen.img2 %></td>
+        <td><%= link_to 'Show', allergen %></td>
+        <td><%= link_to 'Edit', edit_allergen_path(allergen) %></td>
+        <td><%= link_to 'Destroy', allergen, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Allergen', new_allergen_path %>

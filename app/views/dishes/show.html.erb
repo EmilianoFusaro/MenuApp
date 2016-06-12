@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nome:</strong>
+  <%= @dish.nome %>
+</p>
+
+<p>
+  <strong>Descrizione:</strong>
+  <%= @dish.descrizione %>
+</p>
+
+<p>
+  <strong>Lista ingredienti:</strong>
+  <%= @dish.lista_ingredienti %>
+</p>
+
+<p>
+  <strong>Img:</strong>
+  <%= @dish.img %>
+</p>
+
+<p>
+  <strong>Img1:</strong>
+  <%= @dish.img1 %>
+</p>
+
+<p>
+  <strong>Img2:</strong>
+  <%= @dish.img2 %>
+</p>
+
+<p>
+  <strong>Img3:</strong>
+  <%= @dish.img3 %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @dish.user_id %>
+</p>
+
+<%= link_to 'Edit', edit_dish_path(@dish) %> |
+<%= link_to 'Back', dishes_path %>

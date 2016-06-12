@@ -144,3 +144,37 @@ ext install
  inserire
 //= require jquery
 //= require materialize-sprockets
+
+
+------------------------------------------------------------------------------------------------------------------------Aggiunta Risorse
+
+(Piatti)
+rails generate scaffold Dish nome:string descrizione:text lista_ingredienti:text img:string img1:string img2:string img3:string user_id:integer
+
+(Ingredienti)
+rails generate scaffold Ingredient nome:string descrizione:text img:string img1:string img2:string allergen_id
+
+(Allergene)
+rails generate scaffold Allergen nome:string descrizione:text img:string img1:string img2:string
+
+(Aggiungo user_id ad ingredienti)
+rails g migration add_user_id_to_ingredients user_id:integer:index
+
+
+Asset Originale
+//= require jquery
+//= require materialize-sprockets
+//= require jquery_ujs
+//= require_tree .
+
+Precompilazione e pulizia asset
+rake assets:clean assets:precompile
+
+Asset per includere file
+//= require allergeni
+
+
+Login:
+(Controller) users->session_controller.rb
+(View) users->sessions->new.html.erb
+(Layout) layouts>login.html.erb
