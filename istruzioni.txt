@@ -144,6 +144,13 @@ ext install
  inserire
 //= require jquery
 //= require materialize-sprockets
+------------------------------------------------------------------------------------------------------------------------Heroku
+solo prima volta
+heroku create
+https://vast-dawn-46286.herokuapp.com/
+https://git.heroku.com/vast-dawn-46286.git
+
+bundle install --without production
 
 
 ------------------------------------------------------------------------------------------------------------------------Aggiunta Risorse
