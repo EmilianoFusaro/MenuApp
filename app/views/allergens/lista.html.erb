@@ -49,7 +49,9 @@
   // function handler() { alert('hello'); }
 
   $("button").click(function() {
+    if ((this.id != 'btn_salva_add') & (this.id != 'btn_chiudi_add'))  {
     seleziona_azione(this,'statico');
+    }
   });
 
 

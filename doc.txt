@@ -107,3 +107,13 @@ http://stackoverflow.com/questions/907910/how-do-i-put-data-to-rails-using-jquer
 Sistemare css bootstrap
 http://stackoverflow.com/questions/27079000/actioncontrollerroutingerror-no-route-matches-get-stylesheets-bootstrap-t
 questa riga nel css bootstrap deve essere eliminata /*# sourceMappingURL=bootstrap.min.css.map */
+
+
+
+per avviare rails da iphone:
+http://stackoverflow.com/questions/29132719/rails-application-not-visible-to-local-network
+rails server --binding=0.0.0.0  #avviare il server in questo modo per essere fruibile da iphone
+ping lo recuperi da utility network
+esempio da lucchetta :
+192.168.1.115:3000  (senza http://)
+192.168.0.2 casa

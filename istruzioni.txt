@@ -154,7 +154,7 @@ bundle install --without production
 
 git status
 git add .
-git commit -n "nome commit"
+git commit -m "nome commit"
 git push origin master
 
 git push heroku master
