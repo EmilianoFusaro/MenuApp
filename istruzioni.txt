@@ -152,7 +152,18 @@ https://git.heroku.com/vast-dawn-46286.git
 
 bundle install --without production
 
+git status
+git add .
+git commit -n "nome commit"
+git push origin master
 
+git push heroku master
+
+heroku rename menuapp
+
+heroku rake db:migrate
+
+https://menuapp-ef.herokuapp.com/allergeni/gestione
 ------------------------------------------------------------------------------------------------------------------------Aggiunta Risorse
 
 (Piatti)

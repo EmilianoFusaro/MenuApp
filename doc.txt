@@ -55,3 +55,55 @@ https://www.w3.org/TR/html-markup/input.hidden.html
 https://davidwalsh.name/html5-hidden
 http://stackoverflow.com/questions/2979772/set-value-of-hidden-field-in-a-form-using-jquerys-val-doesnt-work
 http://stackoverflow.com/questions/4376664/jquery-access-input-hidden-value
+http://stackoverflow.com/questions/16493280/close-bootstrap-modal
+http://getbootstrap.com/javascript/
+http://stackoverflow.com/questions/22565247/bootstrap-modal-link
+http://js2.coffee/ (convertitore javascritpt jquery)
+http://jsfiddle.net/dcro/XKHC8/
+http://js2coffee.thomaskalka.de/  (convertitore)
+https://api.jquery.com/jquery.post/
+
+Problemi Ajax Post
+http://stackoverflow.com/questions/17559563/sending-ajax-post-jquery-in-rails-application
+http://stackoverflow.com/questions/7237720/jquery-post-to-rails
+https://laracasts.com/discuss/channels/general-discussion/422-unprocessable-entity-error-when-submitting-form-with-ajax
+http://stackoverflow.com/questions/7203304/warning-cant-verify-csrf-token-authenticity-rails
+http://stackoverflow.com/questions/23690560/rails-4-cant-verify-csrf-token-authenticity
+https://coderwall.com/p/8z7z3a/rails-4-solution-for-can-t-verify-csrf-token-authenticity-json-requests
+https://github.com/plataformatec/devise/issues/2734
+
+http://stackoverflow.com/questions/23690560/rails-4-cant-verify-csrf-token-authenticity
+https://coderwall.com/p/8z7z3a/rails-4-solution-for-can-t-verify-csrf-token-authenticity-json-requests  (usata)
+https://github.com/plataformatec/devise/issues/2734
+http://stackoverflow.com/questions/17559563/sending-ajax-post-jquery-in-rails-application
+
+
+Aggiunta azione ad elemento creato dinamicamente
+http://stackoverflow.com/questions/1525664/jquery-how-to-bind-onclick-event-to-dynamically-added-html-element
+
+Altro
+https://css-tricks.com/snippets/javascript/multiline-string-variables-in-javascript/
+http://forum.jquery.com/topic/how-can-you-insert-a-variable-into-a-string
+
+
+Ajax DELETE
+http://stackoverflow.com/questions/14924091/rails-ajax-jquery-delete-submits-a-post-request-after
+https://github.com/twbs/bootstrap/issues/3233
+http://stackoverflow.com/questions/2153917/how-to-send-a-put-delete-request-in-jquery
+http://stackoverflow.com/questions/24006325/ajax-routing-error-for-delete-why-do-i-have-a-delete-routing-error-for-the-inde
+
+bootstrap jquery confirm
+http://stackoverflow.com/questions/24006325/ajax-routing-error-for-delete-why-do-i-have-a-delete-routing-error-for-the-inde
+http://getbootstrap.com/2.3.2/
+http://stackoverflow.com/questions/3519861/yes-or-no-confirm-box-using-jquery
+http://jsfiddle.net/nm3zc/
+http://bootboxjs.com/#download   (usata)
+
+Ajax PUT
+https://launchschool.com/blog/the-detailed-guide-on-how-ajax-works-with-ruby-on-rails
+http://stackoverflow.com/questions/907910/how-do-i-put-data-to-rails-using-jquery
+
+
+Sistemare css bootstrap
+http://stackoverflow.com/questions/27079000/actioncontrollerroutingerror-no-route-matches-get-stylesheets-bootstrap-t
+questa riga nel css bootstrap deve essere eliminata /*# sourceMappingURL=bootstrap.min.css.map */

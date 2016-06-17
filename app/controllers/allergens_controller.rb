@@ -25,6 +25,10 @@ class AllergensController < ApplicationController
   # GET /allergens/new
   def new
     @allergen = Allergen.new
+    #respond_to do |format|
+    # format.html #new.html.erb
+    # format.json { render json: @allergen}
+    #end
   end
 
   # GET /allergens/1/edit
@@ -34,14 +38,18 @@ class AllergensController < ApplicationController
   # POST /allergens
   # POST /allergens.json
   def create
+    #debugger
     @allergen = Allergen.new(allergen_params)
+    #@allergen = Allergen.new
 
     respond_to do |format|
       if @allergen.save
-        format.html { redirect_to @allergen, notice: 'Allergen was successfully created.' }
+        #format.html { redirect_to @allergen, notice: 'Allergen was successfully created.' }
+        #format.json { render :show, status: :created, location: @allergen }
         format.json { render :show, status: :created, location: @allergen }
       else
-        format.html { render :new }
+        #format.html { render :new }
+        #format.json { render json: @allergen.errors, status: :unprocessable_entity }
         format.json { render json: @allergen.errors, status: :unprocessable_entity }
       end
     end
@@ -50,15 +58,17 @@ class AllergensController < ApplicationController
   # PATCH/PUT /allergens/1
   # PATCH/PUT /allergens/1.json
   def update
-    respond_to do |format|
+    #respond_to do |format|
       if @allergen.update(allergen_params)
-        format.html { redirect_to @allergen, notice: 'Allergen was successfully updated.' }
-        format.json { render :show, status: :ok, location: @allergen }
+        #format.html { redirect_to @allergen, notice: 'Allergen was successfully updated.' }
+        #format.json { render :show, status: :ok, location: @allergen }
+        render :show, status: :ok, location: @allergen
       else
-        format.html { render :edit }
-        format.json { render json: @allergen.errors, status: :unprocessable_entity }
+        #format.html { render :edit }
+        #format.json { render json: @allergen.errors, status: :unprocessable_entity }
+        render json: @allergen.errors, status: :unprocessable_entity 
       end
-    end
+    #end
   end
 
   # DELETE /allergens/1
@@ -66,8 +76,8 @@ class AllergensController < ApplicationController
   def destroy
     @allergen.destroy
     respond_to do |format|
-      format.html { redirect_to allergens_url, notice: 'Allergen was successfully destroyed.' }
-      format.json { head :no_content }
+    #format.html { redirect_to allergens_url, notice: 'Allergen was successfully destroyed.' }
+    format.json { head :no_content }
     end
   end
 

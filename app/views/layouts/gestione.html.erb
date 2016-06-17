@@ -25,6 +25,7 @@ l' %>
 <body class="<%= controller_name %>">
 <!-- <body class="gestione" data-no-turbolink="true"> -->
 
+
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
@@ -42,7 +43,7 @@ l' %>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="#"><b>NUOVO</b></a>
+                    <a href="#" data-toggle="modal" data-target="#myModal" id="href_nuovo"><b>NUOVO</b></a>
                 </li>
             </ul>
         </div>
@@ -53,7 +54,29 @@ l' %>
 
 <div class="container">
 
-    <div class="row">
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Inserisci Allergene</h4>
+        </div>
+        <div class="modal-body">
+          <label for="usr">Nome:</label>
+          <input type="text" class="form-control" style="font-weight:bold;" id="frm_nome">
+          <label for="usr">Descrizione:</label>
+          <input type="text" class="form-control" style="font-weight:bold;" id="frm_descrizione">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_chiudi_add">Chiudi</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" id="btn_salva_add">Salva</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div class="row" id="riga_ins">
 
         <div class="col-lg-12">
             <!-- <h1 class="page-header">Gestione Allergeni</h1> -->
@@ -75,11 +98,11 @@ l' %>
             <p><b>Copyright &copy; EF 2016&nbsp;&nbsp;</b><img src="/images/heisenberg.jpg" height="28" width="28"></p>
         </div>
     </div
-
 </footer>
 
 
  <script src="/js/bootstrap.min.js"></script>
+ <script src="/js/bootbox.min.js"></script>
  <script src="/js/allergeni.js" type="text/javascript"></script>
 
 
