@@ -12,10 +12,16 @@ class AllergensController < ApplicationController
   end
 
   def lista
-    @allergens = Allergen.all
+    # @allergens = Allergen.all()
+    @allergens = Allergen.order(:nome)
     render layout: false
   end
 
+  def lista_filtra
+    #@allergens = Allergen.where(:nome => params[:nome]).order(:nome)
+    @allergens=Allergen.where("lower(nome) Like lower(?)", "%#{params[:nome]}%")
+    render 'allergens/lista' , :layout => false
+  end
 
   # GET /allergens/1
   # GET /allergens/1.json
@@ -66,7 +72,7 @@ class AllergensController < ApplicationController
       else
         #format.html { render :edit }
         #format.json { render json: @allergen.errors, status: :unprocessable_entity }
-        render json: @allergen.errors, status: :unprocessable_entity 
+        render json: @allergen.errors, status: :unprocessable_entity
       end
     #end
   end

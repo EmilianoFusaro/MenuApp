@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :allergens do
     collection do
       get 'lista'
+      get '/lista_filtra/:nome' , to: 'allergens#lista_filtra'
     end
   end
 

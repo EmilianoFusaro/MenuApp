@@ -45,10 +45,6 @@ function inserisci_riga(data) {
                   </div>';
   //$('#riga').append(nuova_riga).hide().fadeIn('slow');
   $('#riga').append(nuova_riga);
-  //Aggiunta azione ad elemento dinamico
-  //$(document).on('click', '#btn_elimina_' + data.id , function() {
-  //  alert('elimino');
-  // });
 
   //Aggiunge Azioni Dinamicamente
   $(document).on('click', '#btn_edita_' + data.id , function() {
@@ -75,11 +71,6 @@ $(function(){
     }
    $('#footer').fadeIn('slow');
 
-  //  $("button").click(function() {
-  //   alert(this.id);
-  //  });
-
-  // $('#div_riga_1').hide();
 
   //------------------------------------------------------gestione finestra modale aggiunta riga
   $('#btn_salva_add').click(function() {
@@ -99,8 +90,6 @@ $(function(){
       }
      },
     success: function(data) {  //ritorna oggetto json senza array
-    //alert(data.id);
-    //debugger;
     inserisci_riga(data)
     return false;
     },
@@ -121,13 +110,13 @@ $('#href_nuovo').click(function() {
 });
 
 
-// $('#btn_elimina').click(function() {
-//   $.ajax({
-//       url: "/allergens/" + div_selezionato,
-//       type: 'DELETE',
-//       success: function(result) {
-//           alert('ok');
-//           $('#div_riga_' + div_selezionato ).fadeOut(600, function(){ $(this).remove();});
-//       }
-//   });
-// });
+//------------------------------------------------------gestione modalità ricerca
+$('#btn_menu_cerca').click(function() {
+  $('#footer').hide();
+  if ($('#menu_cerca').val().trim()!="") {
+    $('#riga').load('/allergens/lista_filtra/'+ $('#menu_cerca').val() ).hide().fadeIn(1000);
+  } else {
+    $('#riga').load('/allergens/lista').hide().fadeIn(1000);
+    }
+  $('#footer').fadeIn('slow');
+});
