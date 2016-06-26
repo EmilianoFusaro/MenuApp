@@ -114,6 +114,9 @@ http://stackoverflow.com/questions/27079000/actioncontrollerroutingerror-no-rout
 questa riga nel css bootstrap deve essere eliminata /*# sourceMappingURL=bootstrap.min.css.map */
 
 
+Problema Logout senza import javascript di serie
+http://stackoverflow.com/questions/6557311/no-route-matches-users-sign-out-devise-rails-3
+
 
 per avviare rails da iphone:
 http://stackoverflow.com/questions/29132719/rails-application-not-visible-to-local-network

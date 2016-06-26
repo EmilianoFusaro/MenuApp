@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'dashboard/index'
+
   resources :categories do
     collection do
       get  'gestione'

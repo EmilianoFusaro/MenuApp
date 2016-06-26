@@ -7,7 +7,6 @@ class AllergeniController < ApplicationController
    end
 
    private
-
    def autentica
      unless current_user
        render '/users/sign_in'
