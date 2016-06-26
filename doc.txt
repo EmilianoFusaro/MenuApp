@@ -1,3 +1,8 @@
+Risorse per imparare Ruby On Rails
+https://medium.com/@mackenziechild/how-you-can-finally-learn-to-build-stuff-with-rails-eff61e7bcb6f#.zi9ciysat
+http://rubyonrailstutor.github.io/show/restaurants-show/
+
+
 Layout
 http://stackoverflow.com/questions/10123826/rails-use-different-layouts
 http://stackoverflow.com/questions/5090084/rails-3-how-add-a-view-that-does-not-use-same-layout-as-rest-of-app

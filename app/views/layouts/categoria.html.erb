@@ -9,9 +9,6 @@
   <meta name="author" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-<!-- <script   src="https://code.jquery.com/jquery-2.2.1.min.js"   integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="   crossorigin="anonymous"></script> -->
-<%#= stylesheet_link_tag    'application', media: 'al
-l' %>
 <!-- Bootstrap Core CSS -->
 <link href="/css/bootstrap.min.css" rel="stylesheet">
 <!-- Custom CSS -->
@@ -19,12 +16,10 @@ l' %>
 
 <%= javascript_include_tag 'gestione_prodotti', media: 'all' %>
 
-  <title>Gestione Allergeni</title>
+  <title>Gestione Categorie</title>
 </head>
-<!-- <body class="<%= controller_name %> <%= action_name %>"> -->
-<body class="<%= controller_name %>">
-<!-- <body class="gestione" data-no-turbolink="true"> -->
 
+<body class="<%= controller_name %>">
 
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -37,13 +32,13 @@ l' %>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><b>Gestione Allergeni</b></a>
+            <a class="navbar-brand" href="#"><b>Gestione Categorie</b></a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="#" data-toggle="modal" data-target="#myModal" id="href_nuovo" style="font-size:18px;"><b>Nuovo</b></a>
+                    <a href="#" data-toggle="modal" data-target="#myModal" id="href_nuovo" style="font-size:18px;"><b>Nuova</b></a>
                 </li>
                 <li style="padding-top:10px;padding-left:5px;">
                     <input type="text" style="font-weight:bold;width:150px;" id="menu_cerca">
@@ -68,11 +63,11 @@ l' %>
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">Inserisci Allergene</h4>
+          <h4 class="modal-title" id="myModalLabel">Inserisci Categoria</h4>
         </div>
         <div class="modal-body">
           <label for="usr">Nome:</label>
-          <input type="text" class="form-control" style="font-weight:bold;" id="frm_nome">
+          <input type="text" class="form-control" style="font-weight:bold;" id="frm_titolo">
           <label for="usr">Descrizione:</label>
           <input type="text" class="form-control" style="font-weight:bold;" id="frm_descrizione">
         </div>
@@ -111,7 +106,7 @@ l' %>
 
  <script src="/js/bootstrap.min.js"></script>
  <script src="/js/bootbox.min.js"></script>
- <script src="/js/allergeni.js" type="text/javascript"></script>
+ <script src="/js/categorie.js" type="text/javascript"></script>
 
 
 

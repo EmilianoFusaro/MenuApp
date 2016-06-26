@@ -1,6 +1,7 @@
 class AllergensController < ApplicationController
   before_action :set_allergen, only: [:show, :edit, :update, :destroy]
 
+
   # GET /allergens
   # GET /allergens.json
   def index
@@ -12,6 +13,7 @@ class AllergensController < ApplicationController
   end
 
   def lista
+    #debugger
     # @allergens = Allergen.all()
     @allergens = Allergen.order(:nome)
     render layout: false
@@ -97,4 +99,5 @@ class AllergensController < ApplicationController
     def allergen_params
       params.require(:allergen).permit(:nome, :descrizione, :img, :img1, :img2)
     end
+
 end

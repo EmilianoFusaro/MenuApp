@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
 
+  resources :categories do
+    collection do
+      get  'gestione'
+      #post 'rigenera'
+    end
+  end
+
   resources :allergens do
     collection do
       get 'lista'

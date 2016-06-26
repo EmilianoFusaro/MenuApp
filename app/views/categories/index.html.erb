@@ -1,0 +1,23 @@
+<style scoped>
+  /*#example-one { margin-bottom: 10px; }*/
+  [contenteditable="true"] { padding: 10px; outline: 2px dashed #CCC; }
+  [contenteditable="true"]:hover { outline: 2px dashed #0090D2; }
+</style>
+
+<% @categories.each do |category| %>
+
+        <div class="col-lg-3 col-md-4 col-xs-12 thumb" id="div_riga_<%= category.id %>">
+                <div style="background-color:white;height:150px;">
+                <div id="div_titolo_<%=category.id %>"><h2><%= category.titolo %></h2></div>
+                <div id="div_descrizione_<%=category.id %>">
+                  <h4><%= category.descrizione %></h4></div>
+                </div>
+                <button type="button" class="btn btn-primary btn-lg" style="width:120px" id="btn_edita_<%= category.id %>">Edita</button>
+                <button type="button" class="btn btn-danger btn-lg"  style="width:120px" id="btn_elimina_<%=category.id %>">Elimina</button>
+                <button type="button" class="btn btn-success btn-lg" style="width:120px;display:none;" id="btn_salva_<%= category.id %>">Salva</button>
+                <button type="button" class="btn btn-warning btn-lg"  style="width:120px;display:none;" id="btn_annulla_<%=category.id %>">Annulla</button>
+                <div id="nascosto_titolo_<%=category.id %>" style="display:none;"><h2></h2></div>
+                <div id="nascosto_descrizione_<%=category.id %>" style="display:none;"><h4></h4></div>
+        </div>
+
+<% end %>
