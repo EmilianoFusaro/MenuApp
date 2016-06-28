@@ -379,7 +379,6 @@
         <%= javascript_include_tag 'gestione_prodotti', media: 'all' %>
         <!-- <script src="/js/jquery.min.js"></script> -->
         <script src="/js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
-
         <!-- Bootstrap -->
         <script src="/js/bootstrap.min.js" type="text/javascript"></script>
         <!-- Morris.js charts -->
@@ -399,12 +398,26 @@
         <!-- Bootstrap WYSIHTML5 -->
         <!--<script src="js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>-->
         <!-- iCheck -->
-        <!--<script src="js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>-->
+        <script src="/js/icheck.min.js" type="text/javascript"></script>
+        <!-- Touch x Mobile -->
+        <script src="/js/jquery.ui.touch-punch.min.js"></script>
         <!-- AdminLTE App -->
         <!-- <script src="js/AdminLTE/app.js" type="text/javascript"></script> -->
         <script src="/js/AdminLTE/applicazione.js" type="text/javascript"></script>
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
         <!-- <script src="js/AdminLTE/dashboard.js" type="text/javascript"></script> -->
+
+        <script>
+        //Emiliano per abilitare le funzioni di jquery.ui.touch-punch.min.js x Mobile
+        $(function() {
+          //Permette di ordinare le List
+          //$(".todo-list").sortable({handle:".handle"});  //Emiliano posso identificare l'area che può essere acchiappata per l'ordinamento
+          $(".todo-list").sortable();
+          $(".todo-list").disableSelection();
+          //sposta contenitori colorati
+          $(".small-box").draggable();
+        });
+        </script>
 
     </body>
 </html>

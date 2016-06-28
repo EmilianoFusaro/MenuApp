@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :menus
   get 'dashboard/index'
 
   resources :categories do

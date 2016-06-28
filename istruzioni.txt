@@ -164,6 +164,18 @@ heroku rename menuapp
 heroku rake db:migrate
 
 https://menuapp-ef.herokuapp.com/allergeni/gestione
+
+
+
+per avviare rails da iphone:
+http://stackoverflow.com/questions/29132719/rails-application-not-visible-to-local-network
+rails server --binding=0.0.0.0  #avviare il server in questo modo per essere fruibile da iphone
+ping lo recuperi da utility network
+esempio da lucchetta :
+192.168.1.115:3000  (senza http://)
+192.168.0.2 casa
+
+
 ------------------------------------------------------------------------------------------------------------------------Aggiunta Risorse
 
 (Piatti)

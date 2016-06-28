@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nome:</strong>
+  <%= @menu.nome %>
+</p>
+
+<p>
+  <strong>Descrizione:</strong>
+  <%= @menu.descrizione %>
+</p>
+
+<p>
+  <strong>Categorie:</strong>
+  <%= @menu.categorie %>
+</p>
+
+<p>
+  <strong>Piatti:</strong>
+  <%= @menu.piatti %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @menu.user_id %>
+</p>
+
+<%= link_to 'Edit', edit_menu_path(@menu) %> |
+<%= link_to 'Back', menus_path %>

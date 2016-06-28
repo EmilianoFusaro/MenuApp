@@ -117,6 +117,10 @@ questa riga nel css bootstrap deve essere eliminata /*# sourceMappingURL=bootstr
 Problema Logout senza import javascript di serie
 http://stackoverflow.com/questions/6557311/no-route-matches-users-sign-out-devise-rails-3
 
+Touch X Iphone
+https://github.com/furf/jquery-ui-touch-punch
+http://touchpunch.furf.com/
+
 
 per avviare rails da iphone:
 http://stackoverflow.com/questions/29132719/rails-application-not-visible-to-local-network
