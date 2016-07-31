@@ -1,2 +1,189 @@
-<h1>Dashboard#index</h1>
-<p>Find me in app/views/dashboard/index.html.erb</p>
+<!-- Variabili Locali Della View Sul Layout -->
+<% provide(:v_titolo, "Pannello Di Controllo") %>
+<% provide(:v_minides, "Dashboard") %>
+
+<%# content_for :v_lindex do %>
+<!-- class="active" -->
+<%# end %>
+ <%#= yield :v_lindex %>
+<%# content_for(:title, " class=&quot;active&quot;") %>
+
+<!-- Esempio Carico Script In Pagina -->
+<% content_for :script_view do %>
+<script>
+   //attenzione modificare non devo più agire in base al click ma al caricamento della pagina
+   //$("a.menu").click(function(event){
+   //  $("li.menu").removeClass("active");
+   //   //debugger;
+   //   //provare anche toggleClass
+   //   $(this).parent("li.menu").addClass("active");
+   //});
+
+   //Emiliano per abilitare le funzioni di jquery.ui.touch-punch.min.js x Mobile
+   $(function() {
+     //Permette di ordinare le List
+     //$(".todo-list").sortable({handle:".handle"});  //Emiliano posso identificare l'area che può essere acchiappata per l'ordinamento
+
+    //if ($('.container').length > 0){
+    //$('#lista_categorie').load('/dashboard/lista_categorie').hide().fadeIn(1000);
+    //}
+
+    //var content;
+    //$.get('/dashboard/lista_categorie', function(data){
+    //  content= data;
+    //  //append
+    //$('#lista_categorie').prepend(content);
+    //});
+
+    //visto anche con callback ma non va http://www.w3schools.com/jquery/jquery_callback.asp
+    //$(document).ready(function(){
+    //$.get('/dashboard/lista_categorie', function(data) {
+    //    $('#lista_categorie').append(data);
+    //});
+    //});
+
+    $('#lista_categorie').load('/dashboard/lista_categorie').hide().fadeIn(1000);
+
+    //$(".todo-list").sortable();
+    //$(".todo-list").disableSelection();
+    ////sposta contenitori colorati
+    //$(".small-box").draggable();
+    ////debugger;
+    //$("li.menu").removeClass("active");
+    //$("li.menu.index").addClass("active");
+   });
+
+</script>
+<% end %>
+
+
+<!-- Small boxes (Stat box) -->
+<div class="row">
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-aqua">
+            <div class="inner">
+                <h3>
+                    <%= @menu_creati %>
+                </h3>
+                <p>
+                    Menu Creati
+                </p>
+            </div>
+            <div class="icon">
+                <!-- <i class="ion ion-bag"></i> -->
+                <i class="ion ion-stats-bars"></i>
+            </div>
+            <a href="#" class="small-box-footer">
+                More info <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div><!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-green">
+            <div class="inner">
+                <h3 id="categorie_create">
+                    <!-- 53<sup style="font-size: 20px">%</sup> -->
+                    <%= @categorie_create %>
+                </h3>
+                <p>
+                    Categorie
+                </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+            </div>
+            <a href="#" class="small-box-footer">
+                More info <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div><!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-yellow">
+            <div class="inner">
+                <h3>
+                    <%= @piatti_creati %>
+                </h3>
+                <p>
+                    Numero Portate
+                </p>
+            </div>
+            <div class="icon">
+                <!-- <i class="ion ion-person-add"></i> -->
+                <i class="ion ion-stats-bars"></i>
+            </div>
+            <a href="#" class="small-box-footer">
+                More info <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div><!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-red">
+            <div class="inner">
+                <h3>
+                    <%= @ingredienti_creati %>
+                </h3>
+                <p>
+                    Numero Ingredienti
+                </p>
+            </div>
+            <div class="icon">
+                <!-- <i class="ion ion-pie-graph"></i> -->
+                <i class="ion ion-stats-bars"></i>
+            </div>
+            <a href="#" class="small-box-footer">
+                More info <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div><!-- ./col -->
+</div><!-- /.row -->
+
+
+<!-- Top Row -->
+<div class="row">
+    <div class="col-xs-12 connectedSortable">
+    </div>
+</div>
+<!-- Main row -->
+<div class="row">
+    <!-- Colonna Sinistra -->
+    <section class="col-lg-6 connectedSortable">
+      <div class="box box-primary">
+          <div class="box-header">
+              <i class="ion ion-clipboard"></i>
+              <h3 class="box-title">Lista Categorie</h3>
+              <div class="box-tools pull-right">
+                  <!-- Pagination -->
+                  <!-- <ul class="pagination pagination-sm inline">
+                      <li><a href="#">&laquo;</a></li>
+                      <li><a href="#">1</a></li>
+                      <li><a href="#">2</a></li>
+                      <li><a href="#">3</a></li>
+                      <li><a href="#">&raquo;</a></li>
+                  </ul> -->
+              </div>
+          </div><!-- /.box-header -->
+
+              <!-- Lista Riempita Dinamicamente -->
+              <div id="lista_categorie"></div>
+              <!-- Carica Vista PArziale -->
+              <%#= render "lista_categorie" %>
+
+      </div><!-- /.box -->
+
+
+    <!-- riga di blocco SX-->
+    <div class="box box-danger" id="loading-example" style="border-top-color:white;">
+    </div>
+    </section>
+
+    <!-- Colonna Destra -->
+    <section class="col-lg-6 connectedSortable">
+    <!-- riga di blocco DX-->
+    <div class="box box-danger" id="loading-example" style="border-top-color:white;">
+    </div>
+    </section>
+</div>

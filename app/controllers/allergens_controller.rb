@@ -54,7 +54,8 @@ class AllergensController < ApplicationController
       if @allergen.save
         #format.html { redirect_to @allergen, notice: 'Allergen was successfully created.' }
         #format.json { render :show, status: :created, location: @allergen }
-        format.json { render :show, status: :created, location: @allergen }
+        #format.json { render :show, status: :created, location: @allergen }  #sostituita poco tempo fa
+        format.json { render json: @allergen, status: :created, location: @allergen }
       else
         #format.html { render :new }
         #format.json { render json: @allergen.errors, status: :unprocessable_entity }

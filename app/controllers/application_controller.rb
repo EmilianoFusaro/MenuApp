@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
     #puts "ECCOMI"
     #logger.debug "Emiliano Fusaro"
     #byebug
-    if current_user
+    if current_user    
       if current_user.profile.nil? == false
         if current_user.profile.stampalistino==true && current_user.profile.stampalistino_data < DateTime.now
           current_user.profile.stampalistino = false
@@ -40,6 +40,7 @@ class ApplicationController < ActionController::Base
         end
       end
     end
+
   end
 
 end

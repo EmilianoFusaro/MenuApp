@@ -1,7 +1,16 @@
 Rails.application.routes.draw do
 
   resources :menus
+
   get 'dashboard/index'
+  get 'dashboard/azienda'
+  get 'dashboard/lista_categorie'
+  post 'dashboard/inserisci_categoria' => "dashboard#inserisci_categoria"
+  delete 'dashboard/cancella_categoria/:id' => "dashboard#cancella_categoria"
+  put 'dashboard/aggiorna_ordine_categoria' => "dashboard#aggiorna_ordine_categoria"
+  put 'dashboard/modifica_categoria/:id' => "dashboard#modifica_categoria"
+
+  get 'dashboard/stampa'
 
   resources :categories do
     collection do

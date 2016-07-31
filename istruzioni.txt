@@ -176,6 +176,16 @@ esempio da lucchetta :
 192.168.0.2 casa
 
 
+-----------------------------------cloud9
+fusaro_emiliano
+magghiato
+belzebu@gmx.com
+https://c9.io/fusaro_emiliano
+https://c9.io/
+
+avviare rails s
+rails s -p $PORT -b $IP
+
 ------------------------------------------------------------------------------------------------------------------------Aggiunta Risorse
 
 (Piatti)
@@ -196,6 +206,18 @@ Asset Originale
 //= require materialize-sprockets
 //= require jquery_ujs
 //= require_tree .
+
+Esempio asset inclusione file
+//= require_self
+//= require jquery
+//= require jquery_ujs
+//= require jquery-ui-1.10.3.min
+//= require bootstrap.min
+//= require icheck.min
+//= require jquery.ui.touch-punch.min
+//= require applicazione
+//= require dashboard
+
 
 Precompilazione e pulizia asset
 rake assets:clean assets:precompile

@@ -1,0 +1,276 @@
+<div class="box-body">
+<ul class="todo-list" id="lista_categorie">
+
+<% @lista_categorie.each do |categoria| %>
+    <li id="lista_categorie_<%= categoria.id %>" class="item_categoria">
+        <!-- drag handle -->
+        <span class="handle">
+            <i class="fa fa-ellipsis-v"></i>
+            <i class="fa fa-ellipsis-v"></i>
+        </span>
+        <!-- checkbox -->
+        <input type="checkbox" value="" name=""/>
+        <!-- todo text -->
+        <span id="titolo_<%= categoria.id %>" class="text"><%= categoria.titolo %></span>
+        <!-- Emphasis label -->
+        <!-- <small class="label label-danger"><i class="fa fa-clock-o"></i> 2 mins</small> -->
+        <!-- General tools such as edit or delete-->
+        <div class="tools">
+           <!-- <button type="button" class="btn btn-primary btn-sm" style="padding-bottom:-30px">Modifica</button>
+           <button type="button" class="btn btn-primary btn-sm">Elimina</button> -->
+            <i id="modifica_categoria_<%= categoria.id %>" class="fa fa-edit" style="font-size:25px;font-weight:bold;" data-toggle="modal" data-target="#modifica_categoria"></i>
+            <i id="elimina_categoria_<%= categoria.id %>" class="fa fa-trash-o" style="font-size:25px;font-weight:bold;"></i>
+        </div>
+    </li>
+<%end%>
+
+</ul>
+
+</div><!-- /.box-body -->
+<div class="box-footer clearfix no-border">
+    <button id="btn_inserisci_categoria" class="btn btn-default pull-right" data-toggle="modal" data-target="#aggiungi_categoria"><i class="fa fa-plus" style="font-size:20px;font-weight:bold;"></i><strong>Aggiungi</strong</button>
+    <button id="btn_salva_ordine" class="btn btn-default pull-right"><i class="fa fa-bars" style="font-size:20px;font-weight:bold;"></i><strong>Salva Ordine</strong</button>
+</div>
+
+
+<!-- Modal Aggiungi Nuova Categoria-->
+<div class="modal fade" id="aggiungi_categoria" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Inserisci Categoria</h4>
+      </div>
+      <div class="modal-body">
+        <label for="usr">Nome:</label>
+        <input type="text" class="form-control" style="font-weight:bold;" id="frm_titolo">
+        <label for="usr">Descrizione:</label>
+        <input type="text" class="form-control" style="font-weight:bold;" id="frm_descrizione">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_chiudi_add">Chiudi</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="btn_aggiungi_categoria">Salva</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Modifica Categoria-->
+<div class="modal fade" id="modifica_categoria" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel2">Inserisci Categoria</h4>
+      </div>
+      <div class="modal-body">
+        <label for="usr">Nome:</label>
+        <input type="text" class="form-control" style="font-weight:bold;" id="frm_titolo_m">
+        <label for="usr">Descrizione:</label>
+        <input type="text" class="form-control" style="font-weight:bold;" id="frm_descrizione_m">
+      </div>
+      <div id="frm_nascosto_id" style="display:none;"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_chiudi_add_m">Chiudi</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="btn_modifica_categoria">Salva</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+//imposta lo stile
+$("input[type='checkbox'], input[type='radio']").iCheck({
+     checkboxClass: 'icheckbox_minimal',
+     radioClass: 'iradio_minimal'
+ });
+$(".todo-list").sortable();
+$(".todo-list").disableSelection();
+//sposta contenitori colorati
+$(".small-box").draggable();
+//debugger;
+$("li.menu").removeClass("active");
+$("li.menu.index").addClass("active");
+
+
+//Gestione Azioni
+
+//$('div[id^="sales_info_"]')  inizia per
+//$("[id$=item]") finisce per
+
+$(document).on('click', '[id*="modifica_categoria_"]', function() {
+  //alert("Modifica " + this.id + " " + this.id.split('_')[2]);
+  // alert($('[id*="modifica_categoria_"]').attr("id"));
+  var indice=this.id.split('_')[2];  //attenzione provare senza var
+  //alert($("span#titolo_" + indice).text());
+  //debugger;
+  $('#frm_titolo_m').val($("span#titolo_" + indice).text());
+  $('#frm_nascosto_id').text(indice);
+  //$('#frm_descrizione_m').val($("span#titolo_" + indice).text());
+});
+
+
+//Action Elimina Categoria
+$(document).on('click', '[id*="elimina_categoria_"]', function() {
+var indice=this.id.split('_')[2];
+ bootbox.confirm("Sei sicuro di voler eliminare  la categoria: "+ $("#titolo_" + indice).text() + " ?", function(result) {
+   if (result==true) {
+      $.ajax({
+          url: "/dashboard/cancella_categoria/" + indice,
+          type: 'DELETE',
+          success: function() {
+            $('#lista_categorie_' + indice).fadeOut(600, function(){ $(this).remove();
+              var contatore_categorie_create=parseInt($('#categorie_create').text())-1;
+              $('#categorie_create').text(contatore_categorie_create).fadeIn("slow");
+            });
+          }
+      });
+   };
+});
+});
+//url: "cancella_categoria/" + indice,              //da per scontato che parto dal controller dashboard
+//url: "/dashboard/cancella_categoria/" + indice,   //specifico controller + action
+
+
+//pulisce finestra modale
+$(document).on('click', '#btn_inserisci_categoria', function() {
+   $('#frm_titolo').val('');
+   $('#frm_descrizione').val('');
+ });
+
+//Action Aggiungi Categoria
+$(document).on('click', '#btn_aggiungi_categoria', function() {
+ //   $('#aggiungi_categoria').modal('toggle');
+   $.ajax({
+    type: "POST",
+    url: "/dashboard/inserisci_categoria",
+    data: {
+      category: {
+      titolo: $('#frm_titolo').val(),
+      descrizione: $('#frm_descrizione').val(),
+      ordine:99999
+     }
+    },
+   success: function(data) {  //ritorna oggetto json senza array
+   aggiungi_categoria_data(data)
+   return false;
+   },
+   error: function(data) {
+
+   //alert('Attenzione! problemi nell inserimento ' + data);
+   //iterazione dell'oggetto errore  (data.responseJSON,data.responsetext)
+   var messaggio='';
+   $.each(data.responseJSON, function (i, member) {
+    for (var i in member) {
+     }
+     messaggio = messaggio + member[i] +'\n'; //concateno i messaggi
+   });
+   bootbox.alert(messaggio);
+   return false;
+   }
+ });
+ });
+
+function aggiungi_categoria_data(data) {
+
+    var nuova_categoria= '<li id="lista_categorie_'+ data.id +'" class="item_categoria"> \
+        <span class="handle"> \
+            <i class="fa fa-ellipsis-v"></i> \
+            <i class="fa fa-ellipsis-v"></i> \
+        </span> \
+        <input type="checkbox" value="" name=""/> \
+        <span id="titolo_'+ data.id +'" class="text">' + data.titolo +'</span> \
+        <div class="tools"> \
+            <i id="modifica_categoria_'+ data.id +'" class="fa fa-edit" style="font-size:25px;font-weight:bold;" data-toggle="modal" data-target="#modifica_categoria"></i> \
+            <i id="elimina_categoria_' + data.id + '" class="fa fa-trash-o" style="font-size:25px;font-weight:bold;"></i> \
+        </div> \
+        </li>';
+
+
+  if ($('li.item_categoria').length > 0) {
+    //non append after sembra funzionare meglio
+    $('#lista_categorie li:last').after(nuova_categoria).html();
+    //alert(nuova_categoria);
+    }
+  else {
+    $('ul#lista_categorie').append(nuova_categoria);
+  }
+
+  //imposta lo stile per la lista appena aggiunta
+  $("input[type='checkbox'], input[type='radio']").iCheck({
+       checkboxClass: 'icheckbox_minimal',
+       radioClass: 'iradio_minimal'
+   });
+
+  //incrementa contatore menu
+  // $('#categorie_create').fadeOut("slow");
+  var contatore_categorie_create=parseInt($('#categorie_create').text())+1;
+  $('#categorie_create').text(contatore_categorie_create).fadeIn("slow");
+}
+
+//Salva ordine Categorie
+$(document).on('click', '#btn_salva_ordine', function() {
+     //$("#btn_salva_ordine").click(function () {
+     var lista_categorie_ordine = [];
+     var conta =0;
+     $('.item_categoria').each(function (index, value) {
+       //alert('li' + index + ':' + $(this).attr('id') + ':'+ $(this).text());
+       conta +=1;
+       lista_categorie_ordine.push({
+           id: parseInt(this.id.split('_')[2]),
+           ordine: conta
+       });
+     });
+     var jsonOrdineCategorie = JSON.stringify(lista_categorie_ordine);
+     //var jsonOrdineCategorie = lista_categorie_ordine;  //non passa niente
+     //debugger;
+     $.ajax({
+      type: "PUT",
+      url: "/dashboard/aggiorna_ordine_categoria/",
+      data: jsonOrdineCategorie,
+      contentType: "application/json; charset=utf-8",
+      //dataType: "json",
+      success: function(data) {  //ritorna oggetto json senza array
+      //inserisci_riga(data)
+      bootbox.alert("Ordine Salvato!");
+      return false;
+      },
+      error: function(data) {
+      bootbox.alert("Attenzione! problemi durante il salvataggio , riprova");
+      return false;
+     }
+   });
+});
+
+//Modifica Categorie
+$(document).on('click', '#btn_modifica_categoria', function() {
+     //$(document).on('click', '[id*="modifica_categoria_"]', function() {
+     //var indice=this.id.split('_')[2];
+     //bootbox.alert($('#frm_nascosto_id').text());
+     var indice = $('#frm_nascosto_id').text()
+     $.ajax({
+      type: "PUT",
+      url: "/dashboard/modifica_categoria/" + indice,
+      data: {
+        category: {
+        titolo: $('#frm_titolo_m').val(),
+        descrizione: $('#frm_descrizione_m').val()
+       }
+      },
+      success: function(data) {  //ritorna oggetto json senza array
+      bootbox.alert("Categoria Modificata!");
+      $("#titolo_"+ indice).text($('#frm_titolo_m').val());
+      return false;
+      },
+      error: function(data) {
+      bootbox.alert("Attenzione! problemi durante il salvataggio , riprova");
+      return false;
+     }
+   });
+ });
+
+
+</script>
