@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160628224724) do
+ActiveRecord::Schema.define(version: 20160807230322) do
 
   create_table "allergens", force: :cascade do |t|
     t.string   "nome"
@@ -59,6 +59,17 @@ ActiveRecord::Schema.define(version: 20160628224724) do
   end
 
   add_index "ingredients", ["user_id"], name: "index_ingredients_on_user_id"
+
+  create_table "media", force: :cascade do |t|
+    t.string   "descrizione"
+    t.integer  "user_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.string   "foto_file_name"
+    t.string   "foto_content_type"
+    t.integer  "foto_file_size"
+    t.datetime "foto_updated_at"
+  end
 
   create_table "menus", force: :cascade do |t|
     t.string   "nome"

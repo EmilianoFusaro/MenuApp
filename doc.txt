@@ -220,12 +220,36 @@ https://davidwalsh.name/css-page-breaks  (nascondere blocco pagina e interruzion
 https://davidwalsh.name/optimizing-structure-print-css
 http://www.evopdf.com/demo/HTML_to_PDF/Page_Breaks/Insert_Page_Breaks_Before_After_Using_CSS.aspx  (esempi interessanti su come preparare le stampe)
 
+validatore di gemme
+http://www.ready4rails.net/
 
 upload image
 http://blueimp.github.io/jQuery-File-Upload/basic-plus.html
 https://github.com/thoughtbot/paperclip
 http://cactuslab.com/imagemagick/
-
+(diversa documentazione)
+http://blueimp.github.io/jQuery-File-Upload/basic.html
+https://github.com/thoughtbot/paperclip
+http://stackoverflow.com/questions/15206663/ruby-on-rails-how-to-rename-currently-uploaded-file  (rinominare file)
+http://stackoverflow.com/questions/22820531/how-to-use-jquery-file-upload-in-rails-4
+http://stackoverflow.com/questions/19421292/rails-4-multiple-file-uploads-solution
+http://stackoverflow.com/questions/19441535/jquery-file-upload-in-rails-4
+https://github.com/tors/jquery-fileupload-rails
+https://github.com/vgantchev/rails-resumable-jquery-fileupload
+http://stackoverflow.com/questions/2708115/paperclip-renaming-files-after-theyre-saved
+http://stackoverflow.com/questions/22472366/paperclip-rename-uploaded-files-by-user
+http://stackoverflow.com/questions/9606804/paperclip-how-to-change-basename-filename
+http://stackoverflow.com/questions/11101690/rename-files-uploaded-by-paperclip
+http://stackoverflow.com/questions/38383142/how-to-rename-an-uploaded-file-with-rails-and-paperclip
+http://stackoverflow.com/questions/10280822/paperclip-rename-file-before-saving
+https://wyeworks.com/blog/2009/7/13/paperclip-file-rename
+http://www.rubyflow.com/p/2497
+https://www.sitepoint.com/uploading-files-with-paperclip/
+https://www.youtube.com/watch?v=x23aIQPa-DY
+https://www.youtube.com/watch?v=ic4MeDEfT08   (Ruby on Rails Ajax Files Upload with Dropzone)
+https://5minutenpause.com/blog/2013/09/04/multiple-file-upload-with-jquery-rails-4-and-paperclip/
+http://www.dropzonejs.com/
+http://stackoverflow.com/questions/2943065/how-to-get-utc-timestamp-in-ruby
 
 
 

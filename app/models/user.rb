@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   has_many :dishes
   has_many :ingredients
   has_many :menus
+  has_many :media
 
   #validates_presence_of :email, :message=>"Email Errata!"
   #validates_presence_of :password, :message=>"Password Errata!"

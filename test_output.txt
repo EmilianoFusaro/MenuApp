@@ -1,0 +1,98 @@
+Richiesta Singola
+
+medium_params
+{"descrizione"=>"", "foto"=>#<ActionDispatch::Http::UploadedFile:0x007fbccc695560
+@tempfile=#<Tempfile:/var/folders/z2/vxz1_j8j06766w2mnp9sz5g80000gp/T/RackMultipart20160811-937-8f08uf.png>,
+@original_filename="foto_2.png", @content_type="image/png",
+@headers="Content-Disposition: form-data; name=\"medium[foto]\"; filename=\"foto_2.png\"\r\nContent-Type: image/png\r\n">}
+
+#<ActionDispatch::Http::UploadedFile:0x007fbccc5f6938 @tempfile=#<Tempfile:/var/folders/z2/vxz1_j8j06766w2mnp9sz5g80000gp/T/RackMultipart20160811-937-gt5czc.png>, @original_filename="foto_1.png", @content_type="image/png", @headers="Content-Disposition: form-data; name=\"medium[foto][]\"; filename=\"foto_1.png\"\r\nContent-Type: image/png\r\n">
+
+params
+{"utf8"=>"✓", "authenticity_token"=>"RRVAo9sO06vm8qRcMMhgYDWhf2pKwzWQGh/D/P7gJ8g4dXlHoae5QuNV0KdgjDb7Sq5MnYo7AHQIkSkepLWxKA==",
+"medium"=>{"descrizione"=>"", "foto"=>#<ActionDispatch::Http::UploadedFile:0x007fbccc695560
+@tempfile=#<Tempfile:/var/folders/z2/vxz1_j8j06766w2mnp9sz5g80000gp/T/RackMultipart20160811-937-8f08uf.png>,
+@original_filename="foto_2.png", @content_type="image/png",
+@headers="Content-Disposition: form-data; name=\"medium[foto]\"; filename=\"foto_2.png\"\r\nContent-Type: image/png\r\n">},
+"commit"=>"Create Medium", "controller"=>"media", "action"=>"create"}
+
+
+Richiesta Doppia Con Un file
+
+medium_params
+{"descrizione"=>""}
+------
+{"utf8"=>"✓", "authenticity_token"=>"zuJ3hATuhVsIoKLQtW+Gw0cMug1Ban288Nmx6qvvOaGzgk5gfkfvsg0H1ivlK9BYOAOJ+oGSSFjiV1sI8bqvQQ==",
+"medium"=>{"descrizione"=>"", "foto"=>[#<ActionDispatch::Http::UploadedFile:0x007fbccd637b80
+@tempfile=#<Tempfile:/var/folders/z2/vxz1_j8j06766w2mnp9sz5g80000gp/T/RackMultipart20160811-937-c7d5pm.png>,
+@original_filename="foto_2.png", @content_type="image/png",
+@headers="Content-Disposition: form-data; name=\"medium[foto][]\"; filename=\"foto_2.png\"\r\nContent-Type: image/png\r\n">]},
+"commit"=>"Create Medium", "controller"=>"media", "action"=>"create"}
+
+
+Richiesta Doppia Con più file
+{"utf8"=>"✓", "authenticity_token"=>"RpYnZwE/JMPvq+4pRDPRHDpTqrYxDistPKQgQKqr0+479h6De5ZOKuoMmtIUd4eHRVyZQfH2HskuKsqi8P5FDg==",
+ "medium"=>{"descrizione"=>"", "foto"=>[#<ActionDispatch::Http::UploadedFile:0x007fbccf8644d8
+ @tempfile=#<Tempfile:/var/folders/z2/vxz1_j8j06766w2mnp9sz5g80000gp/T/RackMultipart20160811-937-1c7x6aq.png>,
+ @original_filename="foto_1.png", @content_type="image/png",
+ @headers="Content-Disposition: form-data; name=\"medium[foto][]\"; filename=\"foto_1.png\"\r\nContent-Type: image/png\r\n">,
+ #<ActionDispatch::Http::UploadedFile:0x007fbccf8644b0
+ @tempfile=#<Tempfile:/var/folders/z2/vxz1_j8j06766w2mnp9sz5g80000gp/T/RackMultipart20160811-937-1hal16x.png>,
+ @original_filename="foto_2.png",
+ @content_type="image/png",
+ @headers="Content-Disposition: form-data; name=\"medium[foto][]\"; filename=\"foto_2.png\"\r\nContent-Type: image/png\r\n">]},
+"commit"=>"Create Medium", "controller"=>"media", "action"=>"create"}
+
+
+
+params[:medium]
+{"descrizione"=>"", "foto"=>[#<ActionDispatch::Http::UploadedFile:0x007fbccc5f6938
+@tempfile=#<Tempfile:/var/folders/z2/vxz1_j8j06766w2mnp9sz5g80000gp/T/RackMultipart20160811-937-gt5czc.png>,
+@original_filename="foto_1.png", @content_type="image/png",
+@headers="Content-Disposition: form-data; name=\"medium[foto][]\"; filename=\"foto_1.png\"\r\nContent-Type: image/png\r\n">,
+#<ActionDispatch::Http::UploadedFile:0x007fbccc5f6910
+@tempfile=#<Tempfile:/var/folders/z2/vxz1_j8j06766w2mnp9sz5g80000gp/T/RackMultipart20160811-937-larfqr.png>,
+@original_filename="foto_2.png",
+@content_type="image/png",
+@headers="Content-Disposition: form-data; name=\"medium[foto][]\"; filename=\"foto_2.png\"\r\nContent-Type: image/png\r\n">]}
+
+
+come ho composto il params
+#medium_params = { "descrizione" => '' , "foto" => params[:medium][:foto][0]} #non puà essere settato in quanto definito in private
+
+
+
+def inserisci_categoria
+  @categoria = Category.new(categoria_params)
+  @categoria.user_id = current_user.id
+
+  respond_to do |format|
+    if @categoria.save
+      format.json { render json: @categoria, status: :created, location: @categoria }
+    else
+      format.json { render json: @categoria.errors, status: :unprocessable_entity }
+    end
+  end
+end
+
+
+class UploadsController < ApplicationController
+  def index
+    @upload  = Upload.new
+  end
+
+  def create
+    @upload  = Upload.new(upload_params)
+    if @upload.save
+      render json: {message: "success" , uploadId: @upload.id }, status: 200
+    else
+      render json: { error: upload.errors.full_messages.join(", ")}, status: 400
+    end
+  end
+
+  private
+    def upload_params
+      params.require(:upload).permit(:image)
+    end
+
+end

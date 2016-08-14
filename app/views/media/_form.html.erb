@@ -1,0 +1,164 @@
+<%#= form_for @medium , remote: true , html: { multipart: true } do |f| %>
+<%#= form_for @medium  do |f| %>
+<%= form_for @medium , html: { multipart: true } ,id:"forma" do |f| %>
+  <% if @medium.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@medium.errors.count, "error") %> prohibited this medium from being saved:</h2>
+
+      <ul>
+      <% @medium.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= f.label :descrizione %><br>
+    <%= f.text_field :descrizione %>
+  </div>
+  <!-- <div class="field"> -->
+    <!-- <%#= f.label :user_id %><br> -->
+    <%#= f.number_field :user_id %>
+  <!-- </div> -->
+  <%#= f.file_field :foto, multiple: true %>  <!--x file multipli -->
+  <%#= f.file_field :foto , id:"pictureInput" ,text:"prova" ,:'data-input'=>'false' ,:'data-buttonText'=>'ciao' %>
+  <%= f.file_field :foto , id:"pictureInput" ,text:"prova" ,:value =>'aaaa' %>
+  <br><br>
+
+  <div id="target">
+  </div>
+
+  <div class="actions">
+    <%= f.submit 'salva allegato' ,id:"btn_aggiungi_img" %>
+  </div>
+<% end %>
+
+<!-- Esempio Rinomina Bottoni -->
+<%#= f.label :foto, t('.upload_new_file') %>
+<%#= f.file_field :foto, multiple: true, name: 'media[foto]' %>
+<%#= f.submit 'prova' %>
+
+<script type="text/javascript">
+//Visualizza Anteprima immagine
+$('#btn_aggiungi_img').prop("disabled",true);
+$(function() {
+  $('#pictureInput').on('change', function(event) {
+    //debugger;
+    var files = event.target.files;
+    var image = files[0]
+    //if (typeof image !== "undefined" && image === 0) {
+    //verifico se carico effettivamente un file o annullo operazione
+    if (typeof image == "undefined") {
+      $('#target').html('');
+      $('#btn_aggiungi_img').prop("disabled",true);
+      return false;
+   }
+   else {
+     $('#btn_aggiungi_img').prop("disabled",false);
+   }
+    //debugger;
+    var reader = new FileReader();
+    reader.onload = function(file) {
+      var img = new Image();
+      console.log(file);
+      img.src = file.target.result;
+      $('#target').html(img);
+    }
+  reader.readAsDataURL(image);
+  console.log(files);
+  });
+});
+
+//crea un fomr con il contenuto del file e invia la richiesta
+$(document).on('click', '#btn_aggiungi_img', function(event) {
+  event.preventDefault(); //blocca l'azione scatenata dal clic
+
+      //disabilita bottoni di invio
+      $('#pictureInput').prop("disabled",true);
+      $('#btn_aggiungi_img').prop("disabled",true);
+      //carica loader spinner image
+      var imgb = new Image();
+      imgb.src =  "/images/squares.gif";
+      $('#target').html(imgb);
+      $('#target').show();
+      //debugger;
+
+      //dataproduct = { "foto": foto  };
+      //debugger;
+      var file_data = $("#pictureInput").prop("files")[0];
+	    var form_data = new FormData();
+	    form_data.append("foto", file_data);
+
+      $.ajax({
+       type: "POST",
+       //url: "/media/",
+       url: "/media/aggiungi_foto_galleria",
+      //multiple: false,
+      //element: $('#pictureInput'),
+      //paramName: 'medium[foto]',
+      //autoSubmit: false,
+      //data :$('#pictureInput'),
+      //data :dataproduct,
+
+      dataType: 'script',
+      cache: false,
+      contentType: false,
+      processData: false,
+      data :form_data,
+
+      //data :$('#forma'),
+      //formData: {
+      //"medium[foto]": $('#pictureInput').text(),
+      //},
+      //  data: {
+      //    category: {
+      //    titolo: $('#frm_titolo').val(),
+      //    descrizione: $('#frm_descrizione').val(),
+      //    ordine:99999
+      //   }
+      //  },
+      success: function(data) {
+      alert('ok');
+      //riattiva bottoni di invio
+      $('#pictureInput').prop("disabled",false);
+      $('#btn_aggiungi_img').prop("disabled",true);
+      return false;
+      },
+      error: function(data) {
+        $('#target').html("<h5>Il Processo Non è Andato a Buon Fine</h5>");
+        //riattiva bottoni di invio
+        $('#pictureInput').prop("disabled",false);
+        $('#btn_aggiungi_img').prop("disabled",true);
+        $('#pictureInput').val('');
+        //$('#target').hide();
+        //alert('errore');
+      return false;
+    }
+    });
+});
+
+//Action Aggiungi Categoria
+// $(document).on('click', '#btn_aggiungi_img', function() {
+//
+//    $.ajax({
+//     type: "POST",
+//     url: "/dashboard/inserisci_categoria",
+//     data: {
+//       category: {
+//       titolo: $('#frm_titolo').val(),
+//       descrizione: $('#frm_descrizione').val(),
+//       ordine:99999
+//      }
+//     },
+//    success: function(data) {  //ritorna oggetto json senza array
+//    aggiungi_categoria_data(data)
+//    return false;
+//    },
+//    error: function(data) {
+//      alert('errore');
+//    return false;
+//    }
+//  });
+//  });
+
+</script>

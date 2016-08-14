@@ -1,4 +1,4 @@
-  (Installazione devise)
+Il  (Installazione devise)
 https://github.com/plataformatec/devise
 https://github.com/plataformatec/devise/wiki/How-To:-Redirect-back-to-current-page-after-sign-in,-sign-out,-sign-up,-update
 
@@ -199,6 +199,22 @@ rails generate scaffold Allergen nome:string descrizione:text img:string img1:st
 
 (Aggiungo user_id ad ingredienti)
 rails g migration add_user_id_to_ingredients user_id:integer:index
+
+
+//generare solo model
+rails generate model ad \
+    name:string \
+    description:text \
+    price:decimal \
+    seller_id:integer \
+    email:string img_url:string
+
+Sistema fdi griglia bootstrap
+http://v4-alpha.getbootstrap.com/layout/grid/
+
+
+esempio creazione tabella righe colonne
+http://stackoverflow.com/questions/34068421/how-to-make-an-html-table-which-is-automatically-create-new-row-after-six-item
 
 
 Asset Originale

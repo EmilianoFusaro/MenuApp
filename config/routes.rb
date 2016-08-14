@@ -2,8 +2,15 @@ Rails.application.routes.draw do
 
   resources :menus
 
+  resources :media do
+    collection  do
+      post '/aggiungi_foto_galleria' => "media#aggiungi_foto_galleria"    
+    end
+  end
+
   get 'dashboard/index'
   get 'dashboard/azienda'
+  get 'dashboard/media'
   get 'dashboard/lista_categorie'
   post 'dashboard/inserisci_categoria' => "dashboard#inserisci_categoria"
   delete 'dashboard/cancella_categoria/:id' => "dashboard#cancella_categoria"

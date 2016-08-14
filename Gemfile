@@ -38,7 +38,8 @@ gem 'devise'
 # Use pdfkit to generate PDFs
 gem 'pdfkit'
 
-
+#per allegare file
+gem "paperclip"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

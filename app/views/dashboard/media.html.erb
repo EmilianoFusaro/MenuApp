@@ -1,0 +1,113 @@
+<!-- Variabili Locali Della View Sul Layout -->
+<% provide(:v_titolo, "Media") %>
+<% provide(:v_minides, "Archivio Immagini") %>
+
+<% content_for :script_view do %>
+<script>
+   $(function() {
+     $("li.menu").removeClass("active");
+     $("li.menu.media").addClass("active");
+   });
+</script>
+<% end %>
+<section class="content">
+             <div class="row">
+                 <!-- left column -->
+                 <div class="col-md-6">
+                     <!-- general form elements -->
+                     <div class="box box-primary">
+                         <div class="box-header">
+                             <h3 class="box-title">Dati Azienda</h3>
+                         </div><!-- /.box-header -->
+                         <!-- form start -->
+                         <form role="form">
+                             <div class="box-body">
+
+                               <div class="form-group">
+                                   <label for="input_ragionesociale">Ragione Sociale</label>
+                                   <input type="text" class="form-control" id="ragionesociale" placeholder="Ragione Sociale">
+                               </div>
+
+                               <div class="form-group">
+                                   <label>Indirizzo</label>
+                                   <textarea class="form-control" rows="3" placeholder="Indirizzo ..."></textarea>
+                               </div>
+
+                               <div class="form-group">
+                                   <label for="input_telefono">Telefono</label>
+                                   <input type="number" class="form-control" id="telefono" placeholder="Telefono">
+                               </div>
+
+                               <div class="form-group">
+                                   <label for="input_cellulare">Cellulare</label>
+                                   <input type="number" class="form-control" id="cellulare" placeholder="Cellulare">
+                               </div>
+
+                               <div class="form-group">
+                                   <label for="input_cellulare">Fax</label>
+                                   <input type="number" class="form-control" id="fax" placeholder="Fax">
+                               </div>
+
+                                 <div class="form-group">
+                                     <label for="input_indirizzoemail">Indirizzo Email</label>
+                                     <input type="email" class="form-control" id="email" placeholder="Indirizzo Email">
+                                 </div>
+
+                                 <div class="form-group">
+                                     <label for="input_sitointernet">Sito Internet</label>
+                                     <input type="email" class="form-control" id="email" placeholder="Sito Internet (completo http://)">
+                                 </div>
+
+                                 <div class="form-group">
+                                     <label for="exampleInputFile">Logo Azienda</label>
+                                     <input type="file" id="exampleInputFile">
+                                     <p class="help-block">Anteprima</p>
+                                 </div>
+                                 <div class="checkbox">
+                                     <label>
+                                         <input type="checkbox"> Check me out
+                                     </label>
+                                 </div>
+                             </div><!-- /.box-body -->
+
+                             <div class="box-footer">
+                                 <button type="submit" class="btn btn-primary">Submit</button>
+                             </div>
+                         </form>
+                     </div><!-- /.box -->
+
+
+                 </div><!--/.col (left) -->
+                 <!-- right column -->
+
+             </div>   <!-- /.row -->
+         </section><!-- /.content -->
+
+
+<!-- Sezione Anteprima Foto --->
+<h4 class="page-header">
+    Libreria Media
+    <small>To create a tile we create a solid box and a <code>.bg-*</code> class ( * being the name of the color) to the box.</small>
+</h4>
+<!-- Solid boxes -->
+
+  <% @media.each_slice(4) do |riga| %>
+    <div class="row">
+    <% riga.each do |m| %>
+      <div class="col-lg-3 col-md-6 col-xs-6">
+        <div class="box box-solid">
+          <div class="box-header">
+              <h3 class="box-title"><%= m.descrizione %></h3>
+          </div>
+          <div class="box-body">
+            <%= image_tag m.foto.url(:medium) %>
+          </div>
+        </div>
+     </div>
+    <% end %>
+   </div>
+ <% end %>
+
+
+liliya.maksymnyuk
+emiliano1977

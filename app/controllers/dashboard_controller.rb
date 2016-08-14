@@ -13,6 +13,13 @@ class DashboardController < ApplicationController
   def azienda
   end
 
+  def media
+    #selezione le foto dell'utente loggato
+    @media = Medium.where(user_id: current_user.id)
+    @media ||= Medium.none
+
+  end
+
   def lista_categorie
     #questa query limita il filtro ad un risultato
     #@lista_categorie = Category.find_by(user_id: current_user.id)
