@@ -29,19 +29,40 @@ class MediaController < ApplicationController
   #Aggiunge foto da una chiamata Ajax
 
   def aggiungi_foto_galleria
-    debugger
+    #debugger
     #creo il record da aggiungere
     _record = Hash.new
-    _record = { "descrizione" => '' , "foto" => params[:foto]}
+    # _record = { "descrizione" => '' , "foto" => params[:foto]}
+    _record = { "descrizione" => params[:descrizione] , "foto" => params[:foto]}
     @medium = Medium.new(_record)
     @medium.user_id = current_user.id
+
     respond_to do |format|
      if @medium.save
-       format.html { redirect_to @medium, notice: 'Medium was successfully created.' }
-       format.json { render :show, status: :created, location: @medium }
+       #format.html { redirect_to @medium, notice: 'Medium was successfully created.' }
+       #format.json { render :show, status: :created, location: @medium }
+       #format.json {message: "success" , location: @medium }, status: 200
+       #format.json { render json: @medium, status: :created, location: @medium }
+       #format.json { message: "success" , status: :created , location: @medium }
+       #debugger
+       #@percorso = @medium.foto.url(:medium)
+       #format.json { render json: @percorso, status: :ok } #forza stato 200
+       @foto_salvata = @medium.as_json  #converte activerecord in hash
+       @foto_salvata[:percorso] = @medium.foto.url(:medium)
+       #anche in questo modo  hash = {:item1 => 1}
+       format.json { render json: @foto_salvata, status: :ok } #forza stato 200
+
      else
-       format.html { render :new }
+       #format.html { render :new }
+       #format.json { render json: @medium.errors, status: :unprocessable_entity }
+       #format.json { error: "errore"}, status: 400
        format.json { render json: @medium.errors, status: :unprocessable_entity }
+       #forza risposta negativa
+       #Return a status 404 and an error message in response to an AJAX request, in Rails 3
+       #render nothing: true, status: :bad_request
+       #render nothing: true, status: 400
+       #render text: "This field is required!", status: :bad_request
+       #render text: "This field is required!", status: 400
      end
     end
 
@@ -120,6 +141,18 @@ end
       format.html { redirect_to media_url, notice: 'Medium was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def gallery_filtra
+    # @media = Medium.where(user_id: current_user.id)
+    #if params[:descrizione].strip.size > 0
+    if params[:descrizione] != "XXXX"
+      @media = Medium.where("lower(descrizione) Like lower(?) and user_id=?", "%#{params[:descrizione]}%",current_user.id)
+    else
+      @media = Medium.where(user_id: current_user.id)
+    end
+    @media ||= Medium.none  #se nullo assegno ActiveRecord
+    render 'media/gallery_filtra' , :layout => false
   end
 
   private

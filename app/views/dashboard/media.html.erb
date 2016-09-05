@@ -4,110 +4,351 @@
 
 <% content_for :script_view do %>
 <script>
+
    $(function() {
      $("li.menu").removeClass("active");
      $("li.menu.media").addClass("active");
    });
+
+   $(document).on('change', ':file', function() {
+     var input = $(this),
+     numFiles = input.get(0).files ? input.get(0).files.length : 1,
+     label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+     input.trigger('fileselect', [numFiles, label]);
+
+     <!-- creazione anteprima -->
+     var image = this.files[0]
+     if (numFiles > 0)
+     {
+       var reader = new FileReader();
+       reader.onload = function(file) {
+         var img = new Image();
+         console.log(file);
+         img.src = file.target.result;
+        //  $(img).attr('height','200px');
+         $(img).attr('width','250px');  //$(img) punta alla img creata dinamicamente
+         $('#target').show();
+         $('#target').html(img);
+        //  var appo= $('#target').html();
+         $("#des_salva").show();
+         $("#salva_foto").show();
+         $("#descrizione").show();
+       }
+       reader.readAsDataURL(image);
+     }
+     else {
+       $('#target').html('');
+       $("#des_salva").hide();
+       $("#salva_foto").hide();
+       $("#descrizione").hide();
+     }
+   });
+
+   $(document).ready( function() {
+       $(':file').on('fileselect', function(event, numFiles, label) {
+           console.log(numFiles);
+           console.log(label);
+           $('#nome_file').html(label);
+       });
+   });
+
+
+   //crea un form con il contenuto del file e invia la richiesta
+   $(document).on('click', '#salva_foto', function(event) {
+     event.preventDefault(); //blocca l'azione scatenata dal clic
+     //carica loader spinner image
+     var imgb = new Image();
+     imgb.src =  "/images/squares.gif";
+     $('#target').html(imgb);
+     $('#target').show();
+     //crea forma che contine foto e descrizione
+     var file_data = $("#pictureInput").prop("files")[0];
+     var form_data = new FormData();
+     form_data.append("foto", file_data);
+     form_data.append("descrizione", $('#descrizione').val());
+     //debugger;
+     //disattiva bottoni
+     $('#pictureInput').prop("disabled",true);
+     $('#salva_foto').prop("disabled",true);
+
+     //invia richista ajax passando il form
+     $.ajax({
+      type: "POST",
+      url: "/media/aggiungi_foto_galleria",
+      //dataType: 'script',
+      cache: false,
+      contentType: false,
+      processData: false,
+      data :form_data,
+      // dataType: "json",
+      dataType: 'text',
+      success: function(data) {
+      //debugger;
+      aggiungi_foto_libreria(data);
+      //alert('ok');
+      //riattiva bottoni di invio
+      $('#target').html('');
+      // $('#pictureInput').prop("disabled",false);
+      // $('#btn_aggiungi_img').prop("disabled",true);
+      $("#des_salva").hide();
+      $("#salva_foto").hide();
+      $("#descrizione").val('');
+      $("#descrizione").hide();
+      $('#nome_file').html('');
+      $('#pictureInput').removeAttr('disabled');
+      $('#salva_foto').prop("disabled",false);
+      $('#target').html("<h4><strong>Foto Inserita Correttamente !!</strong></h4>").fadeOut(3000);
+      // $('#target').html("").fadeIn(1);
+      return false;
+      },
+      error: function(data) {
+
+       alert('errore');
+       $('#target').html("<h5>Il Processo Non è Andato a Buon Fine</h5>");
+       $('#pictureInput').removeAttr('disabled');
+       $('#salva_foto').prop("disabled",false);
+       $("#descrizione").val('');
+       //riattiva bottoni di invio
+       //$('#pictureInput').prop("disabled",false);
+       //$('#btn_aggiungi_img').prop("disabled",true);
+       //$('#pictureInput').val('');
+       return false;
+    }
+   });
+   });
+
+   function aggiungi_foto_libreria(data) {
+     //debugger;
+     var obj = jQuery.parseJSON(data);  //trasforma stringa in json
+     //var dataObject = eval('truncate("'+ obj.descrizione +'" , length:27)');  //compila ruby in javascript
+     var descrizione_troncate = jQuery.trim(obj.descrizione).substring(0, 27).trim(this) + "...";
+
+     var nuova_foto= '<div class="col-lg-3 col-md-6 col-xs-6 thumb"> \
+       <h4 class="box-title">&nbsp;'+ descrizione_troncate +'</h4> \
+       <input type="hidden" name="des_estesta" value="'+ obj.descrizione +'" id="des_estesta_'+ obj.id +'> \
+       <div class="box-body"> \
+       <img class="lazy" data-original="'+ obj.percorso +'" src="'+ obj.percorso +'" data-toggle="modal" data-target="#modifica_media" id="fotoid_'+ obj.id +'"> \
+       </div> \
+       </div>';
+      //  $('.row.pull-left').last().after(nuova_foto).html().fadeIn(3000);
+      $('.col-lg-3.col-md-6.col-xs-6.thumb').last().after(nuova_foto).html();
+   };
+
+
+   //Funzione Per Effettuare Ricerche Delle Foto in Base Alla Descrizione
+   $(document).on('click', '#cerca_foto', function(event) {
+     $('#riga_gallery').html('');
+
+     if ($('#cerca').val().trim()!="") {
+       $('#riga_gallery').load('/media/gallery_filtra/'+ $('#cerca').val() ).hide().fadeIn(1000);
+     } else {
+       $('#riga_gallery').load('/media/gallery_filtra/'+ 'XXXX').hide().fadeIn(1000);
+       }
+   });
+
+   //Evento Click Della Foto Apro Pagina Dettaglio
+   $(document).on('click', '[id^=fotoid]', function(event) {
+     event.preventDefault(); //blocca l'azione scatenata da
+     //var appo_foto = this;  //attenzione appo_foto diventa come this (by ref)
+      //in questo modo appo_foto diventa una array di string appo_foto[0]
+     //var appo_foto = $(this);
+     //$('.modal-title').html('Modifica Media: ' + appo_foto[0].id.replace('fotoid_',''));
+     //$('#frm_descrizione_m').val($('#des_estesta_'+ appo_foto[0].id.replace('fotoid_','')).val());
+     //debugger;
+     //$('#foto_corrente').val(this.id.replace('fotoid_','')); //memorizza id Corrente
+     $('#foto_corrente').val(this.id); //memorizza fotoid Corrente
+     //crea una array con tutta la lista di idfoto
+     var listaIdFoto=new Array();
+     $('[id^=fotoid]').each(function() {
+     //console.log(this.id);
+     listaIdFoto.push(this.id);
+     $('#lista_id_foto').val(JSON.stringify(listaIdFoto)); //memorizza lista in hiddenfile
+     });
+     $('.modal-title').html('Modifica Media: ' + this.id.replace('fotoid_',''));
+     $('#frm_descrizione_m').val($('#des_estesta_'+ this.id.replace('fotoid_','')).val());
+     $('#foto_selezionata').html('<img src="'+ this.currentSrc +'" alt="Foto Selezionata" style="width:250px;">');
+
+     //var appo = $(this);
+     //$('#foto_selezionata').html(appo.get(0));
+     //$('#foto_selezionata').html($("#fotoid_39"));
+
+
+     //var span= document.createElement('div');
+     //span.innerHTML = $(this);
+     //$('#foto_selezionata').html(span);
+     //$('#foto_selezionata').html($(this).html());
+     //$('#foto_selezionata').html($(appo_foto[0]));
+     //$('#foto_selezionata').html("$(appo_foto[0])");
+     //$('#foto_selezionata').html('<img class="lazy" data-original="/system/media/fotos/000/000/126/medium/pizza1.jpeg?1472598203" data-toggle="modal" data-target="#modifica_media" id="fotoid_126" src="/system/media/fotos/000/000/126/medium/pizza1.jpeg?1472598203" style="display: block;">');
+     //var frag = document.createDocumentFragment();
+     //frag.appendChild(appo_foto[0]);
+     //var html = frag.innerHTML;
+
+   });
+
+   $(function() {
+      $("img.lazy").lazyload(
+           {
+             effect : "fadeIn",
+             effectspeed: 3000
+           }
+      );
+    });
+
+
+   $( document ).ready(function() {
+     //$(".img_media_xxx").lazyload({effect : "fadeIn"});
+   });
+
+   //Salva Le Modifiche Apportate ALlw Foto
+   $(document).on('click', '#btn_modifica_foto', function(event) {
+     alert("Btn Salva")
+   });
+
+   $(document).on('click', '#btn_indietro', function(event) {
+     event.preventDefault(); //blocca l'azione scatenata da
+     //recupero oggetto array dal campo hidden
+     var listaIdFoto= $('#lista_id_foto').val();
+     listaIdFoto = JSON.parse(listaIdFoto);
+     var indice = listaIdFoto.indexOf($("#foto_corrente").val());
+     //se non arrivo all'inizio scorro all'indietro array di fotoid
+     if (indice > 0 ) {
+         indice = indice - 1;
+         var fotocorrente = $("#" + listaIdFoto[indice])
+         if (fotocorrente[0].currentSrc.match("^http:") != null) {
+           $('#foto_corrente').val(fotocorrente[0].id); //memorizza fotoid Corrente
+           $('.modal-title').html('Modifica Media: ' + fotocorrente[0].id.replace('fotoid_',''));
+           $('#frm_descrizione_m').val($('#des_estesta_'+ fotocorrente[0].id.replace('fotoid_','')).val());
+           $('#foto_selezionata').html('<img src="'+ fotocorrente[0].currentSrc +'" alt="Foto Selezionata" style="width:250px;">');
+         }
+     }
+   });
+
+   $(document).on('click', '#btn_avanti', function(event) {
+     event.preventDefault(); //blocca l'azione scatenata da
+     //recupero oggetto array dal campo hidden
+     var listaIdFoto= $('#lista_id_foto').val();
+     listaIdFoto = JSON.parse(listaIdFoto);
+     var indice = listaIdFoto.indexOf($("#foto_corrente").val());
+     //se non arrivo alla fine scorro in avanti array di fotoid
+     if (indice < listaIdFoto.length-1) {
+         indice = indice + 1;
+         var fotocorrente = $("#" + listaIdFoto[indice])
+         //verifico se ho una foto valida .match("^http:") = inizia .match("http:$") = finisce
+         if (fotocorrente[0].currentSrc.match("^http:") != null) {
+           $('#foto_corrente').val(fotocorrente[0].id); //memorizza fotoid Corrente
+           $('.modal-title').html('Modifica Media: ' + fotocorrente[0].id.replace('fotoid_',''));
+           $('#frm_descrizione_m').val($('#des_estesta_'+ fotocorrente[0].id.replace('fotoid_','')).val());
+           $('#foto_selezionata').html('<img src="'+ fotocorrente[0].currentSrc +'" alt="Foto Selezionata" style="width:250px;">');
+         }
+     }
+   });
+
 </script>
 <% end %>
+
+
 <section class="content">
-             <div class="row">
-                 <!-- left column -->
-                 <div class="col-md-6">
-                     <!-- general form elements -->
-                     <div class="box box-primary">
-                         <div class="box-header">
-                             <h3 class="box-title">Dati Azienda</h3>
-                         </div><!-- /.box-header -->
-                         <!-- form start -->
-                         <form role="form">
-                             <div class="box-body">
-
-                               <div class="form-group">
-                                   <label for="input_ragionesociale">Ragione Sociale</label>
-                                   <input type="text" class="form-control" id="ragionesociale" placeholder="Ragione Sociale">
-                               </div>
-
-                               <div class="form-group">
-                                   <label>Indirizzo</label>
-                                   <textarea class="form-control" rows="3" placeholder="Indirizzo ..."></textarea>
-                               </div>
-
-                               <div class="form-group">
-                                   <label for="input_telefono">Telefono</label>
-                                   <input type="number" class="form-control" id="telefono" placeholder="Telefono">
-                               </div>
-
-                               <div class="form-group">
-                                   <label for="input_cellulare">Cellulare</label>
-                                   <input type="number" class="form-control" id="cellulare" placeholder="Cellulare">
-                               </div>
-
-                               <div class="form-group">
-                                   <label for="input_cellulare">Fax</label>
-                                   <input type="number" class="form-control" id="fax" placeholder="Fax">
-                               </div>
-
-                                 <div class="form-group">
-                                     <label for="input_indirizzoemail">Indirizzo Email</label>
-                                     <input type="email" class="form-control" id="email" placeholder="Indirizzo Email">
-                                 </div>
-
-                                 <div class="form-group">
-                                     <label for="input_sitointernet">Sito Internet</label>
-                                     <input type="email" class="form-control" id="email" placeholder="Sito Internet (completo http://)">
-                                 </div>
-
-                                 <div class="form-group">
-                                     <label for="exampleInputFile">Logo Azienda</label>
-                                     <input type="file" id="exampleInputFile">
-                                     <p class="help-block">Anteprima</p>
-                                 </div>
-                                 <div class="checkbox">
-                                     <label>
-                                         <input type="checkbox"> Check me out
-                                     </label>
-                                 </div>
-                             </div><!-- /.box-body -->
-
-                             <div class="box-footer">
-                                 <button type="submit" class="btn btn-primary">Submit</button>
-                             </div>
-                         </form>
-                     </div><!-- /.box -->
-
-
-                 </div><!--/.col (left) -->
-                 <!-- right column -->
-
-             </div>   <!-- /.row -->
-         </section><!-- /.content -->
-
 
 <!-- Sezione Anteprima Foto --->
 <h4 class="page-header">
-    Libreria Media
-    <small>To create a tile we create a solid box and a <code>.bg-*</code> class ( * being the name of the color) to the box.</small>
+    <!-- Libreria Media  &nbsp;  <button type="submit" class="btn btn-primary">Aggiungi Nuovo</button> -->
+
+    <!-- <label class="btn btn-default btn-file">
+        Browse <input type="file" style="display: none;" multiple>
+    </label> -->
+    <small>Scegli L'Immagine Che Vorresti Aggiunger Nella Libreria Media</small>
+    <br>
+    <span class="btn btn-primary btn-file">
+    Scegli ... <input type="file" id="pictureInput" accept=".png,.jpg,.gif">
+    </span> &nbsp;
+    <span id="nome_file"></span>
+
+    <br><br>
+
+    <div id="target">  <!-- continete anteprima e loader -->
+    </div>
+    <br>
+    <input type="text" class="form-control" id="descrizione" placeholder="Descrizione ..." style="width:350px;display:none;" maxlength="50">
+
+    <br>
+    <small id="des_salva" style="display:none;">Clicca Su Salva Per Aggiungere L'immagine Nella Libreria Media</small>
+    <br>
+    <button type="submit" id="salva_foto" class="btn btn-primary" style="width:120px;height:35px;display:none;">Salva</button>
+
 </h4>
+
+<!-- <div class="form-group pull_left"> -->
+    <input type="text" class="form-control pull-left" id="cerca" placeholder="Cerca ..." style="width:200px;" maxlength="50">
+    <button type="submit" id="cerca_foto" class="btn btn-primary pull-left" style="width:120px;height:35px;">Cerca</button>
+<!-- </div> -->
+
+<br><br><hr>
 <!-- Solid boxes -->
 
+<div class="row pull-left" id="riga_gallery">
   <% @media.each_slice(4) do |riga| %>
-    <div class="row">
+    <!-- <div class="row pull-left"> -->
     <% riga.each do |m| %>
-      <div class="col-lg-3 col-md-6 col-xs-6">
-        <div class="box box-solid">
-          <div class="box-header">
-              <h3 class="box-title"><%= m.descrizione %></h3>
+      <div class="col-lg-3 col-md-6 col-xs-6 thumb">
+        <!-- <div class="box box-solid"> -->
+          <!-- <div class="box-header"> -->
+              <h4 class="box-title">&nbsp;<%= truncate(m.descrizione , length:27) %></h4>
+              <%#= hidden_field(:object, :field, :value => m.descrizione ,:id=>"des_estesta_#{m.id}") %>
+              <%#= hidden_field_tag(:des_estesa, value:m.descrizione ,id:"des_estesta_#{m.id}") %>
+              <input type="hidden" name="des_estesta" value="<%= m.descrizione %>" id="<%="des_estesta_#{m.id}"%>">
+          <!-- </div> -->
+          <div class="box-body" id="cazzo-<%= m.id %>">
+            <!-- <a href="#" data-toggle="modal" data-target="#modifica_media" id="fotoid_h<%#= m.id %>"> -->
+            <%#= image_tag m.foto.url(:medium) ,class:"lazy img_media_xxx" ,data-original:image_tag m.foto.url(:medium) %>
+            <img class="lazy" data-original="<%= m.foto.url(:medium) %>" data-toggle="modal" data-target="#modifica_media" id="fotoid_<%= m.id %>">
+            <!-- </a> -->
           </div>
-          <div class="box-body">
-            <%= image_tag m.foto.url(:medium) %>
-          </div>
-        </div>
+        <!-- </div> -->
      </div>
     <% end %>
-   </div>
+   <!-- </div> -->
  <% end %>
+ </div>
+
+</section><!-- /.content -->
+
+<!-- Modal Modifica Categoria (Html Messo Fuori Dalla Sessione)-->
+<div class="modal fade" id="modifica_media" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+        <h4 class="modal-title" id="myModalLabel2" style="display:inline-block;float:none;margin-right:55%;">Modifica Media</h4>
+        <!-- <i class="fa fa-arrow-left" style="align:left;height:50px;"></i> -->
+
+        <button type="button" class="btn btn-default" aria-label="Left Align" id="btn_indietro">
+        <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+        </button>
+
+        <button type="button" class="btn btn-default" aria-label="Left Align" id="btn_avanti">
+        <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+        </button>
 
 
-liliya.maksymnyuk
-emiliano1977
+      </div>
+      <div class="modal-body">
+        <div hidden id="foto_corrente"></div>
+        <div hidden id="lista_id_foto"></div>
+        <label for="usr">Foto Selezionata:</label>
+        <div id="foto_selezionata"></div>
+        <br>
+        <label for="usr">Descrizione:</label>
+        <input type="text" class="form-control" style="font-weight:bold;" id="frm_descrizione_m" maxlength="50">
+      </div>
+      <div id="frm_nascosto_id" style="display:none;"></div>
+      <div class="modal-footer">
+        <!-- togliere data-dismiss="modal" per non chiudere il form -->
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id="btn_elimina_foto">Elimina</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_chiudi_foto">Chiudi</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="btn_modifica_foto">Salva</button>
+      </div>
+    </div>
+  </div>
+</div>

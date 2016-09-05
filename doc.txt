@@ -252,6 +252,34 @@ http://www.dropzonejs.com/
 http://stackoverflow.com/questions/2943065/how-to-get-utc-timestamp-in-ruby
 
 
+richiesta ajax processata lato server ma torna errore javascript
+http://stackoverflow.com/questions/2233553/data-inserted-successful-but-jquery-still-returning-error
+http://stackoverflow.com/questions/9362910/rails-warning-cant-verify-csrf-token-authenticity-for-json-devise-requests
+http://stackoverflow.com/questions/1349118/jquery-ajax-post-results-in-500-internal-server-error
+
+bootstrap allineare destra sinistra
+http://stackoverflow.com/questions/14809313/twitter-bootstrap-float-div-right
+
+Ruby funzione per troncare stringa con carattere di interruzione
+http://apidock.com/rails/ActionView/Helpers/TextHelper/truncate
+http://stackoverflow.com/questions/4637942/how-can-i-truncate-a-string-in-jquery  (anche jquery)
+
+compila ruby in script javascript
+http://stackoverflow.com/questions/10075126/how-can-i-use-javascript-to-parse-ruby-json-string
+
+jquery infinity scroll
+http://jscroll.com/
+https://www.sitepoint.com/jquery-infinite-scrolling-demos/
+http://www.pandao.eu/items/?item=LazyLoader
+http://www.jqueryrain.com/demo/jquery-lazy-load/
+https://codepen.io/Afiq/pen/IoFkz
+http://miromannino.github.io/Justified-Gallery/endless-scroll/
+https://github.com/miromannino/Justified-Gallery
+http://www.infinite-scroll.com/infinite-scroll-jquery-plugin/
+http://stackoverflow.com/questions/2171889/jquery-infinite-scrolling-lazy-loading
+http://www.appelsiini.net/projects/lazyload  *usato
+https://github.com/tuupola/jquery_lazyload
+http://stackoverflow.com/questions/4022826/lazy-load-lazier-load-control-fade-speed
 
 
 per avviare rails da iphone:

@@ -4,7 +4,8 @@ Rails.application.routes.draw do
 
   resources :media do
     collection  do
-      post '/aggiungi_foto_galleria' => "media#aggiungi_foto_galleria"    
+      post '/aggiungi_foto_galleria' => "media#aggiungi_foto_galleria"
+      get '/gallery_filtra/:descrizione' , to: 'media#gallery_filtra'
     end
   end
 

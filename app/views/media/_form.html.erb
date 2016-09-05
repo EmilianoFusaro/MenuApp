@@ -62,6 +62,7 @@ $(function() {
       var img = new Image();
       console.log(file);
       img.src = file.target.result;
+      //console.log(img.src + "nome");
       $('#target').html(img);
     }
   reader.readAsDataURL(image);

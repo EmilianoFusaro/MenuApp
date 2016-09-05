@@ -14,7 +14,7 @@
   <tbody>
     <% @media.each do |m| %>
       <tr>
-        <%= image_tag m.foto.url %>
+        <%= image_tag m.foto.url(:medium) %>
         <td><%= link_to 'Show', m %></td>
         <td><%= link_to 'Edit', edit_medium_path(m) %></td>
         <td><%= link_to 'Destroy', m, method: :delete, data: { confirm: 'Are you sure?' } %></td>

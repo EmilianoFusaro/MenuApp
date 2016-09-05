@@ -11,6 +11,8 @@
         <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <!-- Ionicons -->
         <link href="/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+        <!-- Css Personalizzato -->
+        <link href="/css/personalizza.css" rel="stylesheet" type="text/css" />
         <!-- Morris chart -->
         <!-- <link href="css/morris/morris.css" rel="stylesheet" type="text/css" /> -->
         <!-- jvectormap -->
@@ -118,7 +120,7 @@
 
                         <li class="menu media">
                           <%= link_to dashboard_media_path ,:class=>"menu" do %>
-                          <i class="fa fa-camera"></i> <span>Media</span>
+                          <i class="fa fa-camera"></i> <span>Libreria Media</span>
                           <% end %>
                         </li>
 
@@ -178,6 +180,13 @@
         <%= javascript_include_tag 'gestione_prodotti', media: 'all' %>
         <!-- <script src="/js/jquery.min.js"></script> -->
         <script src="/js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>   <!--RIPRISTINARE-->
+
+        <!-- <script src="/js/jquery.jscroll.min.js" type="text/javascript"></script> -->   <!--JSCROLL-->
+
+        <!-- <script src="/js/jquery.lazyload.js" type="text/javascript"></script> -->  <!--JSCROLL-->
+
+        <script src="/js/jquery.lazyload.min.js" type="text/javascript"></script>   <!--JSCROLL-->
+
         <!-- Bootstrap -->
         <script src="/js/bootstrap.min.js" type="text/javascript"></script> <!--RIPRISTINARE-->
         <!-- Morris.js charts -->
@@ -212,6 +221,7 @@
         //Aggiunto In Script Pagina Dinamicamente per ogni view
         </script>
 
+        <!-- script generato nella view e riportato nel layout principale -->
         <%= yield :script_view %>
 
     </body>
