@@ -2,7 +2,7 @@
   <%# riga.each do |m| %>
     <!-- <div class="col-lg-3 col-md-6 col-xs-6 thumb"> -->
             <!-- <h4 class="box-title">&nbsp;<%#= truncate(m.descrizione , length:27) %></h4> -->
-            <!-- <input type="hidden" name="des_estesta" value="<%#= m.descrizione %>" id="<%#="des_estesta_#{m.id}"%>"> -->
+            <!-- <input type="hidden" name="des_estesta" value="<%#= m.descrizione %>" id="<%#="des_estesa_#{m.id}"%>"> -->
         <!-- <div class="box-body"> -->
           <!-- <%#= image_tag m.foto.url(:medium) ,class:"img_media_xxx" %> -->
         <!-- </div> -->
@@ -13,9 +13,9 @@
 
   <% @media.each_slice(4) do |riga| %>
     <% riga.each do |m| %>
-      <div class="col-lg-3 col-md-6 col-xs-6 thumb">
-              <h4 class="box-title">&nbsp;<%= truncate(m.descrizione , length:27) %></h4>
-              <input type="hidden" name="des_estesta" value="<%= m.descrizione %>" id="<%="des_estesta_#{m.id}"%>">
+      <div class="col-lg-3 col-md-6 col-xs-6 thumb" id="<%="div_foto_#{m.id}"%>">
+              <h4 class="box-title" id="<%="des_breve_#{m.id}"%> >&nbsp;<%= truncate(m.descrizione , length:27) %></h4>
+              <input type="hidden" name="des_estesta" value="<%= m.descrizione %>" id="<%="des_estesa_#{m.id}"%>">
           <div class="box-body">
             <img class="lazy" data-original="<%= m.foto.url(:medium) %>" data-toggle="modal" data-target="#modifica_media" id="fotoid_<%= m.id %>">
             <%#= image_tag m.foto.url(:medium) ,class:"lazy" %>

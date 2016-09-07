@@ -120,12 +120,12 @@
    function aggiungi_foto_libreria(data) {
      //debugger;
      var obj = jQuery.parseJSON(data);  //trasforma stringa in json
-     //var dataObject = eval('truncate("'+ obj.descrizione +'" , length:27)');  //compila ruby in javascript
-     var descrizione_troncate = jQuery.trim(obj.descrizione).substring(0, 27).trim(this) + "...";
+     //var dataObject = eval('truncate("'+ obj.descrizione +'" , length:20)');  //compila ruby in javascript
+     var descrizione_troncate = jQuery.trim(obj.descrizione).substring(0, 20).trim(this) + "...";
 
-     var nuova_foto= '<div class="col-lg-3 col-md-6 col-xs-6 thumb"> \
-       <h4 class="box-title">&nbsp;'+ descrizione_troncate +'</h4> \
-       <input type="hidden" name="des_estesta" value="'+ obj.descrizione +'" id="des_estesta_'+ obj.id +'> \
+     var nuova_foto= '<div class="col-lg-3 col-md-6 col-xs-6 thumb" id="div_foto_'+ obj.id +'"> \
+       <h4 class="box-title" id="des_breve_'+ obj.id +'">&nbsp;'+ descrizione_troncate +'</h4> \
+       <input type="hidden" name="des_estesta" value="'+ obj.descrizione +'" id="des_estesa_'+ obj.id +'"> \
        <div class="box-body"> \
        <img class="lazy" data-original="'+ obj.percorso +'" src="'+ obj.percorso +'" data-toggle="modal" data-target="#modifica_media" id="fotoid_'+ obj.id +'"> \
        </div> \
@@ -153,7 +153,7 @@
       //in questo modo appo_foto diventa una array di string appo_foto[0]
      //var appo_foto = $(this);
      //$('.modal-title').html('Modifica Media: ' + appo_foto[0].id.replace('fotoid_',''));
-     //$('#frm_descrizione_m').val($('#des_estesta_'+ appo_foto[0].id.replace('fotoid_','')).val());
+     //$('#frm_descrizione_m').val($('#des_estesa_'+ appo_foto[0].id.replace('fotoid_','')).val());
      //debugger;
      //$('#foto_corrente').val(this.id.replace('fotoid_','')); //memorizza id Corrente
      $('#foto_corrente').val(this.id); //memorizza fotoid Corrente
@@ -165,7 +165,7 @@
      $('#lista_id_foto').val(JSON.stringify(listaIdFoto)); //memorizza lista in hiddenfile
      });
      $('.modal-title').html('Modifica Media: ' + this.id.replace('fotoid_',''));
-     $('#frm_descrizione_m').val($('#des_estesta_'+ this.id.replace('fotoid_','')).val());
+     $('#frm_descrizione_m').val($('#des_estesa_'+ this.id.replace('fotoid_','')).val());
      $('#foto_selezionata').html('<img src="'+ this.currentSrc +'" alt="Foto Selezionata" style="width:250px;">');
 
      //var appo = $(this);
@@ -202,8 +202,47 @@
 
    //Salva Le Modifiche Apportate ALlw Foto
    $(document).on('click', '#btn_modifica_foto', function(event) {
-     alert("Btn Salva")
+     //debugger;
+     var indice = $('#foto_corrente').val().replace('fotoid_','');
+     $.ajax({
+      type: "PUT",
+      url: "/media/modifica_media/" + indice,
+      data: {
+        descrizione: $('#frm_descrizione_m').val()
+      },
+      success: function(data) {  //ritorna oggetto json senza array
+      bootbox.alert("Descrizione Modificata!");
+      var descrizione_troncata = jQuery.trim($('#frm_descrizione_m').val()).substring(0, 20).trim(this) + "...";
+      $("#des_breve_"+ indice).text(descrizione_troncata);  //Emix
+      $("#des_estesa_" + indice).text($('#frm_descrizione_m').val());
+      return false;
+      },
+      error: function(data) {
+      bootbox.alert("Attenzione! problemi durante il salvataggio , riprova");
+      return false;
+     }
    });
+   });
+
+
+   $(document).on('click', '#btn_elimina_foto', function(event) {
+     //debugger;
+     var indice = $('#foto_corrente').val().replace('fotoid_','');
+     $.ajax({
+      type: "DELETE",
+      url: "/media/cancella_media/" + indice,
+      success: function() {  //ritorna oggetto json senza array
+        bootbox.alert("Foto Cancellata!");
+        $('#div_foto_' + indice).fadeOut(600, function(){$(this).remove()});
+        return false;
+        },
+      error: function(data) {
+        bootbox.alert("Attenzione! problemi durante l'eliminazione , riprova");
+        return false;
+      }
+    });
+   });
+
 
    $(document).on('click', '#btn_indietro', function(event) {
      event.preventDefault(); //blocca l'azione scatenata da
@@ -218,7 +257,7 @@
          if (fotocorrente[0].currentSrc.match("^http:") != null) {
            $('#foto_corrente').val(fotocorrente[0].id); //memorizza fotoid Corrente
            $('.modal-title').html('Modifica Media: ' + fotocorrente[0].id.replace('fotoid_',''));
-           $('#frm_descrizione_m').val($('#des_estesta_'+ fotocorrente[0].id.replace('fotoid_','')).val());
+           $('#frm_descrizione_m').val($('#des_estesa_'+ fotocorrente[0].id.replace('fotoid_','')).val());
            $('#foto_selezionata').html('<img src="'+ fotocorrente[0].currentSrc +'" alt="Foto Selezionata" style="width:250px;">');
          }
      }
@@ -238,7 +277,7 @@
          if (fotocorrente[0].currentSrc.match("^http:") != null) {
            $('#foto_corrente').val(fotocorrente[0].id); //memorizza fotoid Corrente
            $('.modal-title').html('Modifica Media: ' + fotocorrente[0].id.replace('fotoid_',''));
-           $('#frm_descrizione_m').val($('#des_estesta_'+ fotocorrente[0].id.replace('fotoid_','')).val());
+           $('#frm_descrizione_m').val($('#des_estesa_'+ fotocorrente[0].id.replace('fotoid_','')).val());
            $('#foto_selezionata').html('<img src="'+ fotocorrente[0].currentSrc +'" alt="Foto Selezionata" style="width:250px;">');
          }
      }
@@ -290,13 +329,13 @@
   <% @media.each_slice(4) do |riga| %>
     <!-- <div class="row pull-left"> -->
     <% riga.each do |m| %>
-      <div class="col-lg-3 col-md-6 col-xs-6 thumb">
+      <div class="col-lg-3 col-md-6 col-xs-6 thumb" id="<%="div_foto_#{m.id}"%>">
         <!-- <div class="box box-solid"> -->
           <!-- <div class="box-header"> -->
-              <h4 class="box-title">&nbsp;<%= truncate(m.descrizione , length:27) %></h4>
-              <%#= hidden_field(:object, :field, :value => m.descrizione ,:id=>"des_estesta_#{m.id}") %>
-              <%#= hidden_field_tag(:des_estesa, value:m.descrizione ,id:"des_estesta_#{m.id}") %>
-              <input type="hidden" name="des_estesta" value="<%= m.descrizione %>" id="<%="des_estesta_#{m.id}"%>">
+              <h4 class="box-title" id="<%="des_breve_#{m.id}"%>">&nbsp;<%= truncate(m.descrizione , length:20) %></h4>
+              <%#= hidden_field(:object, :field, :value => m.descrizione ,:id=>"des_estesa_#{m.id}") %>
+              <%#= hidden_field_tag(:des_estesa, value:m.descrizione ,id:"des_estesa_#{m.id}") %>
+              <input type="hidden" name="des_estesta" value="<%= m.descrizione %>" id="<%="des_estesa_#{m.id}"%>">
           <!-- </div> -->
           <div class="box-body" id="cazzo-<%= m.id %>">
             <!-- <a href="#" data-toggle="modal" data-target="#modifica_media" id="fotoid_h<%#= m.id %>"> -->
@@ -346,8 +385,8 @@
       <div class="modal-footer">
         <!-- togliere data-dismiss="modal" per non chiudere il form -->
         <button type="button" class="btn btn-danger" data-dismiss="modal" id="btn_elimina_foto">Elimina</button>
+        <button type="button" class="btn btn-primary" data-dismiss="no-modal" id="btn_modifica_foto">Salva</button>
         <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_chiudi_foto">Chiudi</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" id="btn_modifica_foto">Salva</button>
       </div>
     </div>
   </div>

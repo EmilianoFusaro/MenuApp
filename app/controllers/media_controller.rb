@@ -10,6 +10,8 @@ class MediaController < ApplicationController
     #@media = Medium.find_by_user_id(current_user.id)   #attenzione find non genera una collection e filtra un solo valore
     @media = Medium.where(user_id: current_user.id)
     @media ||= Medium.none  #se nullo assegno ActiveRecord
+    #risponde in formato json web api
+    #render json:@media , status: :ok
   end
 
   # GET /media/1
@@ -141,6 +143,28 @@ end
       format.html { redirect_to media_url, notice: 'Medium was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def modifica_media
+    #puts params
+    #debugger
+    @media = Medium.find(params[:id])
+    @media.descrizione=params[:descrizione]
+    @media.save
+    respond_to do |format|
+     format.json { head :no_content }
+    end
+  end
+
+
+  def cancella_media
+    @media = Medium.find(params[:id])
+    @media.destroy
+    #respond_to do |format|
+    #   format.json { head :no_content }
+    #   #format.json { render :json => 'ok' }
+    #end
+    head :no_content
   end
 
   def gallery_filtra

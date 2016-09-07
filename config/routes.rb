@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     collection  do
       post '/aggiungi_foto_galleria' => "media#aggiungi_foto_galleria"
       get '/gallery_filtra/:descrizione' , to: 'media#gallery_filtra'
+      put '/modifica_media/:id' => "media#modifica_media"
+      delete '/cancella_media/:id' => "media#cancella_media"
     end
   end
 
