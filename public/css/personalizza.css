@@ -63,5 +63,74 @@
   }
 
 
+  .foto_selct
+  {
+    display: inline-block;
+    overflow: hidden;
+    width: 180px;
+    height: 130px;
+    background-position: center center;
+    background-size: cover;
+  }
+    .thumb {
+        display: block;
+        overflow: hidden;
+        width: 180px;
+        height: 130px;
+    }
+
+    .thumb img {
+        display: block;
+        -ms-interpolation-mode: bicubic;
+    }
+
+
 .img_media
 {}
+
+/*@media screen and (min-width: 768px) {
+  #scegli_foto .modal-dialog  {width:900px;height:450px;}
+}*/
+
+/*@media screen and (min-height: 350px) {
+  #scegli_foto .modal-dialog  {height:850px;}
+}*/
+
+/*#scegli_foto {
+    max-height: 620px;
+    overflow-y: auto;
+}*/
+
+/*#scegli_foto {
+    margin-top: -45%;
+    max-height: 90%;
+    overflow-y: auto;
+}*/
+
+
+
+/*.modal{
+    display: block !important;
+}*/
+
+/* Important part */
+/*.modal-dialog{
+    overflow-y: initial !important
+}
+.modal-body{
+    height: 250px;
+    overflow-y: auto;
+}*/
+
+
+/*#myModal .modal-content
+{
+  height:200px;
+  overflow:auto;
+}*/
+
+
+.modal-body {
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
+}

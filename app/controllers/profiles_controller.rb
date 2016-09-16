@@ -3,7 +3,7 @@ class ProfilesController < ApplicationController
   #http_basic_authenticate_with :name => "admin" , :password => "340693" #eseguita su ogni action
   #before_action :check_user
 
-  before_action :check_superuser ,except: [:detail,:payment,:pickup]
+  before_action :check_superuser ,except: [:detail,:payment,:pickup,:aggiungi_dati_azienda]
   #before_action :check_superuser ,only: [:show, :edit, :update, :destroy ,:index]
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
 
@@ -93,6 +93,25 @@ class ProfilesController < ApplicationController
       else
         render :edit
       end
+  end
+
+
+  def aggiungi_dati_azienda
+    puts params
+    @profile = Profile.find_by_user_id(current_user.id)
+    @profile.ragionesociale=params[:ragionesociale]
+    @profile.indirizzo=params[:indirizzo]
+    @profile.telefono=params[:telefono]
+    @profile.cellulare=params[:cellulare]
+    @profile.fax=params[:fax]
+    @profile.email=params[:email]
+    @profile.sitointernet=params[:sitointernet]
+    @profile.logo=params[:logo]
+    @profile.save
+    respond_to do |format|
+     format.json { head :no_content }
+    end
+    #debugger;
   end
 
   # DELETE /profiles/1

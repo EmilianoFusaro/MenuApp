@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     collection  do
       post '/aggiungi_foto_galleria' => "media#aggiungi_foto_galleria"
       get '/gallery_filtra/:descrizione' , to: 'media#gallery_filtra'
+      get '/gallery_scegli/:descrizione' , to: 'media#gallery_scegli'
       put '/modifica_media/:id' => "media#modifica_media"
       delete '/cancella_media/:id' => "media#cancella_media"
     end
@@ -19,7 +20,6 @@ Rails.application.routes.draw do
   delete 'dashboard/cancella_categoria/:id' => "dashboard#cancella_categoria"
   put 'dashboard/aggiorna_ordine_categoria' => "dashboard#aggiorna_ordine_categoria"
   put 'dashboard/modifica_categoria/:id' => "dashboard#modifica_categoria"
-
   get 'dashboard/stampa'
 
   resources :categories do
@@ -45,6 +45,7 @@ Rails.application.routes.draw do
       #post '/compra/:slug', to: 'profiles#payment' , as: :compra
       post '/compra/:pacchetto&:periodo', to: 'profiles#payment' , as: :compra
       get '/pickup/:guid', to: 'profiles#pickup', as: :pickup
+      put '/aggiungi_dati_azienda' => "profiles#aggiungi_dati_azienda"
     end
   end
 

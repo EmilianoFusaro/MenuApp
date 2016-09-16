@@ -282,6 +282,173 @@ https://github.com/tuupola/jquery_lazyload
 http://stackoverflow.com/questions/4022826/lazy-load-lazier-load-control-fade-speed
 
 
+aggiungere campi multipli ad una migrations
+http://joshfrankel.me/blog/2016/tips-and-tricks/add-multiple-columns-to-a-ruby-on-rails-migration/
+
+
+personalizzare form_for
+http://stackoverflow.com/questions/5320414/form-for-but-to-post-to-a-different-action
+
+
+serializzare form
+http://stackoverflow.com/questions/2755802/jquery-ajaxform-returning-json-file
+http://stackoverflow.com/questions/30680562/send-form-data-with-jquery-ajax-json
+https://forum.jquery.com/topic/using-serialize-on-a-dynamically-loaded-form
+http://stackoverflow.com/questions/29523950/jquery-serialize-doesnt-work-on-dynamically-generated-form
+https://forum.jquery.com/topic/serialize-dynamic-form
+http://stackoverflow.com/questions/8820964/jquery-serialize-does-not-work-on-dynamically-loaded-form
+http://stackoverflow.com/questions/30680562/send-form-data-with-jquery-ajax-json
+http://stackoverflow.com/questions/2755802/jquery-ajaxform-returning-json-file
+
+
+sovrascrivere override metodo create Devise
+http://stackoverflow.com/questions/30958120/undefined-method-after-create-for-controllerclass
+http://stackoverflow.com/questions/6658351/devise-after-create-hook
+http://stackoverflow.com/questions/4702806/how-to-add-callback-after-registration-with-rails3-and-devise
+http://stackoverflow.com/questions/18394001/ruby-on-rails-custom-devise-registration-controller-asking-for-create-action
+http://stackoverflow.com/questions/3546289/override-devise-registrations-controller
+https://gist.github.com/kinopyo/2343176
+
+
+registration email confirmation asp.net
+http://www.asp.net/mvc/overview/security/create-an-aspnet-mvc-5-web-app-with-email-confirmation-and-password-reset
+
+
+reindirizza su 404
+http://stackoverflow.com/questions/30459915/redirect-to-404-when-rails-app-crash
+http://stackoverflow.com/questions/34889043/redirect-404-422-500-ruby-on-rails
+
+
+stripe carte di credito TEST
+https://stripe.com/docs/testing
+
+
+lazyload with modal
+https://github.com/ressio/lazy-load-xt/issues/16
+http://stackoverflow.com/questions/20385831/bootstrap-modal-lazy-load-images
+https://blog.krishan711.com/lazy-loading-html-modals
+http://qnimate.com/lazy-loading-images-and-its-seo-impact/
+https://blog.krishan711.com/lazy-loading-html-modals
+http://dinbror.dk/blog/blazy/
+https://gist.github.com/felipem775/6376683
+https://forum.pagelines.com/topic/35420-fire-lazyload-after-modal-loaded/
+http://bulkan-evcimen.com/lazy_load_bootstrap_carousel_images.html
+https://github.com/tuupola/jquery_lazyload/issues/188
+http://luis-almeida.github.io/unveil/
+https://github.com/luis-almeida/unveil
+http://stackoverflow.com/questions/13535597/lazyload-images-not-appearing-until-after-a-scroll
+https://github.com/tuupola/jquery_lazyload/issues/188
+http://stackoverflow.com/questions/18953011/how-to-make-a-div-vertically-scrollable
+http://stackoverflow.com/questions/2566290/html-how-to-create-a-div-with-only-vertical-scroll-bars-for-long-paragraphs
+http://www.bootply.com/McToLlBY3N
+http://www.bootply.com/103704#
+http://www.bootply.com/KG2dfTh0JG
+http://www.bootply.com/KG2dfTh0JG
+https://coderwall.com/p/6qaeya/lazy-carousel-in-bootstrap
+http://www.unknownerror.org/opensource/maxwells/bootstrap-tags/q/stackoverflow/25651243/bootstrap-tags-input-not-working-with-lazyload
+http://www.bootply.com/REg8JO4zRQ
+http://blog.chewxy.com/2011/10/30/dynamically-loading-content-in-twitter-bootstrap-tabs/
+http://jasonlawton.com/blog/dynamically-load-content-in-twitter-bootstrap-modal-boxes/
+http://jsfiddle.net/Qz6rA/
+http://jsfiddle.net/Qz6rA/
+http://stackoverflow.com/questions/20385831/bootstrap-modal-lazy-load-images #questo esempio funziona
+http://stackoverflow.com/questions/13971151/jquery-lazyload-do-not-load-images-until-scroll
+http://stackoverflow.com/questions/21888147/images-not-showing-until-scroll-with-lazy-load-plugin
+http://dinbror.dk/blazy/?ref=blog  (libreria alternativa)
+
+
+personalizzare bootstrap modal
+https://coolestguidesontheplanet.com/bootstrap/modal.php#myModal2
+http://stackoverflow.com/questions/9899676/twitter-bootstrap-scrollable-modal
+http://stackoverflow.com/questions/26807524/twitter-bootstrap-3-modal-with-scrollable-body
+http://jsfiddle.net/jasny/zclse/
+http://www.bootply.com/88983#
+http://fiddle.jshell.net/infinito84/23AYq/
+http://stackoverflow.com/questions/25874001/how-to-put-scrollbar-only-for-modal-body-in-bootstrap-modal-dialog
+http://www.bootply.com/T0yF2ZNTUd
+
+
+gallery aggiuntive x bootstrap
+https://mobirise.com/bootstrap-gallery/
+https://www.template.net/web-templates/bootstrap/bootstrap-gallery-template/
+https://codepen.io/webcane/pen/lHGJf
+http://alt-web.com/TUTORIALS/?id=bootstrap_modal_carousel_gallery
+https://rvera.github.io/image-picker/
+http://michaelsoriano.com/create-a-responsive-photo-gallery-with-bootstrap-framework/
+http://www.jqueryscript.net/gallery/Responsive-Photo-Gallery-with-jQuery-and-Bootstrap-3.html
+http://www.w3schools.com/howto/howto_css_modal_images.asp
+http://stackoverflow.com/questions/33838977/how-to-use-bootstrap-modal-on-multiple-images-on-same-page-on-image-click
+http://ashleydw.github.io/lightbox/
+https://rvera.github.io/image-picker/
+http://bootsnipp.com/tags/images
+https://github.com/michaelsoriano/bootstrap-photo-gallery
+http://bootsnipp.com/tags/images
+https://rvera.github.io/image-picker/
+https://blueimp.github.io/Bootstrap-Image-Gallery/
+http://www.bootply.com/Pej8ET6iEo
+http://jschr.github.io/bootstrap-modal/
+https://github.com/BlackrockDigital/startbootstrap-thumbnail-gallery
+http://untame.net/2013/02/twitter-bootstrap-build-a-responsive-lightbox-gallery/
+http://www.bootply.com/d08bOti6Zs
+https://startbootstrap.com/template-overviews/thumbnail-gallery/
+http://www.bootply.com/Pej8ET6iEo
+https://blackrockdigital.github.io/startbootstrap-thumbnail-gallery/#
+https://startbootstrap.com/template-overviews/thumbnail-gallery/
+http://www.bootply.com/d08bOti6Zs
+http://www.w3schools.com/tags/tag_img.asp
+https://miketricking.github.io/dist/
+http://sevenx.de/demo/bootstrap/thumbnail-hover-caption.html
+http://sevenx.de/blog/tutorial-bootstrap-thumbnail-hover-caption-mit-tooltip/
+http://bestwebegg.com/css3/free-bootstrap-image-hover-effects-using-css3/
+https://rvera.github.io/image-picker/
+
+bootstrap modal esempi
+http://jschr.github.io/bootstrap-modal/
+
+form ajax asp.net
+https://msdn.microsoft.com/it-it/library/dd381533(v=vs.100).aspx
+http://www.asp.net/web-api/overview/getting-started-with-aspnet-web-api/tutorial-your-first-web-api
+
+ajax differenza tra done e success
+http://stackoverflow.com/questions/8847829/what-is-difference-between-success-and-done-method-of-ajax
+
+activerecord seleziona alcune colonne
+http://stackoverflow.com/questions/7911014/activerecord-find-and-only-return-selected-columns
+
+restituire collezione json da paperclip con percorso file
+http://stackoverflow.com/questions/5588185/how-can-i-get-url-for-paperclip-image-in-to-json
+
+restituire chiamata in una variabile
+http://stackoverflow.com/questions/6203502/jquery-load-to-variable
+http://stackoverflow.com/questions/17203173/how-can-i-get-jquery-get-to-return-json-data
+http://api.jquery.com/jquery.getjson/
+
+array javascript
+http://stackoverflow.com/questions/8518885/how-to-create-pagination-like-behavior-for-an-array-in-javascript
+http://stackoverflow.com/questions/4090491/first-element-in-array-jquery
+http://www.w3schools.com/jsref/jsref_slice_array.asp
+data.slice(0,10);
+data.slice(20,30);
+data.slice(20,30) == "" true porzione vuota
+http://stackoverflow.com/questions/4090491/first-element-in-array-jquery
+http://stackoverflow.com/questions/1232040/how-do-i-empty-an-array-in-javascript
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice
+http://stackoverflow.com/questions/1181575/determine-whether-an-array-contains-a-value
+http://stackoverflow.com/questions/2672380/how-do-i-check-if-a-javascript-array-value-is-empty-or-null
+http://stackoverflow.com/questions/1181575/determine-whether-an-array-contains-a-value
+
+
+Medium.where(user_id: current_user.id).size   (size più veloce)
+Medium.where(user_id: current_user.id).count  (count fa una query)
+a=Medium.where(user_id: current_user.id).size
+11.to_f/10
+a[0..9] + 10
+a[10..19]
+#implementa pagination javascript
+#http://stackoverflow.com/questions/8518885/how-to-create-pagination-like-behavior-for-an-array-in-javascript
+
+
+
 per avviare rails da iphone:
 http://stackoverflow.com/questions/29132719/rails-application-not-visible-to-local-network
 rails server --binding=0.0.0.0  #avviare il server in questo modo per essere fruibile da iphone

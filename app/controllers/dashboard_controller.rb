@@ -1,5 +1,6 @@
 class DashboardController < ApplicationController
   before_action :authenticate_user!
+  before_action :verifica_profilo
 
   layout 'dashboard'
 
@@ -17,7 +18,6 @@ class DashboardController < ApplicationController
     #selezione le foto dell'utente loggato
     @media = Medium.where(user_id: current_user.id)
     @media ||= Medium.none
-
   end
 
   def lista_categorie
@@ -114,6 +114,18 @@ private
     params.require(:category).permit(:titolo, :descrizione, :foto, :ordine)
   end
 
-
+  def verifica_profilo
+    #debugger
+    if current_user.profile.stampalistino == false and current_user.profile.weblistino == false
+      #redirect_to detail_profiles
+      #render plain: "404 Not Found dove cazzo vai!", status: 404
+      #render "handle_errors/page_404", status: 404
+      #raise ActionController::RoutingError.new('Not Found')
+      #funziona su pagina in public
+      #render file: "#{Rails.root}/public/404", layout: false, status: :not_found
+      #redirect_to :controller=>'profiles', :action => 'detail', :id => @tip.permalink
+      redirect_to :controller=>'profiles', :action => 'detail'
+    end
+  end
 
 end

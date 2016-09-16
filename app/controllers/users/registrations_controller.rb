@@ -2,6 +2,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #layout :nil
   #emiliano attivato blocco per non far registrare nessuno autonomamente
   before_filter :configure_sign_up_params, only: [:new]
+  #after_create :aggiungi_profilo
+  #after_commit :aggiungi_profilo, on: :create
+  after_action :aggiungi_profilo, only: [:create]
 
   #layout :registrazione, :only => :new_user_session
 
@@ -23,6 +26,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   @user.save
   #   super
   # end
+
 
   # GET /resource/edit
   # def edit
@@ -47,6 +51,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def cancel
   #   super
   # end
+  private
+    def aggiungi_profilo
+      #creazione profilo di default se ho creato un utente
+      if current_user.nil? == false
+        @profile = Profile.new
+        @profile.user_id= current_user.id
+        @profile.tipo= "utente"
+        @profile.save
+      end
+    end
+
 
   #def altro_esempio
   #  utente = authenticate_with_http_basic { |u, p| u == "admin" && p == "340693" }

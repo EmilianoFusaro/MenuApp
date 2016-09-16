@@ -2,7 +2,6 @@
   <% if @profile.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
-
       <ul>
       <% @profile.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -32,3 +31,11 @@
     <%= f.submit %>
   </div>
 <% end %>
+
+<!--esempi form_for -->
+<!--form_for @user, :url => url_for(:controller => 'mycontroller', :action => 'myaction')-->
+<!--form_for @user, :url => whatever_path-->
+<!--form_for @user, :url => {:action => "YourActionName"}-->
+<!--form_for :user, url: {action: "update", params: {id: @user.id}} do |f| -->
+<!--render 'form', :locals => {:controller => 'my_controller', :action => 'my_action'} -->
+<!--form_tag({controller: "people", action: "search"}, method: "get", class: "nifty_form") -->

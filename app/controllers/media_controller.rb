@@ -175,9 +175,27 @@ end
     else
       @media = Medium.where(user_id: current_user.id)
     end
+
     @media ||= Medium.none  #se nullo assegno ActiveRecord
     render 'media/gallery_filtra' , :layout => false
   end
+
+
+  def gallery_scegli
+    if params[:descrizione] != "XXXX"
+      @media = Medium.where("lower(descrizione) Like lower(?) and user_id=?", "%#{params[:descrizione]}%",current_user.id)
+    else
+      @media = Medium.where(user_id: current_user.id)
+      #@media = Medium.where(user_id: current_user.id).select("descrizione,foto_file_name")  #ActiveRecord filtra determinate colonne
+    end
+    @media ||= Medium.none  #se nullo assegno ActiveRecord
+    #render 'media/gallery_scegli' , :layout => false
+    #render json:@media, status: :ok
+    #render json:@media.first.foto.url(:medium) , status: :ok
+    #foto_media_url metodo mio creato nel model
+    render json:@media.to_json(:only =>  [:id,:descrizione], :methods => [:foto_media_url]) , status: :ok
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

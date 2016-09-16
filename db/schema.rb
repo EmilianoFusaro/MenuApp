@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160807230322) do
+ActiveRecord::Schema.define(version: 20160910101944) do
 
   create_table "allergens", force: :cascade do |t|
     t.string   "nome"
@@ -91,6 +91,14 @@ ActiveRecord::Schema.define(version: 20160807230322) do
     t.datetime "stampalistino_data"
     t.boolean  "weblistino",         default: false
     t.datetime "weblistino_data"
+    t.string   "ragionesociale"
+    t.string   "indirizzo"
+    t.string   "telefono"
+    t.string   "cellulare"
+    t.string   "fax"
+    t.string   "email"
+    t.string   "sitointernet"
+    t.string   "logo"
   end
 
   create_table "users", force: :cascade do |t|

@@ -61,7 +61,7 @@
      imgb.src =  "/images/squares.gif";
      $('#target').html(imgb);
      $('#target').show();
-     //crea forma che contine foto e descrizione
+     //crea form  che contine foto e descrizione
      var file_data = $("#pictureInput").prop("files")[0];
      var form_data = new FormData();
      form_data.append("foto", file_data);
@@ -138,7 +138,6 @@
    //Funzione Per Effettuare Ricerche Delle Foto in Base Alla Descrizione
    $(document).on('click', '#cerca_foto', function(event) {
      $('#riga_gallery').html('');
-
      if ($('#cerca').val().trim()!="") {
        $('#riga_gallery').load('/media/gallery_filtra/'+ $('#cerca').val() ).hide().fadeIn(1000);
      } else {
@@ -212,9 +211,18 @@
       },
       success: function(data) {  //ritorna oggetto json senza array
       bootbox.alert("Descrizione Modificata!");
-      var descrizione_troncata = jQuery.trim($('#frm_descrizione_m').val()).substring(0, 20).trim(this) + "...";
-      $("#des_breve_"+ indice).text(descrizione_troncata);  //Emix
+      if ($('#frm_descrizione_m').val().length > 20) {
+        var descrizione_troncata = jQuery.trim($('#frm_descrizione_m').val()).substring(0, 20).trim(this) + "...";
+      }
+      else {
+        var descrizione_troncata = $('#frm_descrizione_m').val();
+      }
+      //val e text per farlo prendere in schermata principale e in riquadro anteprima
+      $("#des_breve_"+ indice).val(descrizione_troncata);
+      $("#des_estesa_" + indice).val($('#frm_descrizione_m').val());
+      $("#des_breve_"+ indice).text(descrizione_troncata);
       $("#des_estesa_" + indice).text($('#frm_descrizione_m').val());
+
       return false;
       },
       error: function(data) {

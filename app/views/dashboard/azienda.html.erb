@@ -4,339 +4,348 @@
 
 <% content_for :script_view do %>
 <script>
+
+   //setta il cursore sul menu
    $(function() {
      $("li.menu").removeClass("active");
      $("li.menu.azienda").addClass("active");
    });
+
+  //salva il form dati azienda
+  $(document).on('click', '#btn_salva_datiazienda', function(event) {
+    event.preventDefault(); //blocca l'azione scatenata dal clic
+
+    //crea form  che contine foto e descrizione
+    var form_data = new FormData();
+    form_data.append("ragionesociale", $('#f_ragionesociale').val());
+    form_data.append("indirizzo", $('#f_indirizzo').val());
+    form_data.append("telefono", $('#f_telefono').val());
+    form_data.append("cellulare", $('#f_cellulare').val());
+    form_data.append("fax", $('#f_fax').val());
+    form_data.append("email", $('#f_email').val());
+    form_data.append("sitointernet", $('#f_sitointernet').val());
+    //debugger;
+    //invia richista ajax passando il form
+    //var jsonDatiAzienda = JSON.stringify(form_data);  //non funziona per un form
+    //debugger;
+    $.ajax({
+     type: "PUT",
+     url: "/profiles/aggiungi_dati_azienda",
+     //dataType: 'script',
+     cache: false,
+     contentType: false,
+     processData: false,
+     data :form_data,
+     //dataType: "json",
+     //contentType: "application/json; charset=utf-8",
+     // data: $('#myform').serialize(),  //funziona solo con un form vero (vedere doc)
+     dataType: 'text',
+     success: function(data) {
+     //var data = $.parseJSON(data);
+     //debugger;
+     //aggiungi_foto_libreria(data);
+     alert('ok');
+     return false;
+     },
+     error: function(data) {
+
+      alert('errore');
+      return false;
+   }
+  });
+  });
+
+
+  $(function() {
+    //$(window).scroll();
+    //  $("img.lazy").lazyload(
+    //       {
+    //         effect : "fadeIn",
+    //         effectspeed: 3000
+    //       }
+    //  );
+    //  $(window).scroll();
+   });
+
+
+  //click scegli logo
+  $(document).on('click', '#f_logo', function(event) {
+    event.preventDefault();
+    // $('img.lazy').lazyload();
+    //$(".wrapper.row-offcanvas.row-offcanvas-left").width('900px');
+    // $('#riga_gallery').html('');
+    // if ($('#cerca').val().trim()!="") {
+    //   $('#riga_gallery').load('/media/gallery_filtra/'+ $('#cerca').val() ).hide().fadeIn(1000);
+    //  } else {
+    // $('#riga_gallery').load('/media/gallery_scegli/'+ 'XXXX').hide().fadeIn(1000);
+    // // // $('img.lazy').lazyload();
+    // };
+    $.getJSON("/media/gallery_scegli/"+ "XXXX", function (data) {
+        localStorage.setItem("lista_foto", JSON.stringify(data));
+        navigaFoto('Inizio');
+    });
+  });
+
+  //gestione evento avanti-foto
+  $(document).on('click', '#btn_avanti', function(event) {
+    event.preventDefault();
+    navigaFoto('Avanti');
+  });
+
+  //gestione evento indietro-foto
+  $(document).on('click', '#btn_indietro', function(event) {
+    event.preventDefault();
+    navigaFoto('Indietro');
+  });
+
+  //gestione filtro cerca foto
+  $(document).on('click', '#cerca_foto', function(event) {
+    event.preventDefault();
+    if ($('#cerca').val().trim()!="") {
+      var filtro_ricerca=$('#cerca').val();
+    }
+    else {
+      var filtro_ricerca='XXXX';
+    }
+    $.getJSON("/media/gallery_scegli/"+ filtro_ricerca, function (data) {
+        localStorage.setItem("lista_foto", JSON.stringify(data));
+        navigaFoto('Inizio');
+    });
+  });
+
+  //gestione gallery anteprima
+  function navigaFoto(direzione) {
+
+    var store_lista_foto = JSON.parse(localStorage.getItem("lista_foto"));
+    var istart = parseInt(localStorage.getItem("inizio_foto"));
+    var iend = parseInt(localStorage.getItem("fine_foto"));
+
+    if (direzione == 'Avanti') {
+      if (iend < store_lista_foto.length) {
+       var istart = istart + 9;
+       var iend = iend + 9;
+      }
+    }
+    else if (direzione == 'Indietro') {
+      if (istart > 0) {
+        var istart = istart - 9;
+        var iend = iend - 9;
+      }
+    }
+    else if ('Inizio') {
+      var istart = 0;
+      var iend = 9;
+    }
+    localStorage.setItem('inizio_foto', istart);
+    localStorage.setItem('fine_foto', iend);
+    $('#riga_gallery').html('');
+    $.each(store_lista_foto.slice(istart,iend), function(idx, obj) {
+      if (obj.descrizione.length > 15) {
+        var descrizione_troncate = jQuery.trim(obj.descrizione).substring(0, 15).trim(this) + "...";
+        }
+        else {
+          var descrizione_troncate = jQuery.trim(obj.descrizione);
+        };
+      //var descrizione_troncate = eval('truncate("'+ obj.descrizione +'" , length:15)');  //compila ruby in javascript
+      var foto= '<div class="col-lg-3 col-md-6 col-xs-6 thumb" id="div_foto_'+ obj.id +'"> \
+        <h4 class="box-title" id="des_breve_'+ obj.id +'">&nbsp;'+ descrizione_troncate +'</h4> \
+        <div class="box-body"> \
+        <a class="thumbnail" href="#" data-dismiss="modal"> \
+        <img class="foto_select" src="'+ obj.foto_media_url +'" data-toggle="modal" data-target="#modifica_media" id="fotoid_'+ obj.id +'"> \
+        </a> \
+        </div> \
+        </div>';
+      // $('#riga_gallery').append(foto).hide().fadeIn(500);
+      $('#riga_gallery').append(foto);
+    });
+  };
+
+  //gestione click foto Selezionata
+  $(document).on('click', '.thumbnail', function(event) {
+    event.preventDefault();
+    $('#anteprima').html($(this).html());
+  });
+
+  $(document).on('click', '#bottone_test', function(event) {
+    event.preventDefault();
+    // $('img.lazy').lazyload();
+    //$(".wrapper.row-offcanvas.row-offcanvas-left").width('900px');
+    $('#riga_gallery').html('');
+    //if ($('#cerca').val().trim()!="") {
+    //  $('#riga_gallery').load('/media/gallery_filtra/'+ $('#cerca').val() ).hide().fadeIn(1000);
+    //} else {
+    $('#riga_gallery').load('/media/gallery_filtra/'+ 'XXXX').hide().fadeIn(1000);
+    //  $('img.lazy').lazyload();
+  });
+
+
+  // $('#scegli_logo').bind('load', function() {
+  //   //  alert('ok');
+  //    console.log("T");
+  //  });
+
+  //  $('#scegli_logo').on('show', function(){
+  //    alert('The modal is show');
+  //  });
+
+  //  $('#scegli_logo').on('shown', function(){
+  //    alert('The modal is shown');
+  //  });
+
+   // Feature request:
+
+  //  $('#scegli_logo').on('ajax:show', function(){
+  //    alert('The ajax is about to be send');
+  //  });
+
+  //  $('#scegli_logo').on('ajax:shown', function(){
+  //    alert('The ajax call finished and contents are loaded');
+  //  });
+
+   //quando si apre la finestra modale
+  //  $('#scegli_foto').on("shown.bs.modal", function () {
+  //         //  $("img.lazy").lazyload({container:$("#scegli_foto")});
+  //         $("img.lazy").lazyload();
+  //  });
+
+  //  $('#myModal').on("shown.bs.modal", function () {
+  //         //  $("img.lazy").lazyload({container:$("#scegli_foto")});
+  //         $("img.lazy").lazyload();
+  //  });
+
+
 </script>
 <% end %>
 <section class="content">
-             <div class="row">
-                 <!-- left column -->
-                 <div class="col-md-6">
-                     <!-- general form elements -->
-                     <div class="box box-primary">
-                         <div class="box-header">
-                             <h3 class="box-title">Dati Azienda</h3>
-                         </div><!-- /.box-header -->
-                         <!-- form start -->
-                         <form role="form">
-                             <div class="box-body">
+ <div class="row">
+     <!-- left column -->
+     <div class="col-md-6">
+         <!-- general form elements -->
+         <div class="box box-primary">
+             <div class="box-header">
+                 <h3 class="box-title">Dati Azienda</h3>
+             </div><!-- /.box-header -->
+             <!-- form start -->
+             <form role="form">
+                 <div class="box-body">
 
-                               <div class="form-group">
-                                   <label for="input_ragionesociale">Ragione Sociale</label>
-                                   <input type="text" class="form-control" id="ragionesociale" placeholder="Ragione Sociale">
-                               </div>
+                   <div class="form-group">
+                       <label for="input_ragionesociale">Ragione Sociale</label>
+                       <input type="text" class="form-control" id="f_ragionesociale" placeholder="Ragione Sociale">
+                   </div>
 
-                               <div class="form-group">
-                                   <label>Indirizzo</label>
-                                   <textarea class="form-control" rows="3" placeholder="Indirizzo ..."></textarea>
-                               </div>
+                   <div class="form-group">
+                       <label>Indirizzo</label>
+                       <textarea class="form-control" rows="3" placeholder="Indirizzo ..." id="f_indirizzo"></textarea>
+                   </div>
 
-                               <div class="form-group">
-                                   <label for="input_telefono">Telefono</label>
-                                   <input type="number" class="form-control" id="telefono" placeholder="Telefono">
-                               </div>
+                   <div class="form-group">
+                       <label for="input_telefono">Telefono</label>
+                       <input type="text" class="form-control" id="f_telefono" placeholder="Telefono">
+                   </div>
 
-                               <div class="form-group">
-                                   <label for="input_cellulare">Cellulare</label>
-                                   <input type="number" class="form-control" id="cellulare" placeholder="Cellulare">
-                               </div>
+                   <div class="form-group">
+                       <label for="input_cellulare">Cellulare</label>
+                       <input type="text" class="form-control" id="f_cellulare" placeholder="Cellulare">
+                   </div>
 
-                               <div class="form-group">
-                                   <label for="input_cellulare">Fax</label>
-                                   <input type="number" class="form-control" id="fax" placeholder="Fax">
-                               </div>
+                   <div class="form-group">
+                       <label for="input_cellulare">Fax</label>
+                       <input type="text" class="form-control" id="_ffax" placeholder="Fax">
+                   </div>
 
-                                 <div class="form-group">
-                                     <label for="input_indirizzoemail">Indirizzo Email</label>
-                                     <input type="email" class="form-control" id="email" placeholder="Indirizzo Email">
-                                 </div>
+                     <div class="form-group">
+                         <label for="input_indirizzoemail">Indirizzo Email</label>
+                         <input type="email" class="form-control" id="f_email" placeholder="Indirizzo Email">
+                     </div>
 
-                                 <div class="form-group">
-                                     <label for="input_sitointernet">Sito Internet</label>
-                                     <input type="email" class="form-control" id="email" placeholder="Sito Internet (completo http://)">
-                                 </div>
+                     <div class="form-group">
+                         <label for="input_sitointernet">Sito Internet</label>
+                         <input type="text" class="form-control" id="f_sitointernet" placeholder="Sito Internet (completo http://)">
+                     </div>
 
-                                 <div class="form-group">
-                                     <label for="exampleInputFile">Logo Azienda</label>
-                                     <input type="file" id="exampleInputFile">
-                                     <p class="help-block">Anteprima</p>
-                                 </div>
-                                 <div class="checkbox">
-                                     <label>
-                                         <input type="checkbox"> Check me out
-                                     </label>
-                                 </div>
-                             </div><!-- /.box-body -->
+                     <div class="form-group">
+                         <label for="exampleInputFile">Logo Azienda</label>
+                         <br>
+                         <!-- <input type="file" id="f_logo" data-toggle="modal" data-target="#scegli_foto"> -->
+                         <a data-toggle="modal" href="#scegli_foto" class="btn btn-primary" id="f_logo">Scegli Foto</a>
+                         <p class="help-block" id="anteprima">Anteprima</p>
 
-                             <div class="box-footer">
-                                 <button type="submit" class="btn btn-primary">Submit</button>
-                             </div>
-                         </form>
-                     </div><!-- /.box -->
+                     </div>
+                 </div><!-- /.box-body -->
 
-                     <!-- Form Element sizes -->
-                     <div class="box box-success">
-                         <div class="box-header">
-                             <h3 class="box-title">Different Height</h3>
-                         </div>
-                         <div class="box-body">
-                             <input class="form-control input-lg" type="text" placeholder=".input-lg">
-                             <br/>
-                             <input class="form-control" type="text" placeholder="Default input">
-                             <br/>
-                             <input class="form-control input-sm" type="text" placeholder=".input-sm">
-                         </div><!-- /.box-body -->
-                     </div><!-- /.box -->
+                 <div class="box-footer">
+                     <button type="submit" class="btn btn-primary" id="btn_salva_datiazienda">Salva</button>
+                 </div>
+             </form>
+         </div><!-- /.box -->
+     </div><!--/.col (left) -->
+</div>
 
-                     <div class="box box-danger">
-                         <div class="box-header">
-                             <h3 class="box-title">Different Width</h3>
-                         </div>
-                         <div class="box-body">
-                             <div class="row">
-                                 <div class="col-xs-3">
-                                     <input type="text" class="form-control" placeholder=".col-xs-3">
-                                 </div>
-                                 <div class="col-xs-4">
-                                     <input type="text" class="form-control" placeholder=".col-xs-4">
-                                 </div>
-                                 <div class="col-xs-5">
-                                     <input type="text" class="form-control" placeholder=".col-xs-5">
-                                 </div>
-                             </div>
-                         </div><!-- /.box-body -->
-                     </div><!-- /.box -->
+<!-- <div id="riga_gallery"></div> -->
+</section><!-- /.content -->
 
-                     <!-- Input addon -->
-                     <div class="box box-info">
-                         <div class="box-header">
-                             <h3 class="box-title">Input Addon</h3>
-                         </div>
-                         <div class="box-body">
-                             <div class="input-group">
-                                 <span class="input-group-addon">@</span>
-                                 <input type="text" class="form-control" placeholder="Username">
-                             </div>
-                             <br/>
-                             <div class="input-group">
-                                 <input type="text" class="form-control">
-                                 <span class="input-group-addon">.00</span>
-                             </div>
-                             <br/>
-                             <div class="input-group">
-                                 <span class="input-group-addon">$</span>
-                                 <input type="text" class="form-control">
-                                 <span class="input-group-addon">.00</span>
-                             </div>
 
-                             <h4>With icons</h4>
-                             <div class="input-group">
-                                 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                 <input type="text" class="form-control" placeholder="Email">
-                             </div>
-                             <br/>
-                             <div class="input-group">
-                                 <input type="text" class="form-control">
-                                 <span class="input-group-addon"><i class="fa fa-check"></i></span>
-                             </div>
-                             <br/>
-                             <div class="input-group">
-                                 <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
-                                 <input type="text" class="form-control">
-                                 <span class="input-group-addon"><i class="fa fa-ambulance"></i></span>
-                             </div>
+<div id="scegli_foto" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Scegli La Foto</h4>
 
-                             <h4>With checkbox and radio inputs</h4>
-                             <div class="row">
-                                 <div class="col-lg-6">
-                                     <div class="input-group">
-                                         <span class="input-group-addon">
-                                             <input type="checkbox">
-                                         </span>
-                                         <input type="text" class="form-control">
-                                     </div><!-- /input-group -->
-                                 </div><!-- /.col-lg-6 -->
-                                 <div class="col-lg-6">
-                                     <div class="input-group">
-                                         <span class="input-group-addon">
-                                             <input type="radio">
-                                         </span>
-                                         <input type="text" class="form-control">
-                                     </div><!-- /input-group -->
-                                 </div><!-- /.col-lg-6 -->
-                             </div><!-- /.row -->
+            </div>
+            <div class="modal-body">
+              <br>
+              <input type="text" class="form-control pull-left" id="cerca" placeholder="Cerca ..." style="width:200px;" maxlength="50">
+              <button type="submit" id="cerca_foto" class="btn btn-primary pull-left" style="width:120px;height:35px;display:inline-block;float:none;margin-right:27%;">Cerca</button>
 
-                             <h4>With buttons</h4>
-                             <p class="margin">Large: <code>.input-group.input-group-lg</code></p>
-                             <div class="input-group input-group-lg">
-                                 <div class="input-group-btn">
-                                     <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">Action <span class="fa fa-caret-down"></span></button>
-                                     <ul class="dropdown-menu">
-                                         <li><a href="#">Action</a></li>
-                                         <li><a href="#">Another action</a></li>
-                                         <li><a href="#">Something else here</a></li>
-                                         <li class="divider"></li>
-                                         <li><a href="#">Separated link</a></li>
-                                     </ul>
-                                 </div><!-- /btn-group -->
-                                 <input type="text" class="form-control">
-                             </div><!-- /input-group -->
-                             <p class="margin">Normal</p>
-                             <div class="input-group">
-                                 <div class="input-group-btn">
-                                     <button type="button" class="btn btn-danger">Action</button>
-                                 </div><!-- /btn-group -->
-                                 <input type="text" class="form-control">
-                             </div><!-- /input-group -->
-                             <p class="margin">Small <code>.input-group.input-group-sm</code></p>
-                             <div class="input-group input-group-sm">
-                                 <input type="text" class="form-control">
-                                 <span class="input-group-btn">
-                                     <button class="btn btn-info btn-flat" type="button">Go!</button>
-                                 </span>
-                             </div><!-- /input-group -->
-                         </div><!-- /.box-body -->
-                     </div><!-- /.box -->
+              <button type="button" class="btn btn-default" aria-label="Left Align" id="btn_indietro">
+              <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+              </button>
 
-                 </div><!--/.col (left) -->
-                 <!-- right column -->
-                 <div class="col-md-6">
-                     <!-- general form elements disabled -->
-                     <div class="box box-warning">
-                         <div class="box-header">
-                             <h3 class="box-title">General Elements</h3>
-                         </div><!-- /.box-header -->
-                         <div class="box-body">
-                             <form role="form">
-                                 <!-- text input -->
-                                 <div class="form-group">
-                                     <label>Text</label>
-                                     <input type="text" class="form-control" placeholder="Enter ..."/>
-                                 </div>
-                                 <div class="form-group">
-                                     <label>Text Disabled</label>
-                                     <input type="text" class="form-control" placeholder="Enter ..." disabled/>
-                                 </div>
+              <button type="button" class="btn btn-default" aria-label="Left Align" id="btn_avanti">
+              <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+              </button>
 
-                                 <!-- textarea -->
-                                 <div class="form-group">
-                                     <label>Textarea</label>
-                                     <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
-                                 </div>
-                                 <div class="form-group">
-                                     <label>Textarea Disabled</label>
-                                     <textarea class="form-control" rows="3" placeholder="Enter ..." disabled></textarea>
-                                 </div>
+              <br><br>
+              <div id="riga_gallery"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_chiudi_foto">Chiudi</button>
+              <button type="button" class="btn btn-primary" data-dismiss="no-modal" id="btn_modifica_foto">Scegli</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
-                                 <!-- input states -->
-                                 <div class="form-group has-success">
-                                     <label class="control-label" for="inputSuccess"><i class="fa fa-check"></i> Input with success</label>
-                                     <input type="text" class="form-control" id="inputSuccess" placeholder="Enter ..."/>
-                                 </div>
-                                 <div class="form-group has-warning">
-                                     <label class="control-label" for="inputWarning"><i class="fa fa-warning"></i> Input with warning</label>
-                                     <input type="text" class="form-control" id="inputWarning" placeholder="Enter ..."/>
-                                 </div>
-                                 <div class="form-group has-error">
-                                     <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> Input with error</label>
-                                     <input type="text" class="form-control" id="inputError" placeholder="Enter ..."/>
-                                 </div>
 
-                                 <!-- checkbox -->
-                                 <div class="form-group">
-                                     <div class="checkbox">
-                                         <label>
-                                             <input type="checkbox"/>
-                                             Checkbox 1
-                                         </label>
-                                     </div>
-
-                                     <div class="checkbox">
-                                         <label>
-                                             <input type="checkbox"/>
-                                             Checkbox 2
-                                         </label>
-                                     </div>
-
-                                     <div class="checkbox">
-                                         <label>
-                                             <input type="checkbox" disabled/>
-                                             Checkbox disabled
-                                         </label>
-                                     </div>
-                                 </div>
-
-                                 <!-- radio -->
-                                 <div class="form-group">
-                                     <div class="radio">
-                                         <label>
-                                             <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-                                             Option one is this and that&mdash;be sure to include why it's great
-                                         </label>
-                                     </div>
-                                     <div class="radio">
-                                         <label>
-                                             <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                                             Option two can be something else and selecting it will deselect option one
-                                         </label>
-                                     </div>
-                                     <div class="radio">
-                                         <label>
-                                             <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" disabled/>
-                                             Option three is disabled
-                                         </label>
-                                     </div>
-                                 </div>
-
-                                 <!-- select -->
-                                 <div class="form-group">
-                                     <label>Select</label>
-                                     <select class="form-control">
-                                         <option>option 1</option>
-                                         <option>option 2</option>
-                                         <option>option 3</option>
-                                         <option>option 4</option>
-                                         <option>option 5</option>
-                                     </select>
-                                 </div>
-                                 <div class="form-group">
-                                     <label>Select Disabled</label>
-                                     <select class="form-control" disabled>
-                                         <option>option 1</option>
-                                         <option>option 2</option>
-                                         <option>option 3</option>
-                                         <option>option 4</option>
-                                         <option>option 5</option>
-                                     </select>
-                                 </div>
-
-                                 <!-- Select multiple-->
-                                 <div class="form-group">
-                                     <label>Select Multiple</label>
-                                     <select multiple class="form-control">
-                                         <option>option 1</option>
-                                         <option>option 2</option>
-                                         <option>option 3</option>
-                                         <option>option 4</option>
-                                         <option>option 5</option>
-                                     </select>
-                                 </div>
-                                 <div class="form-group">
-                                     <label>Select Multiple Disabled</label>
-                                     <select multiple class="form-control" disabled>
-                                         <option>option 1</option>
-                                         <option>option 2</option>
-                                         <option>option 3</option>
-                                         <option>option 4</option>
-                                         <option>option 5</option>
-                                     </select>
-                                 </div>
-
-                             </form>
-                         </div><!-- /.box-body -->
-                     </div><!-- /.box -->
-                 </div><!--/.col (right) -->
-             </div>   <!-- /.row -->
-         </section><!-- /.content -->
+<!-- Modal Modifica Categoria (Html Messo Fuori Dalla Sessione)-->
+<div class="modal fade" id="scegli_foto_old" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel2" style="display:inline-block;float:none;margin-right:55%;">Scegli Media</h4>
+      </div>
+      <div class="modal-body">
+        <br>
+        <input type="text" class="form-control pull-left" id="cerca" placeholder="Cerca ..." style="width:200px;" maxlength="50">
+        <button type="submit" id="cerca_foto" class="btn btn-primary pull-left" style="width:120px;height:35px;">Cerca</button>
+        <br>
+      </div>
+      <br>
+      <div style="width:590px; height:330px; overflow-y: scroll;" >
+      <div id="riga_gallery"></div>
+    </div>
+      <!-- </div> -->
+      <div class="modal-footer">
+        <!-- togliere data-dismiss="modal" per non chiudere il form -->
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_chiudi_foto">Chiudi</button>
+        <button type="button" class="btn btn-primary" data-dismiss="no-modal" id="btn_modifica_foto">Scegli</button>
+      </div>
+    </div>
+  </div>
+</div>
