@@ -12,6 +12,7 @@ class DashboardController < ApplicationController
   end
 
   def azienda
+    @azienda = Profile.find_by_user_id(current_user.id)
   end
 
   def media

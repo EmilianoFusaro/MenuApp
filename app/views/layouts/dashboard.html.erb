@@ -63,7 +63,11 @@
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header bg-light-blue">
-                                    <img src="/img/avatar3.png" class="img-circle" alt="User Image" />
+                                  <% if current_user.profile.logo != nil %>
+                                    <img src="<%= current_user.profile.logo %>" class="img-circle" alt="User Image" id="logo_testa_1"/>
+                                  <% else %>
+                                    <img src="/images/logo2.png" class="img-circle" alt="User Image" id="logo_testa_1"/>
+                                  <% end %>
                                     <p>
                                         <%= current_user.name %>
                                     </p>
@@ -94,11 +98,15 @@
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
-                            <img src="/img/avatar3.png" class="img-circle" alt="User Image" />
+                            <!-- <img src="/img/avatar3.png" class="img-circle" alt="User Image" /> -->
+                            <% if current_user.profile.logo != nil %>
+                              <img src="<%= current_user.profile.logo %>" class="img-circle" alt="User Image" id="logo_testa_2"/>
+                            <% else %>
+                              <img src="/images/logo2.png" class="img-circle" alt="User Image" id="logo_testa_2"/>
+                            <% end %>
                         </div>
                         <div class="pull-left info">
                             <p>Ciao <%= current_user.name %></p>
-
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
                     </div>

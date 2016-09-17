@@ -24,6 +24,14 @@
     form_data.append("fax", $('#f_fax').val());
     form_data.append("email", $('#f_email').val());
     form_data.append("sitointernet", $('#f_sitointernet').val());
+    var anteprima= $('#anteprima').children('img').attr('src');
+    if (anteprima != null)
+    {
+      form_data.append("logo", $('#anteprima').children('img').attr('src'));
+      //cambio le foto logo del layout
+      $('#logo_testa_1').attr('src',anteprima);
+      $('#logo_testa_2').attr('src',anteprima);
+    }
     //debugger;
     //invia richista ajax passando il form
     //var jsonDatiAzienda = JSON.stringify(form_data);  //non funziona per un form
@@ -44,12 +52,14 @@
      //var data = $.parseJSON(data);
      //debugger;
      //aggiungi_foto_libreria(data);
-     alert('ok');
+     //alert('ok');
+     bootbox.alert("Dati Azienda Salvati Correttamente !");
      return false;
      },
      error: function(data) {
 
-      alert('errore');
+      //alert('errore');
+      bootbox.alert("Attenzione Problemi Durante Il Salvataggio !");
       return false;
    }
   });
@@ -163,6 +173,7 @@
   //gestione click foto Selezionata
   $(document).on('click', '.thumbnail', function(event) {
     event.preventDefault();
+    $('#logo').hide();
     $('#anteprima').html($(this).html());
   });
 
@@ -231,37 +242,37 @@
 
                    <div class="form-group">
                        <label for="input_ragionesociale">Ragione Sociale</label>
-                       <input type="text" class="form-control" id="f_ragionesociale" placeholder="Ragione Sociale">
+                       <input type="text" class="form-control" id="f_ragionesociale" placeholder="Ragione Sociale" value="<%= @azienda.ragionesociale %>">
                    </div>
 
                    <div class="form-group">
                        <label>Indirizzo</label>
-                       <textarea class="form-control" rows="3" placeholder="Indirizzo ..." id="f_indirizzo"></textarea>
+                       <textarea class="form-control" rows="3" placeholder="Indirizzo ..." id="f_indirizzo" value="<%= @azienda.indirizzo %>"></textarea>
                    </div>
 
                    <div class="form-group">
                        <label for="input_telefono">Telefono</label>
-                       <input type="text" class="form-control" id="f_telefono" placeholder="Telefono">
+                       <input type="text" class="form-control" id="f_telefono" placeholder="Telefono" value="<%= @azienda.telefono %>">
                    </div>
 
                    <div class="form-group">
                        <label for="input_cellulare">Cellulare</label>
-                       <input type="text" class="form-control" id="f_cellulare" placeholder="Cellulare">
+                       <input type="text" class="form-control" id="f_cellulare" placeholder="Cellulare" value="<%= @azienda.cellulare %>">
                    </div>
 
                    <div class="form-group">
                        <label for="input_cellulare">Fax</label>
-                       <input type="text" class="form-control" id="_ffax" placeholder="Fax">
+                       <input type="text" class="form-control" id="_ffax" placeholder="Fax" value="<%= @azienda.fax %>">
                    </div>
 
                      <div class="form-group">
                          <label for="input_indirizzoemail">Indirizzo Email</label>
-                         <input type="email" class="form-control" id="f_email" placeholder="Indirizzo Email">
+                         <input type="email" class="form-control" id="f_email" placeholder="Indirizzo Email" value="<%= @azienda.email %>">
                      </div>
 
                      <div class="form-group">
                          <label for="input_sitointernet">Sito Internet</label>
-                         <input type="text" class="form-control" id="f_sitointernet" placeholder="Sito Internet (completo http://)">
+                         <input type="text" class="form-control" id="f_sitointernet" placeholder="Sito Internet (completo http://)" value="<%= @azienda.sitointernet %>">
                      </div>
 
                      <div class="form-group">
@@ -269,7 +280,10 @@
                          <br>
                          <!-- <input type="file" id="f_logo" data-toggle="modal" data-target="#scegli_foto"> -->
                          <a data-toggle="modal" href="#scegli_foto" class="btn btn-primary" id="f_logo">Scegli Foto</a>
-                         <p class="help-block" id="anteprima">Anteprima</p>
+                         <p class="help-block" id="anteprima"></p>
+                         <% if  @azienda.logo != nil %>
+                         <img src="<%= @azienda.logo %>" alt="Logo" id="logo">
+                         <% end %>
 
                      </div>
                  </div><!-- /.box-body -->
@@ -312,7 +326,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_chiudi_foto">Chiudi</button>
-              <button type="button" class="btn btn-primary" data-dismiss="no-modal" id="btn_modifica_foto">Scegli</button>
+              <!-- <button type="button" class="btn btn-primary" data-dismiss="no-modal" id="btn_modifica_foto">Scegli</button> -->
             </div>
         </div>
         <!-- /.modal-content -->

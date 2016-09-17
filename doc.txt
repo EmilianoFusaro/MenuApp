@@ -438,6 +438,16 @@ http://stackoverflow.com/questions/2672380/how-do-i-check-if-a-javascript-array-
 http://stackoverflow.com/questions/1181575/determine-whether-an-array-contains-a-value
 
 
+recuperare src dentro un div (children)
+http://stackoverflow.com/questions/8440315/using-jquery-how-can-i-select-an-image-inside-of-a-div-to-change-its-source
+http://stackoverflow.com/questions/8643165/get-image-attrib-inside-a-div
+$('#foto_selezionata').html('<img src="'+ this.currentSrc +'" alt="Foto Selezionata" style="width:250px;">');
+form_data.append("logo", $('#anteprima').children('img').attr('src'));
+
+extend devise current_user
+http://stackoverflow.com/questions/10349606/where-to-override-current-user-helper-method-of-devise-gem
+
+
 Medium.where(user_id: current_user.id).size   (size più veloce)
 Medium.where(user_id: current_user.id).count  (count fa una query)
 a=Medium.where(user_id: current_user.id).size
