@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Receives</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tipo</th>
+      <th>Email</th>
+      <th>Nome</th>
+      <th>Oggetto</th>
+      <th>Messaggio</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @receives.each do |receife| %>
+      <tr>
+        <td><%= receife.tipo %></td>
+        <td><%= receife.email %></td>
+        <td><%= receife.nome %></td>
+        <td><%= receife.oggetto %></td>
+        <td><%= receife.messaggio %></td>
+        <td><%= link_to 'Show', receife %></td>
+        <td><%= link_to 'Edit', edit_receife_path(receife) %></td>
+        <td><%= link_to 'Destroy', receife, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Receive', new_receife_path %>

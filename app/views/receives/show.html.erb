@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Tipo:</strong>
+  <%= @receife.tipo %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @receife.email %>
+</p>
+
+<p>
+  <strong>Nome:</strong>
+  <%= @receife.nome %>
+</p>
+
+<p>
+  <strong>Oggetto:</strong>
+  <%= @receife.oggetto %>
+</p>
+
+<p>
+  <strong>Messaggio:</strong>
+  <%= @receife.messaggio %>
+</p>
+
+<%= link_to 'Edit', edit_receife_path(@receife) %> |
+<%= link_to 'Back', receives_path %>

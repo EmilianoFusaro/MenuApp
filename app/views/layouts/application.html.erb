@@ -1,17 +1,50 @@
 <!DOCTYPE html>
+<!-- <html lang="en"> -->
 <html>
 <head>
+  <!-- <meta charset="utf-8"> -->
+  <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
   <title>Menuapp</title>
   <%#= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%#= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 
-  <%= stylesheet_link_tag    'application', media: 'all' %>
-  <%= javascript_include_tag 'application'%>
+  <%#= stylesheet_link_tag    'application', media: 'all' %>
+  <%#= javascript_include_tag 'application'%>
+
+
+  <link rel="icon" href="/sito/images/favicon.ico" type="image/x-icon"/>
+
+  <!-- Bootstrap 3.2.0 stylesheet -->
+  <link href="/sito/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Font Awesome Icon stylesheet -->
+  <link href="/sito/css/font-awesome.min.css" rel="stylesheet">
+
+  <!-- Owl Carousel stylesheet -->
+  <link href="/sito/css/owl.carousel.css" rel="stylesheet">
+
+  <!-- Pretty Photo stylesheet -->
+  <link href="/sito/css/prettyPhoto.css" rel="stylesheet">
+
+  <!-- Custom stylesheet -->
+  <link href="/sito/style.css" rel="stylesheet">
+
+  <link href="/sito/css/color/white.css" rel="stylesheet">
+
+  <!-- Custom Responsive stylesheet -->
+  <link href="/sito/css/responsive.css" rel="stylesheet">
 
 
   <%= csrf_meta_tags %>
+
+
 </head>
 <body>
+
+
+<%= yield %>
+
 
 <p class="notice"><%= notice %></p>
 <p class="alert"><%= alert %></p>
@@ -21,7 +54,6 @@
   <%= link_to "LogOut", destroy_user_session_path , method: :delete %>
 <% end %>
 
-<%= yield %>
 
 </body>
 </html>

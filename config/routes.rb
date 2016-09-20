@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  resources :receives do
+    collection do
+      post '/regisra' => "receives#registra"
+    end
+  end
+  
   resources :menus
 
   resources :media do
