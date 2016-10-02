@@ -12,6 +12,10 @@
   <%#= stylesheet_link_tag    'application', media: 'all' %>
   <%#= javascript_include_tag 'application'%>
 
+  <!-- alcuni di questi permettono il delete -->
+  <%#= javascript_include_tag :all %>
+  <%= javascript_include_tag 'application' %>
+  <!-- alcuni di questi permettono il delete -->
 
   <link rel="icon" href="/sito/images/favicon.ico" type="image/x-icon"/>
 
@@ -46,13 +50,13 @@
 <%= yield %>
 
 
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+<!-- <p class="notice"><%#= notice %></p>
+<p class="alert"><%#= alert %></p> -->
 
-<%if user_signed_in? %>
-  <%="Ciao #{current_user.name}" %>
-  <%= link_to "LogOut", destroy_user_session_path , method: :delete %>
-<% end %>
+<%#if user_signed_in? %>
+  <%#="Ciao #{current_user.name}" %>
+  <%#= link_to "LogOut", destroy_user_session_path , method: :delete %>
+<%# end %>
 
 
 </body>

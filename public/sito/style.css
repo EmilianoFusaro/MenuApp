@@ -1,6 +1,6 @@
 /* =========================================
 
-Theme Name: Blue App 
+Theme Name: Blue App
 Theme URI: http://mishk.at/
 Author: S M Mishkatul Islam
 Author URI: http://mishk.at/
@@ -15,7 +15,7 @@ Tags: html5, themplate, landing page, app landing page
 /* =========================================
 /* 1 - Google Font
 ========================================= */
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,300,700);
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,300,700);
 
 
 
@@ -157,7 +157,7 @@ textarea:focus {
 
 
 /* =========================================
-   3. Section Header                 
+   3. Section Header
 ========================================= */
 header {
 	background: url(images/bg.jpg) 50% 0 no-repeat fixed;
@@ -210,7 +210,7 @@ header {
 
 
 /* =========================================
-   4. Section Menu                 
+   4. Section Menu
 ========================================= */
 .navigation {
 	min-height: 70px;
@@ -259,7 +259,7 @@ header {
 
 
 /* =========================================
-   5. Section Features                 
+   5. Section Features
 ========================================= */
 .features .featured-item-img {
 	width: 252px;
@@ -313,7 +313,7 @@ header {
 
 
 /* =========================================
-   6. Section Screenshots                 
+   6. Section Screenshots
 ========================================= */
 .owl-carousel {
 	margin-bottom: 50px;
@@ -404,7 +404,7 @@ header {
 
 
 /* =========================================
-   7. Section Description                 
+   7. Section Description
 ========================================= */
 .description .app-image {
 	max-width: 441px;
@@ -453,7 +453,7 @@ header {
 	margin-bottom: 15px;
 }
 /* =========================================
-   8. Section Testimonial                 
+   8. Section Testimonial
 ========================================= */
 #testimonial {
 	background: url(images/bg4.jpg) 50% 0 no-repeat fixed;
@@ -500,7 +500,7 @@ header {
 }
 
 /* =========================================
-   9. Section Team                 
+   9. Section Team
 ============================================ */
 .team {
 	text-align: center;
@@ -588,7 +588,7 @@ header {
 }
 
 /* =========================================
-   10. Section Price                 
+   10. Section Price
 ========================================= */
 .price .price-table {
 	padding:0 30px;
@@ -681,7 +681,7 @@ header {
 }
 
 /* =========================================
-   11. Section Subscribe                 
+   11. Section Subscribe
 ========================================= */
 .subscribe {
 	text-align: center;
@@ -744,7 +744,7 @@ header {
 }
 
 /* =========================================
-   12. Section Download                 
+   12. Section Download
 ========================================= */
 #download {
 	background: url(images/bg5.jpg) 50% 0 no-repeat fixed;
@@ -794,7 +794,7 @@ header {
 }
 
 /* =========================================
-   13. Section Footer                 
+   13. Section Footer
 ========================================= */
 
 .footer {
@@ -831,7 +831,7 @@ header {
 }
 
 /* =========================================
-   14. Section Copyright                 
+   14. Section Copyright
 ========================================= */
 .copyright {
 	text-align: center;

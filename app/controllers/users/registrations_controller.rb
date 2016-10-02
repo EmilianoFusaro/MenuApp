@@ -54,6 +54,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   private
     def aggiungi_profilo
       #creazione profilo di default se ho creato un utente
+      #debugger
       if current_user.nil? == false
         @profile = Profile.new
         @profile.user_id= current_user.id

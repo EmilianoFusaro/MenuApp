@@ -37,6 +37,13 @@ devise
 https://github.com/plataformatec/devise/wiki/How-To:-Create-custom-layouts
 http://stackoverflow.com/questions/6234045/how-do-you-access-devise-controllers
 http://stackoverflow.com/questions/9325176/devise-custom-messages-when-validation-fails
+redirect dopo login
+https://github.com/plataformatec/devise/wiki/How-To:-redirect-to-a-specific-page-on-successful-sign-in
+https://github.com/plataformatec/devise/wiki/How-To%3A-Redirect-to-a-specific-page-on-successful-sign-in-and-sign-out
+http://www.rubydoc.info/github/plataformatec/devise/master/Devise/Controllers/Helpers:after_sign_in_path_for
+logout
+http://stackoverflow.com/questions/21040168/rails-devise-error-no-route-matches-get-users-sign-out
+
 
 
 ambiente per testare i framework web
@@ -438,6 +445,55 @@ http://stackoverflow.com/questions/2672380/how-do-i-check-if-a-javascript-array-
 http://stackoverflow.com/questions/1181575/determine-whether-an-array-contains-a-value
 
 
+configurare console cloud9 sqlite,mysql
+http://stackoverflow.com/questions/29417328/how-to-disable-cannot-render-console-from-on-rails
+http://stackoverflow.com/questions/29113975/how-to-view-or-edit-sqlite-db-records-on-cloud9-ide
+https://community.c9.io/t/setting-up-mysql/1718
+https://community.c9.io/t/getting-started-with-emberjs/1788  (installare ember)
+
+
+sqlite utility
+https://www.sqlite.org/cli.html
+
+ajax
+https://medium.com/coding-design/writing-better-ajax-8ee4a7fb95f#.8a2j4554z
+
+
+problemi con delete javascript da lasciare
+  http://stackoverflow.com/questions/12997167/ruby-on-rails-link-to-delete-method-not-working
+  http://stackoverflow.com/questions/28210296/shows-no-route-matches-for-delete-link-rails-4
+  http://stackoverflow.com/questions/18723155/destroy-path-not-working-in-ruby-on-rails
+  http://stackoverflow.com/questions/7465919/rails-link-to-method-geting-when-it-should-delete
+
+
+delete e destroy
+http://stackoverflow.com/questions/4177686/how-do-you-delete-an-activerecord-object
+
+
+pulire Mac
+http://www.titanium.free.fr/
+http://www.onyxmac.com/
+https://www.macupdate.com/app/mac/13416/yasu
+
+
+risorse Rails
+http://www.korenlc.com/creating-a-simple-search-in-rails-4/
+
+
+Gestione Pagina 404 con template
+http://www.creativebloq.com/web-design/best-404-pages-812505
+https://www.webresourcesfree.com/free-html-404-error-page-website-template/
+http://stackoverflow.com/questions/19653761/how-redirect-to-404-page-in-routes-rb
+http://stackoverflow.com/questions/2385799/how-to-redirect-to-a-404-in-rails
+http://stackoverflow.com/questions/22748697/render-a-404-page-on-routing-error-in-rails    (development.rb config.consider_all_requests_local=false)
+https://gorails.com/forum/error-handling-in-ruby-4
+http://thepugautomatic.com/2014/08/404-with-rails-4/
+
+
+
+rails - “WARNING: Can't verify CSRF token authenticity” for json devise requests
+http://stackoverflow.com/questions/9362910/rails-warning-cant-verify-csrf-token-authenticity-for-json-devise-requests
+
 recuperare src dentro un div (children)
 http://stackoverflow.com/questions/8440315/using-jquery-how-can-i-select-an-image-inside-of-a-div-to-change-its-source
 http://stackoverflow.com/questions/8643165/get-image-attrib-inside-a-div
@@ -448,6 +504,21 @@ extend devise current_user
 http://stackoverflow.com/questions/10349606/where-to-override-current-user-helper-method-of-devise-gem
 
 
+model validate 2 colonne
+http://stackoverflow.com/questions/34424154/rails-validate-uniqueness-of-two-columns-together
+
+
+query a campi incrociati
+http://stackoverflow.com/questions/19175084/activerecord-query-through-multiple-joins
+http://stackoverflow.com/questions/10391266/ruby-on-rails-activerecord-query-using-a-join
+
+modificare stripe
+https://mattarkin.com/pretty-custom-integration-stripe-button/
+https://stripe.com/docs/checkout/tutorial
+https://wpsimplepay.com/docs/misc/calling-stripe-checkout-externally/
+https://wpsimplepay.com/
+
+
 Medium.where(user_id: current_user.id).size   (size più veloce)
 Medium.where(user_id: current_user.id).count  (count fa una query)
 a=Medium.where(user_id: current_user.id).size
@@ -456,7 +527,9 @@ a[0..9] + 10
 a[10..19]
 #implementa pagination javascript
 #http://stackoverflow.com/questions/8518885/how-to-create-pagination-like-behavior-for-an-array-in-javascript
-
+  #181b3d
+  #3c8dbc
+  #367fa9
 
 
 per avviare rails da iphone:

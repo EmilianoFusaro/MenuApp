@@ -8,6 +8,14 @@ Bundler.require(*Rails.groups)
 
 module Menuapp
   class Application < Rails::Application
+
+    #Attenzione da abilitare su Cloud9 (prima riga)
+    #config.web_console.whiny_requests = false
+    ##config.web_console.whitelisted_ips = '37.117.184.120'
+
+    #modulo per gestiore pagina notfound
+    #config.exceptions_app = self.routes
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

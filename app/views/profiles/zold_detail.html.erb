@@ -1,0 +1,51 @@
+<h1>Dettaglio Profilo</h1>
+<%#= debug current_user %>
+<% if current_user.profile.nil?  %>
+<div>
+  Pacchetto Stampa Listino Disattivato
+</div>
+<div>
+  Pacchetto Listino Web Disattivato
+</div>
+<% else %>
+  <% if current_user.profile.stampalistino == false || current_user.profile.stampalistino_data < DateTime.now  %>
+    <div>
+      Pacchetto Stampa Listino Disattivato
+    </div>
+  <% else %>
+     <div>
+       Pacchetto Stampa Listino Attivo Sino al <%= current_user.profile.stampalistino_data %>
+     </div>
+  <% end %>
+  <% if current_user.profile.weblistino == false || current_user.profile.weblistino_data < DateTime.now %>
+    <div>
+      Pacchetto Listino Web Disattivato
+    </div>
+  <% else %>
+    <div>
+      Pacchetto Listino Web Attivo Sino al <%= current_user.profile.weblistino_data %>
+    </div>
+  <% end %>
+<% end %>
+
+<br><br><br>
+
+<div>
+  Acquista Pacchetto Stampa Listino 1 mese <%= ENV['PACCHETTO_STAMPALISTINO_MESE'] %> €
+  <%= render partial: 'payment', :locals => {:pacchetto=>"stampalistino", :periodo=>1, :prezzo => ENV['PACCHETTO_STAMPALISTINO_MESE'].to_i , :dettaglio=> "Stampa Listino 1 Mese" } %>
+</div>
+
+<div>
+  Acquista Pacchetto Stampa Listino 1 anno <%= ENV['PACCHETTO_STAMPALISTINO_ANNO'] %> €
+  <%= render partial: 'payment', :locals => { :pacchetto=>"stampalistino", :periodo=>12, :prezzo => ENV['PACCHETTO_STAMPALISTINO_ANNO'].to_i, :dettaglio=> "Stampa Listino 1 Anno" } %>
+</div>
+
+<div>
+  Acquista Pacchetto Listino Web 1 mese <%= ENV['PACCHETTO_LISTINOWEB_MESE'] %> €
+  <%= render partial: 'payment', :locals => {:pacchetto=>"listinoweb", :periodo=>1, :prezzo => ENV['PACCHETTO_LISTINOWEB_MESE'].to_i, :dettaglio=> "Listino Web 1 Mese" } %>
+</div>
+
+<div>
+  Acquista Pacchetto Listino Web 1 anno <%= ENV['PACCHETTO_LISTINOWEB_ANNO'] %> €
+  <%= render partial: 'payment', :locals => {:pacchetto=>"listinoweb", :periodo=>12, :prezzo => ENV['PACCHETTO_LISTINOWEB_ANNO'].to_i, :dettaglio=> "Listino Web 1 Anno" } %>
+</div>

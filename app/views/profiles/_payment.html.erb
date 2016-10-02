@@ -1,6 +1,6 @@
 
 <%#=form_tag(compra_profiles_path(slug: 999, prezzo:prezzo), :method => "post") do %>
-<%=form_tag compra_profiles_path(pacchetto: pacchetto , periodo:periodo) do %>
+<%=form_tag compra_profiles_path(pacchetto: pacchetto , periodo:periodo)  ,id:stripe do %>
 <script
   src="https://checkout.stripe.com/checkout.js" class="stripe-button"
   data-key="<%= Rails.configuration.stripe[:publishable_key] %>"

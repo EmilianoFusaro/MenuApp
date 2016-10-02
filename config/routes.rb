@@ -2,10 +2,10 @@ Rails.application.routes.draw do
 
   resources :receives do
     collection do
-      post '/regisra' => "receives#registra"
+      post '/registra' => "receives#registra"
     end
   end
-  
+
   resources :menus
 
   resources :media do
@@ -47,11 +47,14 @@ Rails.application.routes.draw do
   resources :profiles do
     collection do
       get 'detail'
+      get 'cerca'
+      #get 'profiles/cerca/:descrizione' => "profiles#descrizone"
       #post '/compra/:slug&:prezzo', to: 'profiles#payment' , as: :compra
       #post '/compra/:slug', to: 'profiles#payment' , as: :compra
       post '/compra/:pacchetto&:periodo', to: 'profiles#payment' , as: :compra
       get '/pickup/:guid', to: 'profiles#pickup', as: :pickup
       put '/aggiungi_dati_azienda' => "profiles#aggiungi_dati_azienda"
+      #delete '/cancella_profilo/:id' => "profiles#cancella_profilo"
     end
   end
 
@@ -68,6 +71,17 @@ Rails.application.routes.draw do
   #controller per la registrazione (Attenzione devo aggiungere questi controller al route se voglio farli funzionare)
   #xdevise_for :users, controllers: { registrations: "users/registrations" }
   devise_for :users, controllers: { registrations: "users/registrations" , sessions: "users/sessions" }
+  #mi permette il logout e ritorna alla index
+  devise_scope :user do
+   get '/users/sign_out' => 'devise/sessions#destroy'
+ end
+
+
+
+#gestione errore
+#if Rails.env.production?
+#get '404', :to => 'application#page_not_found'
+#end
 
 
   #controller per il login

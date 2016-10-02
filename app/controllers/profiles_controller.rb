@@ -3,14 +3,30 @@ class ProfilesController < ApplicationController
   #http_basic_authenticate_with :name => "admin" , :password => "340693" #eseguita su ogni action
   #before_action :check_user
 
-  before_action :check_superuser ,except: [:detail,:payment,:pickup,:aggiungi_dati_azienda]
-  #before_action :check_superuser ,only: [:show, :edit, :update, :destroy ,:index]
-  before_action :set_profile, only: [:show, :edit, :update, :destroy]
+  before_action :check_superuser ,except: [:detail,:payment,:pickup,:destroy, :aggiungi_dati_azienda]
+  ##before_action :check_superuser ,only: [:show, :edit, :update, :destroy ,:index]
+  before_action :set_profile, only: [:show, :edit, :update ,:destroy]
 
   # GET /profiles
   # GET /profiles.json
   def index
     @profiles = Profile.all
+    #se attivo genera json saltando la vista di default
+    #render json: @profiles
+  end
+
+
+  def cerca
+    puts params
+    #debugger
+    #@profiles = Profile.joins(:user).where("users.name like '%a%'") #occhio al plurale
+    if params[:descrizione].strip.size==0
+      redirect_to profiles_url  #forza azione controller
+    else
+      #@profiles = Profile.joins(:user).where("users.name like ? or users.email like ?","%#{params[:descrizione]}%","%#{params[:descrizione]}%")
+      @profiles = Profile.joins(:user).where("users.name like ? or users.email like ?","%#{params[:descrizione]}%","%#{params[:descrizione]}%")
+      render :index #forza una view
+    end
   end
 
   #Get Visualizza Il Dettaglio Utente
@@ -46,6 +62,8 @@ class ProfilesController < ApplicationController
     #  @error = e
     #  redirect_to content_path(content) , notice: @error
     #end
+    #togliere e fare pagina a posta
+    redirect_to detail_profiles_path
   end
 
   def pickup
@@ -56,6 +74,7 @@ class ProfilesController < ApplicationController
   # GET /profiles/1
   # GET /profiles/1.json
   def show
+    @profile = Profile.find(params[:id])
   end
 
   # GET /profiles/new
@@ -117,14 +136,25 @@ class ProfilesController < ApplicationController
   # DELETE /profiles/1
   # DELETE /profiles/1.json
   def destroy
-    @profile.destroy
-      redirect_to profiles_url, notice: 'Profile was successfully destroyed.'
+    #da richiesta destroy standard arriva "id" profilo
+    #Eliminazione Completa delete più veloce destroy necessario per eliminare anche i file
+    utente = Profile.find(params[:id]).user_id
+    User.find(utente).Elimina_Utente()
+
+    #abilitare se si preferisce fare il delete da javascript
+    #respond_to do |format|
+    #  #format.html { redirect_to allergens_url, notice: 'Allergen was successfully destroyed.' }
+    #  format.json { head :no_content }
+    #end
+
+    #@profile.destroy
+    #redirect_to profiles_url, notice: 'Il Profilo Utente è stato eliminato correttamente.'
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_profile
-      @profile = Profile.find(params[:id])
+      @profile = Profile.find_by_user_id(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -148,7 +178,7 @@ class ProfilesController < ApplicationController
        current_user.profile = p
      end
 
-     if pacchetto == "stampalistino"
+     if pacchetto == "stampalistino" or pacchetto == "listinoweb&pdf"
        a = current_user.profile
        a.stampalistino = true
        if a.stampalistino_data.nil? || a.stampalistino_data < DateTime.now
@@ -159,7 +189,7 @@ class ProfilesController < ApplicationController
        a.save
      end
 
-     if pacchetto == "listinoweb"
+     if pacchetto == "listinoweb" or pacchetto == "listinoweb&pdf"
        a = current_user.profile
        a.weblistino = true
        if a.weblistino_data.nil? || a.weblistino_data < DateTime.now

@@ -9,6 +9,25 @@ class ReceivesController < ApplicationController
   end
 
   def registra
+    #puts params
+    #debugger
+    @receife = Receive.new()
+    @receife.tipo= params[:tipo_form]
+    if params[:tipo_form]=="newsletter"
+      @receife.email = params[:newsletter_email]
+    else
+      @receife.email = params[:contatti_email]
+      @receife.nome = params[:contatti_nome]
+      @receife.oggetto = params[:contatti_oggetto]
+      @receife.messaggio = params[:contatti_messaggio]
+    end
+    if @receife.save
+      #render json: @receife, status: :created  #201
+      #format.json { render json: @receife, status: :ok }
+      render json: @receife
+    else
+      render json: @receife.errors, status: :unprocessable_entity #422
+    end
   end
 
   # GET /receives/1

@@ -1,51 +1,297 @@
-<h1>Dettaglio Profilo</h1>
-<%#= debug current_user %>
-<% if current_user.profile.nil?  %>
-<div>
-  Pacchetto Stampa Listino Disattivato
-</div>
-<div>
-  Pacchetto Listino Web Disattivato
-</div>
-<% else %>
-  <% if current_user.profile.stampalistino == false || current_user.profile.stampalistino_data < DateTime.now  %>
-    <div>
-      Pacchetto Stampa Listino Disattivato
+<!-- ====== Menu Section ====== -->
+<section id="menu">
+  <div class="navigation">
+    <div id="main-nav" class="navbar navbar-default" role="navigation">
+      <div class="container">
+
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">MenuApp</a>
+        </div> <!-- end .navbar-header -->
+
+        <div class="navbar-collapse collapse">
+          <ul id="ulnav" class="nav navbar-nav navbar-right">
+            <li><a href="/">Home</a></li>
+            <li><a href="/dashboard/index">Dashboard</a></li>
+            <li>
+            <%if user_signed_in? %>
+              <%#= link_to "#{current_user.name} LogOut", destroy_user_session_path , method: :delete %>
+              <%= link_to "LogOut", destroy_user_session_path , method: :delete %>
+            <% end %>
+            </li>
+          </ul>
+        </div><!-- end .navbar-collapse -->
+
+      </div> <!-- end .container -->
+    </div> <!-- end #main-nav -->
+  </div> <!-- end .navigation -->
+</section>
+<!-- ====== End Menu Section ====== -->
+
+<!-- ====== Subscribe Section ====== -->
+<div class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+      <h1><strong>Dettaglio Del Tuo Profilo: <%= current_user.name %></strong></h1>
+      </div>
     </div>
+  </div>
+</div>
+
+<section id="situazione_date" style="background-color:#3c8dbc;">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+      <br>
+  <%#= debug current_user %>
+  <% if current_user.profile.nil?  %>
+  <div>
+    <h2><strong>Pacchetto Listino Web Disattivato</strong></h2>
+  </div>
+  <div>
+    <h2><strong>Pacchetto Stampa Listino Disattivato</strong></h2>
+  </div>
   <% else %>
-     <div>
-       Pacchetto Stampa Listino Attivo Sino al <%= current_user.profile.stampalistino_data %>
-     </div>
+    <% if current_user.profile.weblistino == false || current_user.profile.weblistino_data < DateTime.now %>
+      <div>
+        <h2><strong>Pacchetto Listino Web Disattivato</strong></h2>
+      </div>
+    <% else %>
+      <div>
+        <h2><strong>Pacchetto Listino Web  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Attivo Sino al: &nbsp;&nbsp; <%= current_user.profile.weblistino_data.strftime("%d/%m/%Y") %></strong></h2>
+      </div>
+    <% end %>
+    <% if current_user.profile.stampalistino == false || current_user.profile.stampalistino_data < DateTime.now  %>
+      <div>
+        <h2><strong>Pacchetto Stampa Listino Disattivato</strong></h2>
+      </div>
+    <% else %>
+       <div>
+         <h2><strong>Pacchetto Stampa Listino Attivo Sino al: &nbsp;&nbsp; <%= current_user.profile.stampalistino_data.strftime("%d/%m/%Y") %></strong></h2>
+       </div>
+    <% end %>
   <% end %>
-  <% if current_user.profile.weblistino == false || current_user.profile.weblistino_data < DateTime.now %>
-    <div>
-      Pacchetto Listino Web Disattivato
+  <br>
+  </div>
+  </div>
+  </div>
+</section>
+
+<section id="download">
+  <div class="bg-color">
+    <div class="download section-padding">
+      <div class="container">
+
+        <div class="header">
+          <h1><strong>MenuApp</strong> Accesso Rapido</h1>
+          <!-- <p>Per accedere a MenuApp hai bisogno solo di una connessione ad internet, non ti serve nient'altro, nessuna installazione complicata, nessun sistema dedicato.</p> -->
+          <div class="underline"><i class="fa fa-cloud-download"></i></div>
+        </div> <!-- end .container > .header -->
+
+        <div class="row download-area">
+
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+            <a href="/users/sign_in" class="btn btn-default custom-btn download-btn">
+              <i class="fa fa-mobile"></i>
+              <div class="app-download">
+                <span>Disponibile Per</span><strong>Iphone - Ipad</strong>
+              </div>
+            </a>
+          </div> <!-- end .download-area> .col-lg-3 (1) -->
+
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+            <a href="/users/sign_in" class="btn btn-default custom-btn download-btn">
+            <img src="/sito/images/playstore.png" alt="">
+            <div class="app-download">
+              <span>Disponibile Per</span><strong>Android</strong>
+            </div></a>
+          </div> <!-- end .download-area> .col-lg-3 (2) -->
+
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+            <a href="/users/sign_in" class="btn btn-default custom-btn download-btn">
+            <i class="fa fa-windows"></i>
+            <div class="app-download">
+              <span>Disponibile Per</span>Windows Phone
+            </div>
+            </a>
+          </div> <!-- end .download-area> .col-lg-3 (3) -->
+
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+            <a href="/users/sign_in" class="btn btn-default custom-btn download-btn">
+            <!-- <img src="/sito/images/amazon.png" alt=""> -->
+            <i class="fa fa-windows"></i>
+            <div class="app-download">
+              <span>Disponibile Per</span><strong>Il Tuo Computer</strong>
+            </div>
+            </a>
+          </div> <!-- end .download-area> .col-lg-3 (4) -->
+
+        </div> <!-- end .container > .row/.download-area -->
+
+      </div> <!-- end .container -->
+    </div> <!-- end .download -->
+  </div> <!-- end .bg-color -->
+</section>
+
+
+<!-- ====== Price Section ====== -->
+<section id="price">
+  <div class="price section-padding dark-bg">
+    <div class="container">
+
+      <div class="header">
+        <h1>Acquista Pacchetto</h1>
+        <div class="underline"><i class="fa fa-users"></i></div>
+      </div> <!-- end .container> .header -->
+
+      <div class="row">
+        <div class="price-list">
+
+          <div class="col-md-4">
+            <div class="price-table">
+              <div class="rate">€19<h4>al mese.</h4></div>
+              <h2>Listini Web</h2>
+              <p>Crea i tuoi menu web facili da consultare su qualsiasi dispositivo.</p>
+              <ul>
+                <li><i class="fa fa-check"></i>Creazione menu <strong>Web</strong>.</li>
+                <li><i class="fa fa-check"></i>Gestione e archiviazione menu.</li>
+                <li><i class="fa fa-check"></i>Tanti template disponibili.</li>
+                <li><i class="fa fa-check"></i>Traduzioni automatiche.</li>
+                <li><i class="fa fa-check"></i>Allergeni e intolleranze.</li>
+                <li><i class="fa fa-check"></i>Invio menu per email.</li>
+                <li><i class="fa fa-check"></i>Aggiornamenti gratuiti.</li>
+                <li><i class="fa fa-check"></i>Assistenza gratuita.</li>
+              </ul>
+              <a href="#" class="btn btn-default buy-now" id="acquista_web">Acquista</a>
+            </div> <!-- end .price-table -->
+          </div> <!-- end .price-list> .col-md-4 (1) -->
+
+          <div class="col-md-4">
+            <div class="price-table">
+              <div class="rate">€19<h4>al mese.</h4></div>
+              <h2>Listini Pdf</h2>
+              <p>Crea con facilità i tuoi menu del giorno, stampali e lasciali sui tavoli. </p>
+              <ul>
+                <li><i class="fa fa-check"></i>Creazione menu <strong>Pdf</strong>.</li>
+                <li><i class="fa fa-check"></i>Gestione e archiviazione menu.</li>
+                <li><i class="fa fa-check"></i>Tanti template disponibili.</li>
+                <li><i class="fa fa-check"></i>Traduzioni automatiche.</li>
+                <li><i class="fa fa-check"></i>Gestione stampa menu.</li>
+                <li><i class="fa fa-check"></i>Invio menu per email.</li>
+                <li><i class="fa fa-check"></i>Aggiornamenti gratuiti.</li>
+                <li><i class="fa fa-check"></i>Assistenza gratuita.</li>
+              </ul>
+              <a href="#" class="btn btn-default buy-now" id="acquista_pdf">Acquista</a>
+            </div> <!-- end .price-table -->
+          </div> <!-- end .price-list> .col-md-4 (2) -->
+
+          <div class="col-md-4">
+            <div class="price-table featured-price">
+              <div class="rate">€29<h4>al mese.</h4></div>
+              <h2>Listini Web + Pdf</h2>
+              <p>Soluzione completa che comprende i due pacchetti menu web + menu pdf.</p>
+              <ul>
+                <li><i class="fa fa-check"></i>Creazione menu <strong>Web + Pdf</strong>.</li>
+                <li><i class="fa fa-check"></i>Gestione e archiviazione menu.</li>
+                <li><i class="fa fa-check"></i>Tanti template disponibili.</li>
+                <li><i class="fa fa-check"></i>Traduzioni automatiche.</li>
+                <li><i class="fa fa-check"></i> Allergeni e intolleranze.</li>
+                <li><i class="fa fa-check"></i>Gestione stampa menue invio mail.</li>
+                <li><i class="fa fa-check"></i>Aggiornamenti gratuiti.</li>
+                <li><i class="fa fa-check"></i>Assistenza gratuita.</li>
+              </ul>
+              <a href="#" class="btn btn-default buy-now" id="acquista_web_pdf">Acquista</a>
+            </div> <!-- end .price-table -->
+          </div> <!-- end .price-list> .col-md-4 (3) -->
+
+        </div> <!-- end .price-list -->
+      </div> <!-- end .container> .row -->
+
+    </div> <!-- end .container -->
+  </div> <!-- end .price -->
+</section>
+
+<section id="stripe_pagamento" style="background-color:white;">
+  <div class="container">
+  <div class="row">
+  <div class="col-md-12" id="stripe_pagamenti" hidden>
+    <!-- <br><br> -->
+    Acquista Pacchetto Stampa Listino 1 mese <%= ENV['PACCHETTO_STAMPALISTINO_MESE'] %> €
+    <%= render partial: 'payment', :locals => {:pacchetto=>"stampalistino", :periodo=>1, :prezzo => ENV['PACCHETTO_STAMPALISTINO_MESE'].to_i , :dettaglio=> "Stampa Listino 1 Mese" ,:stripe=>"pdf1"} %>
+
+    Acquista Pacchetto Stampa Listino 1 anno <%= ENV['PACCHETTO_STAMPALISTINO_ANNO'] %> €
+    <%#= render partial: 'payment', :locals => { :pacchetto=>"stampalistino", :periodo=>12, :prezzo => ENV['PACCHETTO_STAMPALISTINO_ANNO'].to_i, :dettaglio=> "Stampa Listino 1 Anno" ,:stripe=>"pdf12" } %>
+
+    Acquista Pacchetto Listino Web 1 mese <%= ENV['PACCHETTO_LISTINOWEB_MESE'] %> €
+    <%= render partial: 'payment', :locals => {:pacchetto=>"listinoweb", :periodo=>1, :prezzo => ENV['PACCHETTO_LISTINOWEB_MESE'].to_i, :dettaglio=> "Listino Web 1 Mese" ,:stripe=>"web1" } %>
+
+    Acquista Pacchetto Listino Web 1 anno <%= ENV['PACCHETTO_LISTINOWEB_ANNO'] %> €
+    <%#= render partial: 'payment', :locals => {:pacchetto=>"listinoweb", :periodo=>12, :prezzo => ENV['PACCHETTO_LISTINOWEB_ANNO'].to_i, :dettaglio=> "Listino Web 1 Anno" ,:stripe=>"web12" } %>
+
+    Acquista Pacchetto Listino Web & Pdf 1 mese <%= ENV['PACCHETTO_LISTINOWEBPDF_MESE'] %> €
+    <%= render partial: 'payment', :locals => {:pacchetto=>"listinoweb&pdf", :periodo=>1, :prezzo => ENV['PACCHETTO_LISTINOWEBPDF_MESE'].to_i, :dettaglio=> "Listino Web & Pdf 1 Mese" ,:stripe=>"webpdf1" } %>
+
+  </div>
+  </div>
+  </div>
+  <br><br><br><br>
+  </section>
+
+
+
+
+<!--======E nd Subscribe Section======-->
+
+<footer class="navbar-fixed-bottom">
+  <section class="copyright dark-bg">
+    <div class="container">
+       <p>© 2014
+       <a href="#">Blue App</a>, All Rights Reserved</p>
     </div>
-  <% else %>
-    <div>
-      Pacchetto Listino Web Attivo Sino al <%= current_user.profile.weblistino_data %>
-    </div>
-  <% end %>
-<% end %>
+  </section>
+</footer>
 
-<br><br><br>
+<script type="text/javascript">
+$(document).on('click', '#acquista_web', function(event) {
+  event.preventDefault();
+   $('#web1').children('.stripe-button-el').click()
+});
 
-<div>
-  Acquista Pacchetto Stampa Listino 1 mese <%= ENV['PACCHETTO_STAMPALISTINO_MESE'] %> €
-  <%= render partial: 'payment', :locals => {:pacchetto=>"stampalistino", :periodo=>1, :prezzo => ENV['PACCHETTO_STAMPALISTINO_MESE'].to_i , :dettaglio=> "Stampa Listino 1 Mese" } %>
-</div>
+$(document).on('click', '#acquista_pdf', function(event) {
+  event.preventDefault();
+   $('#pdf1').children('.stripe-button-el').click()
+});
 
-<div>
-  Acquista Pacchetto Stampa Listino 1 anno <%= ENV['PACCHETTO_STAMPALISTINO_ANNO'] %> €
-  <%= render partial: 'payment', :locals => { :pacchetto=>"stampalistino", :periodo=>12, :prezzo => ENV['PACCHETTO_STAMPALISTINO_ANNO'].to_i, :dettaglio=> "Stampa Listino 1 Anno" } %>
-</div>
+$(document).on('click', '#acquista_web_pdf', function(event) {
+  event.preventDefault();
+   $('#webpdf1').children('.stripe-button-el').click()
+});
 
-<div>
-  Acquista Pacchetto Listino Web 1 mese <%= ENV['PACCHETTO_LISTINOWEB_MESE'] %> €
-  <%= render partial: 'payment', :locals => {:pacchetto=>"listinoweb", :periodo=>1, :prezzo => ENV['PACCHETTO_LISTINOWEB_MESE'].to_i, :dettaglio=> "Listino Web 1 Mese" } %>
-</div>
+</script>
 
-<div>
-  Acquista Pacchetto Listino Web 1 anno <%= ENV['PACCHETTO_LISTINOWEB_ANNO'] %> €
-  <%= render partial: 'payment', :locals => {:pacchetto=>"listinoweb", :periodo=>12, :prezzo => ENV['PACCHETTO_LISTINOWEB_ANNO'].to_i, :dettaglio=> "Listino Web 1 Anno" } %>
-</div>
+
+<!-- <%= link_to 'New Profile', new_profile_path %>
+<script src="https://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).on('click', '[id*="elimina_"]', function(event) {
+  event.preventDefault();
+  debugger;
+  var indice=this.id.split('_')[1];
+//  bootbox.confirm("Sei sicuro di voler eliminare  la categoria: "+ $("#titolo_" + indice).text() + " ?", function(result) {
+//   if (result==true) {
+      $.ajax({
+          url: "/profiles/" + indice,
+          type: 'DELETE',
+          success: function(){
+            alert('Utente Eliminato!');
+          }
+      });
+//    }
+  });
+</script> -->

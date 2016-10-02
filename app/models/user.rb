@@ -17,4 +17,18 @@ class User < ActiveRecord::Base
   #validates_presence_of :email, :message=>"Email Errata!"
   #validates_presence_of :password, :message=>"Password Errata!"
 
+  def Elimina_Utente()
+    Category.delete_all(user_id: self.id)
+    Dish.delete_all(user_id: self.id)
+    Ingredient.delete_all(user_id: self.id)
+    Medium.destroy_all(user_id: self.id)
+    Menu.delete_all(user_id: self.id)
+    Profile.destroy_all(user_id: self.id)
+    self.destroy()
+  end
+
+  def saluta
+    puts self.id
+  end
+
 end

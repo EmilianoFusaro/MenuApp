@@ -12,7 +12,16 @@ class ApplicationController < ActionController::Base
 
   before_action :controlla_pacchetti, only: [:profiles] #specifica su quali controller
 
+
   protected
+
+  # def page_not_found
+  #     respond_to do |format|
+  #       format.html { render template: 'errors/not_found_error', layout: 'layouts/application', status: 404 }
+  #       format.all  { render nothing: true, status: 404 }
+  #     end
+  # end
+
   def configure_permitted_parameters
     #emiliano aggiunta di campi nelle varie fasi del controller
     #devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
@@ -21,12 +30,18 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:account_update) << :name
   end
 
+  #reindirizza ad una pagina specifica dopo il login
+  def after_sign_in_path_for(resource)
+    detail_profiles_path
+  end
+
+
   def controlla_pacchetti
     #debugger
     #puts "ECCOMI"
     #logger.debug "Emiliano Fusaro"
     #byebug
-    if current_user    
+    if current_user
       if current_user.profile.nil? == false
         if current_user.profile.stampalistino==true && current_user.profile.stampalistino_data < DateTime.now
           current_user.profile.stampalistino = false

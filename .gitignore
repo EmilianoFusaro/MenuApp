@@ -17,4 +17,4 @@
 /tmp
 
 #emiliano 26.04.16 ignora questo tipo di file che contiene variabili develop & production
-.env
+#.env
