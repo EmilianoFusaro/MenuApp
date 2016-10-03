@@ -1,34 +1,94 @@
-<h2>Sign-n-up</h2>
+<!-- ====== Menu Section ====== -->
+<section id="menu">
+  <div class="navigation">
+    <div id="main-nav" class="navbar navbar-default" role="navigation">
+      <div class="container">
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">MenuApp</a>
+        </div> <!-- end .navbar-header -->
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true %>
-  </div>
+        <div class="navbar-collapse collapse">
+          <ul id="ulnav" class="nav navbar-nav navbar-right">
+            <li><a href="/">Home</a></li>
+            <%if user_signed_in? %>
+              <li><a href="/dashboard/index">Dashboard</a></li>
+            <% end %>
+            <li>
+            <%if user_signed_in? %>
+              <%#= link_to "#{current_user.name} LogOut", destroy_user_session_path , method: :delete %>
+              <%= link_to "LogOut", destroy_user_session_path , method: :delete %>
+			      <% else %>
+			        <%#= render "devise/shared/links" %>
+			        <a href="/users/sign_in">Login</a>
+            <% end %>
+            </li>
+          </ul>
+        </div><!-- end .navbar-collapse -->
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email %>
-  </div>
+      </div> <!-- end .container -->
+    </div> <!-- end #main-nav -->
+  </div> <!-- end .navigation -->
+</section>
+<!-- ====== End Menu Section ====== -->
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
+<section id="registrazione">
+  <div class="footer section-padding">
+    <div class="container">
+      <h1><strong>Registrazione Utente</strong></h1>
+      <%= devise_error_messages! %>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class:"form contact", id:"frm_contatti" }) do |f| %>
+      <!-- <form action="/receives/registra" class="form contact" id="frm_contatti" method="post"> -->
+        <div class="row">
+          <div class="col-xs-12 col-md-6">
+            <div class="form-group">
+              <label for="name" class="sr-only">Nome</label>
+              <%= f.text_field :name, autofocus: true ,class:"form-control", placeholder:"Nome"%>
+            </div> <!-- end .form-group -->
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
+            <div class="form-group">
+              <label for="email" class="sr-only">Email</label>
+              <%= f.email_field :email, autofocus: true ,class:"form-control" , placeholder:"Email" %>
+            </div> <!-- end .form-group -->
 
-<%= render "devise/shared/links" %>
+          </div> <!-- end .form> .row> .col-md-4 -->
+
+          <div class="col-xs-12 col-md-6">
+            <div class="form-group">
+              <label for="name" class="sr-only">Password</label>
+              <%= f.password_field :password, autocomplete: "off", class:"form-control", placeholder:"Password (8 caratteri minimo)" %>
+            </div> <!-- end .form-group -->
+
+            <div class="form-group">
+              <label for="name" class="sr-only">Conferma Password</label>
+              <%= f.password_field :password_confirmation, autocomplete: "off" , class:"form-control", placeholder:"Conferma Password" %>
+            </div> <!-- end .form-group -->
+            </div>
+
+        </div> <!-- end .form> .row -->
+        <button class="btn btn-default contact-submit custom-btn" type="submit" id="btn_contatti"><i class="fa fa-hand-o-right"></i>REGISTRA</button>
+        <!-- <%= f.submit "Sign up" %> -->
+
+      <!-- </form>  -->
+      <% end %>
+    </div> <!-- end .container -->
+  </div> <!-- end .footer -->
+</section>
+
+
+
+<footer class="navbar-fixed-bottom">
+  <section class="copyright dark-bg">
+    <div class="container">
+       <p>© 2016
+       <a href="#">MenuApp</a>, All Rights Reserved</p>
+    </div>
+  </section>
+</footer>

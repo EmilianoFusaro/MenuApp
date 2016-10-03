@@ -75,6 +75,7 @@ class ProfilesController < ApplicationController
   # GET /profiles/1.json
   def show
     @profile = Profile.find(params[:id])
+    @utente = @profile.user
   end
 
   # GET /profiles/new
@@ -148,7 +149,7 @@ class ProfilesController < ApplicationController
     #end
 
     #@profile.destroy
-    #redirect_to profiles_url, notice: 'Il Profilo Utente è stato eliminato correttamente.'
+    redirect_to profiles_url, notice: 'Il Profilo Utente è stato eliminato correttamente.'
   end
 
   private

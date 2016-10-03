@@ -154,7 +154,7 @@ bundle install --without production
 
 git status
 git add .
-git commit -m "nome commit"
+git commit -m "menuapp 2 Ottobre"
 git push origin master
 
 git push heroku master

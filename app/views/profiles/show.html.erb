@@ -35,61 +35,141 @@
 
 
 <!-- ====== Subscribe Section ====== -->
-<div class="section">
+<section id="mostra">
   <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="section">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-12">
-                <h1>Gestione Profili Utente</h1>
-                <div class="row">
-                  <div class="col-md-6">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Mostra Profilo Utente: <%= @utente.name %></h1>
+      <div class="row">
+        <div class="col-md-12">
+        <p id="notice"><%= notice %></p>
+          <table class="table table-bordered table-condensed table-hover table-striped">
+            <thead>
+              <tr>
+                <th>Campo Utente</th>
+                <th>Valore</th>
+              </tr>
+            </thead>
+            <tr>
+            <td>Utente Id:</td>
+            <td><%= @utente.id %></td>
+            </tr>
+            <tr>
+            <td>Email:</td>
+            <td><%= @utente.email %></td>
+            </tr>
+            <tr>
+            <td>Nome:</td>
+            <td><%= @utente.name %></td>
+            </tr>
+            <tr>
+            <td>Numero Di Accessi:</td>
+            <td><%= @utente.sign_in_count %></td>
+            </tr>
+            <tr>
+            <td>Ultimo Accesso:</td>
+            <td><%= @utente.current_sign_in_at %></td>
+            </tr>
+            <td>Penultimo Accesso:</td>
+            <td><%= @utente.last_sign_in_at %></td>
+            </tr>
+            <td>Data Creazione:</td>
+            <td><%= @utente.created_at %></td>
+            </tr>
+            <td>Data Aggiornamento:</td>
+            <td><%= @utente.updated_at %></td>
+            </tr>
+          </table>
+          <hr>
 
-                    <p id="notice"><%= notice %></p>
+          <table class="table table-bordered table-condensed table-hover table-striped">
+            <thead>
+              <tr>
+                <th>Campo Profilo</th>
+                <th>Valore</th>
+              </tr>
+            </thead>
+            <tr>
+            <td>Profilo Id:</td>
+            <td><%= @profile.id %></td>
+            </tr>
+            <tr>
+            <td>Tipo:</td>
+            <td><%= @profile.tipo %></td>
+            </tr>
+            <tr>
+            <td>Descrizione:</td>
+            <td><%= @profile.descrizione %></td>
+            </tr>
+            <tr>
+            <td>Creato:</td>
+            <td><%= @profile.created_at %></td>
+            </tr>
+            <tr>
+            <td>Aggiornato:</td>
+            <td><%= @profile.updated_at %></td>
+            </tr>
+            <tr>
+            <td>Stampa Listino:</td>
+            <td><%= @profile.stampalistino %></td>
+            </tr>
+            <tr>
+            <td>Stampa Listino Valido:</td>
+            <td><%= @profile.stampalistino_data %></td>
+            </tr>
+            <tr>
+            <td>Lisino Web:</td>
+            <td><%= @profile.weblistino %></td>
+            </tr>
+            <tr>
+            <td>Listino Web Valido:</td>
+            <td><%= @profile.weblistino_data %></td>
+            </tr>
+            <tr>
+            <td>Ragione Sociale:</td>
+            <td><%= @profile.ragionesociale %></td>
+            </tr>
+            <tr>
+            <td>Indirizzo:</td>
+            <td><%= @profile.indirizzo %></td>
+            </tr>
+            <tr>
+            <td>Telefono:</td>
+            <td><%= @profile.telefono %></td>
+            </tr>
+            <tr>
+            <td>Cellulare:</td>
+            <td><%= @profile.cellulare %></td>
+            </tr>
+            <tr>
+            <td>Fax:</td>
+            <td><%= @profile.fax %></td>
+            </tr>
+            <td>Sito:</td>
+            <td><%= @profile.sitointernet %></td>
+            </tr>
 
-                    <p>
-                      <strong>User:</strong>
-                      <%= @profile.user_id %>
-                    </p>
+          </table>
+          <hr>
 
-                    <p>
-                      <strong>Tipo:</strong>
-                      <%= @profile.tipo %>
-                    </p>
-
-                    <p>
-                      <strong>Descrizione:</strong>
-                      <%= @profile.descrizione %>
-                    </p>
-
-                    <%= link_to 'Edit', edit_profile_path(@profile) %> |
-                    <%= link_to 'Back', profiles_path %>
-
-                  </div>
-                  <br>
-                  <br>
-                  <br>
-                  <br>
-                </div>
-              </div>
-            </div>
-          </div>
+          <%= link_to 'Edit', edit_profile_path(@profile) %> |
+          <%= link_to 'Back', profiles_path %>
+          <br><br><br>
         </div>
       </div>
     </div>
   </div>
-</div>
+  </div>
+</section>
 
 
 
 
-<footer class="navbar-fixed-bottom">
+<footer> <!--class="navbar-fixed-bottom">-->
   <section class="copyright dark-bg">
     <div class="container">
-       <p>© 2014
-       <a href="#">Blue App</a>, All Rights Reserved</p>
+       <p>© 2016
+       <a href="#">MenuApp</a>, All Rights Reserved</p>
     </div>
   </section>
 </footer>
