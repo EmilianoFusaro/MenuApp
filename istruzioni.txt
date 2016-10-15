@@ -154,7 +154,7 @@ bundle install --without production
 
 git status
 git add .
-git commit -m "menuapp 2 Ottobre"
+git commit -m "menuapp 3 Ottobre"
 git push origin master
 
 git push heroku master
@@ -215,6 +215,10 @@ http://v4-alpha.getbootstrap.com/layout/grid/
 
 esempio creazione tabella righe colonne
 http://stackoverflow.com/questions/34068421/how-to-make-an-html-table-which-is-automatically-create-new-row-after-six-item
+
+
+aggiungere migrazione-migration
+rails g migration add_ordine_to_dishes ordine:int
 
 
 Asset Originale

@@ -5,7 +5,9 @@ class ProfilesController < ApplicationController
 
   before_action :check_superuser ,except: [:detail,:payment,:pickup,:destroy, :aggiungi_dati_azienda]
   ##before_action :check_superuser ,only: [:show, :edit, :update, :destroy ,:index]
+  before_action :set_utente, only: [:aggiorna_utente]
   before_action :set_profile, only: [:show, :edit, :update ,:destroy]
+
 
   # GET /profiles
   # GET /profiles.json
@@ -76,6 +78,8 @@ class ProfilesController < ApplicationController
   def show
     @profile = Profile.find(params[:id])
     @utente = @profile.user
+    #puts @profile.user_id
+    #@utente = User.find(@profile.user_id)
   end
 
   # GET /profiles/new
@@ -108,11 +112,32 @@ class ProfilesController < ApplicationController
   # PATCH/PUT /profiles/1
   # PATCH/PUT /profiles/1.json
   def update
+      #puts params
+      #puts profile_params
+      #debugger
+      @profile = Profile.find(params[:id])
       if @profile.update(profile_params)
-        redirect_to @profile, notice: 'Profile was successfully updated.'
+        redirect_to @profile, notice: 'Il Profilo è Stato Aggiornato.'
       else
-        render :edit
+        #render :edit
+        render :show
       end
+  end
+
+
+  def aggiorna_utente
+      #puts params
+      #puts utente_params
+      #debugger
+      @utente = User.find(params[:user][:id])
+      @profile = Profile.find_by_user_id(params[:user][:id])
+      if @utente.update(utente_params)
+        redirect_to @profile, notice: "L'utente è Stato Aggiornato."
+      else
+        #render :edit
+        render :show
+      end
+
   end
 
 
@@ -155,12 +180,28 @@ class ProfilesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_profile
+      puts "setto profilo"
       @profile = Profile.find_by_user_id(params[:id])
     end
 
+    def set_utente
+      puts "setto utente"
+      @utente = User.find_by_id(params[:id])
+    end
+
+
+    def utente_params
+      #params.require(:profile).permit(:user_id, :tipo, :descrizione, :created_at, :updated_at, :cellulare)
+      #params.require(:user).permit!
+      params.require(:user).permit!.except(:id)  #in utente_params non arriva più :id
+    end
+
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def profile_params
-      params.require(:profile).permit(:user_id, :tipo, :descrizione)
+      #params.require(:profile).permit(:user_id, :tipo, :descrizione, :created_at, :updated_at, :cellulare)
+      #params.require(:user).permit!
+      params.require(:profile).permit!.except(:id)
     end
 
     def check_superuser

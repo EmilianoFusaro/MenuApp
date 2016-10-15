@@ -1,0 +1,289 @@
+<div class="box-body col-xs-12">
+
+  <!-- <div class="box-footer clearfix no-border"> -->
+  <!-- <div class="box-header clearfix no-border">
+      <button id="btn_inserisci_piatto" class="btn btn-default pull-right" data-toggle="modal" data-target="#aggiungi_piatto"><i class="fa fa-plus" style="font-size:20px;font-weight:bold;"></i><strong>Aggiungi</strong</button>
+      <button id="btn_salva_ordine" class="btn btn-default pull-right"><i class="fa fa-bars" style="font-size:20px;font-weight:bold;"></i><strong>Salva Ordine</strong</button>
+  </div> -->
+
+<ul class="todo-list" id="lista_piatti" contenteditable="false">
+<% @lista_piatti.each do |piatto| %>
+    <li id="lista_piatti_<%= piatto.id %>" class="item_piatto" style="height:50px;" contenteditable="false">
+        <!-- drag handle -->
+        <span class="handle">
+            <i class="fa fa-ellipsis-v"></i>
+            <i class="fa fa-ellipsis-v"></i>
+            <i class="fa fa-ellipsis-v"></i>
+        </span>
+        <!-- checkbox -->
+        <!-- <input type="checkbox" value="" name=""/> -->
+        <!-- todo text -->
+        <span id="nome<%= piatto.id %>" class="text" style="font-size:22px;font-weight:bold;" contenteditable="false"><%= piatto.nome %></span>
+
+        <!-- <span class="text"><input type="text" class="form-control" id="nome_<%#= piatto.id %>" style="font-size:16px;font-weight:bold;width:350px;" placeholder="Nome Piatto ..." value="<%#= piatto.nome %>"></span> -->
+        <!-- <br>
+        <span class="text"><input type="text" class="form-control" id="ingredienti_<%#= piatto.id %>" style="font-size:12px;width:500px;margin-left:22px;" placeholder="Ingredienti ..." value="<%#= piatto.lista_ingredienti %>"></span>
+        <br>
+        <span class="text"><textarea rows="6" cols="50" class="form-control" id="descrizione_<%#= piatto.id %>" style="font-size:12px;width:500px;margin-left:22px;resize:none;" placeholder="Descrizione ..."></textarea></span> -->
+        <!-- <br> -->
+        <!-- <span class="text"><textarea rows="2" cols="50" class="form-control" id="descrizione_<%#=piatto_id %>" style="font-size:12px;width:500px;margin-left:22px;" placeholder="Descrizione ..."><%#= piatto.descrizione %></textarea></span> -->
+        <!-- Emphasis label -->
+        <!-- <small class="label label-danger"><i class="fa fa-clock-o"></i> 2 mins</small> -->
+        <!-- General tools such as edit or delete-->
+        <div class="tools">
+           <!-- <button type="button" class="btn btn-primary btn-sm" style="padding-bottom:-30px">Modifica</button>
+           <button type="button" class="btn btn-primary btn-sm">Elimina</button> -->
+            <i id="modifica_piatto_<%= piatto.id %>" class="fa fa-edit" style="font-size:25px;font-weight:bold;" data-toggle="modal" data-target="#modifica_piatto"></i>
+            <i id="elimina_piatto_<%= piatto.id %>" class="fa fa-trash-o" style="font-size:25px;font-weight:bold;"></i>
+        </div>
+    </li>
+<%end%>
+
+</ul>
+
+</div><!-- /.box-body -->
+
+
+<!-- Modal Aggiungi Nuova piatto-->
+<div class="modal fade" id="aggiungi_piatto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Inserisci piatto</h4>
+      </div>
+      <div class="modal-body">
+        <label for="usr">Nome:</label>
+        <input type="text" class="form-control" style="font-weight:bold;" id="frm_nome">
+        <label for="usr">Descrizione:</label>
+        <input type="text" class="form-control" style="font-weight:bold;" id="frm_descrizione">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_chiudi_add">Chiudi</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="btn_aggiungi_piatto">Salva</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Modifica piatto-->
+<div class="modal fade" id="modifica_piatto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel2">Inserisci piatto</h4>
+      </div>
+      <div class="modal-body">
+        <label for="usr">Nome:</label>
+        <input type="text" class="form-control" style="font-weight:bold;" id="frm_nome_m">
+        <label for="usr">Descrizione:</label>
+        <input type="text" class="form-control" style="font-weight:bold;" id="frm_descrizione_m">
+      </div>
+      <div id="frm_nascosto_id" style="display:none;"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_chiudi_add_m">Chiudi</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="btn_modifica_piatto">Salva</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+//imposta lo stile
+$("input[type='checkbox'], input[type='radio']").iCheck({
+     checkboxClass: 'icheckbox_minimal',
+     radioClass: 'iradio_minimal'
+ });
+//quando la lista è ordinabile non funziona il contenteditable
+//$(".todo-list").sortable();  //il drag & drop funziona su tutta la lista
+$(".todo-list").sortable({handle: ".handle"});  //il drag & drop funziona solo su la parte specificata
+$(".todo-list").disableSelection();
+//sposta contenitori colorati
+$(".small-box").draggable();
+//debugger;
+$("li.menu").removeClass("active");
+$("li.menu.index").addClass("active");
+
+
+//Gestione Azioni
+
+//$('div[id^="sales_info_"]')  inizia per
+//$("[id$=item]") finisce per
+
+$(document).on('click', '[id*="modifica_piatto_"]', function() {
+  //alert("Modifica " + this.id + " " + this.id.split('_')[2]);
+  // alert($('[id*="modifica_piatto_"]').attr("id"));
+  var indice=this.id.split('_')[2];  //attenzione provare senza var
+  //alert($("span#nome_" + indice).text());
+  //debugger;
+  $('#frm_nome_m').val($("span#nome_" + indice).text());
+  $('#frm_nascosto_id').text(indice);
+  //$('#frm_descrizione_m').val($("span#nome_" + indice).text());
+});
+
+
+//Action Elimina piatto
+$(document).on('click', '[id*="elimina_piatto_"]', function() {
+var indice=this.id.split('_')[2];
+ bootbox.confirm("Sei sicuro di voler eliminare  la piatto: "+ $("#nome_" + indice).text() + " ?", function(result) {
+   if (result==true) {
+      $.ajax({
+          url: "/dashboard/cancella_piatto/" + indice,
+          type: 'DELETE',
+          success: function() {
+            $('#egorie_' + indice).fadeOut(600, function(){ $(this).remove();
+              var contatore_categorie_create=parseInt($('#categorie_create').text())-1;
+              $('#categorie_create').text(contatore_categorie_create).fadeIn("slow");
+            });
+          }
+      });
+   };
+});
+});
+//url: "cancella_piatto/" + indice,              //da per scontato che parto dal controller dashboard
+//url: "/dashboard/cancella_piatto/" + indice,   //specifico controller + action
+
+
+//pulisce finestra modale
+$(document).on('click', '#btn_inserisci_piatto', function() {
+   $('#frm_nome').val('');
+   $('#frm_descrizione').val('');
+ });
+
+//Action Aggiungi piatto
+$(document).on('click', '#btn_aggiungi_piatto', function() {
+ //   $('#aggiungi_piatto').modal('toggle');
+   $.ajax({
+    type: "POST",
+    url: "/dashboard/inserisci_piatto",
+    data: {
+      category: {
+      nome: $('#frm_nome').val(),
+      descrizione: $('#frm_descrizione').val(),
+      ordine:99999
+     }
+    },
+   success: function(data) {  //ritorna oggetto json senza array
+   aggiungi_piatto_data(data)
+   return false;
+   },
+   error: function(data) {
+
+   //alert('Attenzione! problemi nell inserimento ' + data);
+   //iterazione dell'oggetto errore  (data.responseJSON,data.responsetext)
+   var messaggio='';
+   $.each(data.responseJSON, function (i, member) {
+    for (var i in member) {
+     }
+     messaggio = messaggio + member[i] +'\n'; //concateno i messaggi
+   });
+   bootbox.alert(messaggio);
+   return false;
+   }
+ });
+ });
+
+function aggiungi_piatto_data(data) {
+
+    var nuova_piatto= '<li id="lista_piatti_'+ data.id +'" class="item_piatto"> \
+        <span class="handle"> \
+            <i class="fa fa-ellipsis-v"></i> \
+            <i class="fa fa-ellipsis-v"></i> \
+        </span> \
+        <input type="checkbox" value="" name=""/> \
+        <span id="nome_'+ data.id +'" class="text">' + data.nome +'</span> \
+        <div class="tools"> \
+            <i id="modifica_piatto_'+ data.id +'" class="fa fa-edit" style="font-size:25px;font-weight:bold;" data-toggle="modal" data-target="#modifica_piatto"></i> \
+            <i id="elimina_piatto_' + data.id + '" class="fa fa-trash-o" style="font-size:25px;font-weight:bold;"></i> \
+        </div> \
+        </li>';
+
+
+  if ($('li.item_piatto').length > 0) {
+    //non append after sembra funzionare meglio
+    $('#lista_piatti li:last').after(nuova_piatto).html();
+    //alert(nuova_piatto);
+    }
+  else {
+    $('ul#lista_piatti').append(nuova_piatto);
+  }
+
+  //imposta lo stile per la lista appena aggiunta
+  $("input[type='checkbox'], input[type='radio']").iCheck({
+       checkboxClass: 'icheckbox_minimal',
+       radioClass: 'iradio_minimal'
+   });
+
+  //incrementa contatore menu
+  // $('#categorie_create').fadeOut("slow");
+  var contatore_categorie_create=parseInt($('#categorie_create').text())+1;
+  $('#categorie_create').text(contatore_categorie_create).fadeIn("slow");
+}
+
+//Salva ordine Categorie
+$(document).on('click', '#btn_salva_ordine', function() {
+     //$("#btn_salva_ordine").click(function () {
+     var lista_piatti_ordine = [];
+     var conta =0;
+     $('.item_piatto').each(function (index, value) {
+       //alert('li' + index + ':' + $(this).attr('id') + ':'+ $(this).text());
+       conta +=1;
+       lista_piatti_ordine.push({
+           id: parseInt(this.id.split('_')[2]),
+           ordine: conta
+       });
+     });
+     var jsonOrdineCategorie = JSON.stringify(lista_piatti_ordine);
+     //var jsonOrdineCategorie = lista_piatti_ordine;  //non passa niente
+     //debugger;
+     $.ajax({
+      type: "PUT",
+      url: "/dashboard/aggiorna_ordine_piatto/",
+      data: jsonOrdineCategorie,
+      contentType: "application/json; charset=utf-8",
+      //dataType: "json",
+      success: function(data) {  //ritorna oggetto json senza array
+      //inserisci_riga(data)
+      bootbox.alert("Ordine Salvato!");
+      return false;
+      },
+      error: function(data) {
+      bootbox.alert("Attenzione! problemi durante il salvataggio , riprova");
+      return false;
+     }
+   });
+});
+
+//Modifica Categorie
+$(document).on('click', '#btn_modifica_piatto', function() {
+     //$(document).on('click', '[id*="modifica_piatto_"]', function() {
+     //var indice=this.id.split('_')[2];
+     //bootbox.alert($('#frm_nascosto_id').text());
+     var indice = $('#frm_nascosto_id').text()
+     $.ajax({
+      type: "PUT",
+      url: "/dashboard/modifica_piatto/" + indice,
+      data: {
+        category: {
+        nome: $('#frm_nome_m').val(),
+        descrizione: $('#frm_descrizione_m').val()
+       }
+      },
+      success: function(data) {  //ritorna oggetto json senza array
+      bootbox.alert("piatto Modificata!");
+      $("#nome_"+ indice).text($('#frm_nome_m').val());
+      return false;
+      },
+      error: function(data) {
+      bootbox.alert("Attenzione! problemi durante il salvataggio , riprova");
+      return false;
+     }
+   });
+ });
+
+
+</script>

@@ -1,0 +1,78 @@
+<!-- Variabili Locali Della View Sul Layout -->
+<% provide(:v_titolo, "Lista Dei Tuoi Piatti") %>
+<% provide(:v_minides, "Piatti") %>
+
+<%# content_for :v_lindex do %>
+<!-- class="active" -->
+<%# end %>
+ <%#= yield :v_lindex %>
+<%# content_for(:title, " class=&quot;active&quot;") %>
+
+<!-- Esempio Carico Script In Pagina -->
+<% content_for :script_view do %>
+<script>
+   $(function() {
+    $('#lista_piatti').load('/dishes/lista_piatti_filtra/'+ 'XXXX&TUTTE').hide().fadeIn(500);
+   });
+
+   $(document).on('click', '#btn_cerca_piatto', function(event) {
+    $('#lista_piatti').html('');
+     var txt_des=$('#txt_descrizione').val().trim();
+     var sel_cat=$("#select_categoria option:selected").text()  //valore selezionato nella option
+     if (txt_des!="") {
+       $('#lista_piatti').load('/dishes/lista_piatti_filtra/'+ $('#txt_descrizione').val() + '&' + sel_cat ).hide().fadeIn(500);
+     } else {
+       $('#lista_piatti').load('/dishes/lista_piatti_filtra/'+ 'XXXX' + '&' + sel_cat).hide().fadeIn(500);
+       }
+   });
+
+   //Action Elimina Piatto
+   $(document).on('click', '[id*="elimina_piatto_"]', function() {
+   var indice=this.id.split('_')[2];
+    bootbox.confirm("Sei sicuro di voler eliminare  il piatto: "+ $("#nome_" + indice).text() + " ?", function(result) {
+      if (result==true) {
+        //se passo indice automaticamente sto passando tutto l'oggetto
+         $.ajax({
+             url: "/dishes/" + indice,
+             type: 'DELETE',
+             success: function() {
+               $('#lista_piatti_' + indice).fadeOut(600, function(){ $(this).remove();
+               });
+             }
+         });
+      };
+   });
+   });
+
+
+</script>
+<% end %>
+
+<!-- Main row -->
+<div class="row">
+    <section class="NOconnectedSortable">
+      <div class="box box-primary col-xs-12">
+          <div class="box-header">
+              <!-- <i class="ion ion-clipboard"></i> -->
+              <select class="form-control pull-left" id="select_categoria" style="width:200px;margin-left:10px;margin-top:5px;">
+                <option>TUTTE</option>
+                <% @lista_categorie.each do |categoria| %>
+                <option><%= categoria.titolo %></option>
+                <% end %>
+              </section>
+              <input type="text" id="txt_descrizione" class="form-control pull-left" name="txt_descrizione" placeholder="Cerca Piatto ..." style="width:200px;margin-left:10px;margin-top:5px;" maxlength="50">
+              <div class="box-tools  pull-left">
+                  <!-- <div class="box-header clearfix no-border"> -->
+                      <button id="btn_cerca_piatto" class="btn btn-default pull-left"><i class="fa fa-search" style="font-size:20px;font-weight:bold;"></i><strong>Cerca</strong></button>
+                      <!-- <button id="btn_inserisci_piatto" class="btn btn-default pull-left"><i class="fa fa-plus" style="font-size:20px;font-weight:bold;"></i><strong>Aggiungi</strong></button> -->
+                      <%= link_to new_dish_path ,class:"btn btn-default pull-left",id:"btn_inserisci_piatto" do %>
+                        <i class="fa fa-plus" style="font-size:20px;font-weight:bold;"></i><strong>Aggiungi</strong>
+                      <% end %>
+                      <!-- <button id="btn_salva_ordine" class="btn btn-default pull-left"><i class="fa fa-bars" style="font-size:20px;font-weight:bold;"></i><strong>Ordina</strong</button> -->
+                  <!-- </div> -->
+              </div>
+          </div>
+              <div id="lista_piatti"></div>
+      </div>
+    </section>
+</div>

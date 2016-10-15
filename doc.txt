@@ -519,6 +519,21 @@ https://wpsimplepay.com/docs/misc/calling-stripe-checkout-externally/
 https://wpsimplepay.com/
 
 
+contoller parametri permessi
+http://stackoverflow.com/questions/14033908/rails-4-strong-parameters-permit-all-attributes
+http://stackoverflow.com/questions/17810838/strong-parameters-permit-all-attributes-for-nested-attributes
+http://stackoverflow.com/questions/15528649/how-to-permit-all-attributes-besides-user-id-using-strong-parameters
+http://stackoverflow.com/questions/22487878/strong-parameters-require-multiple
+http://stackoverflow.com/questions/5320414/form-for-but-to-post-to-a-different-action
+http://www.saalonmuyo.com/2010/01/27/using-form_tag-in-ruby-on-rails/
+http://6ftdan.com/allyourdev/2015/01/05/dealing-with-rails-4-forms-and-params/
+
+
+form campi data e true false
+http://guides.rubyonrails.org/form_helpers.html
+
+
+
 Medium.where(user_id: current_user.id).size   (size più veloce)
 Medium.where(user_id: current_user.id).count  (count fa una query)
 a=Medium.where(user_id: current_user.id).size
@@ -530,6 +545,42 @@ a[10..19]
   #181b3d
   #3c8dbc
   #367fa9
+
+
+semplice lista draggable
+http://fiddle.jshell.net/ramnathv/1064q7jm/
+http://issues.wenzhixin.net.cn/bootstrap-table/
+http://www.jqueryrain.com/?Nw62xmH1
+http://www.jqueryrain.com/demo/jquery-sortable-sort/
+http://www.bootply.com/DzAKXhHztZ  (griglia con foto)
+
+
+come determinare ordine lista sortable (sortable dipende da jquery-ui)
+http://stackoverflow.com/questions/17771187/jquery-ui-sortable-drop-event
+https://jqueryui.com/sortable/
+https://api.jqueryui.com/sortable/
+https://forum.jquery.com/topic/get-item-that-was-dropped-into-a-sortable
+http://stackoverflow.com/questions/8148145/drag-event-for-jquery-ui-sortable
+https://jqueryui.com/sortable/#empty-lists
+http://stackoverflow.com/questions/3886380/find-position-of-li
+http://stackoverflow.com/questions/2899540/jquery-ui-selectable-get-id
+http://stackoverflow.com/questions/3239598/how-can-i-get-the-id-of-an-element-using-jquery
+http://stackoverflow.com/questions/1601827/jquery-ui-sortable-how-to-determine-current-location-and-new-location-in-update
+http://stackoverflow.com/questions/15633341/jquery-ui-sortable-then-write-order-into-a-database
+http://api.jqueryui.com/sortable/#option-forcePlaceholderSize
+http://stackoverflow.com/questions/16510323/jquery-ui-sortable-how-to-make-some-action-with-just-moved-item
+http://stackoverflow.com/questions/4956039/jquery-sortable-change-event-element-position  (start,change,update)
+http://devilmaycode.altervista.org/jquery-sortable-change-event-element-position/
+https://www.tutorialspoint.com/jqueryui/jqueryui_sortable.htm
+https://api.jqueryui.com/sortable/
+
+link_to con do end
+http://stackoverflow.com/questions/1086360/how-do-i-wrap-link-to-around-some-html-ruby-code
+
+
+bootstrap elementi di selezione personalizzati
+https://silviomoreto.github.io/bootstrap-select/examples/#customize-options
+https://github.com/silviomoreto/bootstrap-select
 
 
 per avviare rails da iphone:

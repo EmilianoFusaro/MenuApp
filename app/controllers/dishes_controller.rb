@@ -1,6 +1,6 @@
 class DishesController < ApplicationController
   before_action :set_dish, only: [:show, :edit, :update, :destroy]
-
+  # layout 'dashboard'
   # GET /dishes
   # GET /dishes.json
   def index
@@ -14,7 +14,10 @@ class DishesController < ApplicationController
 
   # GET /dishes/new
   def new
+    @lista_categorie = Category.select(:id,:titolo).where(user_id: current_user.id).order(:ordine)
+    @allergeni = Allergen.all
     @dish = Dish.new
+    render layout: "dashboard"
   end
 
   # GET /dishes/1/edit
@@ -23,18 +26,42 @@ class DishesController < ApplicationController
 
   # POST /dishes
   # POST /dishes.json
-  def create
-    @dish = Dish.new(dish_params)
+  # CREATE originale
+  # def create
+  #   debugger
+  #   @dish = Dish.new(dish_params)
+  #   respond_to do |format|
+  #     if @dish.save
+  #       format.html { redirect_to @dish, notice: 'Dish was successfully created.' }
+  #       format.json { render :show, status: :created, location: @dish }
+  #     else
+  #       format.html { render :new }
+  #       format.json { render json: @dish.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
-    respond_to do |format|
-      if @dish.save
-        format.html { redirect_to @dish, notice: 'Dish was successfully created.' }
-        format.json { render :show, status: :created, location: @dish }
-      else
-        format.html { render :new }
-        format.json { render json: @dish.errors, status: :unprocessable_entity }
+  # POST /dishes
+  # POST /dishes.json
+  # CREATE modificata
+  def create
+      puts params
+      #@dish = Profile.find_by_user_id(current_user.id)
+      @dish = Dish.new
+      @dish.nome=params[:nome]
+      @dish.category=params[:category]
+      @dish.lista_ingredienti=params[:lista_ingredienti]
+      @dish.descrizione=params[:descrizione]
+      @dish.lista_allergeni=params[:lista_allergeni]
+      @dish.img=params[:img]
+      @dish.img1=params[:img1]
+      @dish.img2=params[:img2]
+      @dish.img3=params[:img3]
+      @dish.user_id=current_user.id
+      @dish.save
+      respond_to do |format|
+       format.json { head :no_content }
       end
-    end
   end
 
   # PATCH/PUT /dishes/1
@@ -56,10 +83,35 @@ class DishesController < ApplicationController
   def destroy
     @dish.destroy
     respond_to do |format|
-      format.html { redirect_to dishes_url, notice: 'Dish was successfully destroyed.' }
-      format.json { head :no_content }
+       format.json { head :no_content }
     end
+    # respond_to do |format|
+    #   format.html { redirect_to dishes_url, notice: 'Dish was successfully destroyed.' }
+    #   format.json { head :no_content }
+    # end
   end
+
+  #-----------------Action Definite Da Me
+  def lista_piatti
+    @lista_piatti = Dish.where(user_id: current_user.id).order(:ordine)
+    render layout: false
+  end
+
+
+  def lista_piatti_filtra
+    if params[:nome] != "XXXX" and params[:categoria] != "TUTTE"
+      @dish = Dish.where("lower(nome) Like lower(?) and lower(category) Like lower(?) and user_id=?", "%#{params[:nome]}%","%#{params[:categoria]}%",current_user.id)
+    elsif params[:nome] != "XXXX" and params[:categoria] == "TUTTE"
+      @dish = Dish.where("lower(nome) Like lower(?) and user_id=?", "%#{params[:nome]}%",current_user.id)
+    elsif params[:nome] == "XXXX" and params[:categoria] != "TUTTE"
+      @dish = Dish.where("lower(category) Like lower(?) and user_id=?", "%#{params[:categoria]}%",current_user.id)
+    else # =="XXXX" and =="TUTTE"
+      @dish = Dish.where(user_id: current_user.id)
+    end
+    @dish ||= Dish.none  #se nullo assegno ActiveRecord
+    render 'dishes/lista_piatti_filtra' , :layout => false
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

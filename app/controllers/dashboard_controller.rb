@@ -21,6 +21,10 @@ class DashboardController < ApplicationController
     @media ||= Medium.none
   end
 
+  def dishes #Piatti
+      @lista_categorie = Category.select(:id,:titolo).where(user_id: current_user.id).order(:ordine)
+  end
+
   def lista_categorie
     #questa query limita il filtro ad un risultato
     #@lista_categorie = Category.find_by(user_id: current_user.id)
@@ -31,6 +35,10 @@ class DashboardController < ApplicationController
     # render 'dashboard/_lista_categorie' , :layout => false
   end
 
+  #def lista_piatti
+  #  @lista_piatti = Dish.where(user_id: current_user.id).order(:ordine)
+  #  render layout: false
+  #end
 
   def inserisci_categoria
     @categoria = Category.new(categoria_params)

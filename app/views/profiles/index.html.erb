@@ -21,7 +21,7 @@
             <li>
             <%if user_signed_in? %>
               <%#= link_to "#{current_user.name} LogOut", destroy_user_session_path , method: :delete %>
-              <%= link_to "LogOut", destroy_user_session_path , method: :delete %>
+              <%= link_to "Esci", destroy_user_session_path , method: :delete %>
             <% end %>
             </li>
           </ul>
@@ -96,10 +96,10 @@
       <td> non assegnato</td>
       <% end %>
       <td><%= profile.descrizione %></td>
-      <td style="width:220px;">
-      <%= link_to 'Mostra', profile ,class:"btn btn-primary btnrs" ,style:"width:65px;"%>
-      <%= link_to 'Edita', edit_profile_path(profile) ,class:"btn btn-warning btnrs" ,style:"width:65px;"%>
-      <%= link_to 'Elimina', profile, method: :delete, data: { confirm: 'Sei Sicuro Di Voler Eliminare Questo Utente?'} ,id:"elimina_#{profile.id}", class:"btn btn-danger btnrs" ,style:"width:65px;"%>
+      <td style="width:170px;">
+      <%= link_to 'Modifica', profile ,class:"btn btn-primary btnrs" ,style:"width:75px;"%>
+      <%#= link_to 'Edita', edit_profile_path(profile) ,class:"btn btn-warning btnrs" ,style:"width:65px;"%>
+      <%= link_to 'Elimina', profile, method: :delete, data: { confirm: 'Sei Sicuro Di Voler Eliminare Questo Utente?'} ,id:"elimina_#{profile.id}", class:"btn btn-danger btnrs" ,style:"width:75px;"%>
       </td>
       </tr>
     <% end %>

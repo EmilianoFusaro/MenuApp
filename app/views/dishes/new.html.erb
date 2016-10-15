@@ -1,5 +1,295 @@
-<h1>New Dish</h1>
+<!-- Variabili Locali Della View Sul Layout -->
+<% provide(:v_titolo, "Lista Dei Tuoi Piatti") %>
+<% provide(:v_minides, "Piatti") %>
 
-<%= render 'form' %>
+<%# content_for :v_lindex do %>
+<!-- class="active" -->
+<%# end %>
+ <%#= yield :v_lindex %>
+<%# content_for(:title, " class=&quot;active&quot;") %>
 
-<%= link_to 'Back', dishes_path %>
+
+<!-- ------------------------------------------------------------------------------------------------parte Javascript Iniettata  -->
+<% content_for :script_view do %>
+<script>
+
+$(document).on('click', '[id*=f_img_]', function(event) {
+  event.preventDefault();
+  $my_foto_selezionata = this.id.split("_")[2]; //recupera in una variabile globale l'indice del bottone cliccato
+  $.getJSON("/media/gallery_scegli/"+ "XXXX", function (data) {
+      localStorage.setItem("lista_foto", JSON.stringify(data));
+      navigaFoto('Inizio');
+  });
+});
+
+//gestione evento avanti-foto
+$(document).on('click', '#btn_avanti', function(event) {
+  event.preventDefault();
+  navigaFoto('Avanti');
+});
+
+//gestione evento indietro-foto
+$(document).on('click', '#btn_indietro', function(event) {
+  event.preventDefault();
+  navigaFoto('Indietro');
+});
+
+//gestione filtro cerca foto
+$(document).on('click', '#cerca_foto', function(event) {
+  event.preventDefault();
+  if ($('#cerca').val().trim()!="") {
+    var filtro_ricerca=$('#cerca').val();
+  }
+  else {
+    var filtro_ricerca='XXXX';
+  }
+  $.getJSON("/media/gallery_scegli/"+ filtro_ricerca, function (data) {
+      localStorage.setItem("lista_foto", JSON.stringify(data));
+      navigaFoto('Inizio');
+  });
+});
+
+//gestione gallery anteprima
+function navigaFoto(direzione) {
+
+  var store_lista_foto = JSON.parse(localStorage.getItem("lista_foto"));
+  var istart = parseInt(localStorage.getItem("inizio_foto"));
+  var iend = parseInt(localStorage.getItem("fine_foto"));
+
+  if (direzione == 'Avanti') {
+    if (iend < store_lista_foto.length) {
+     var istart = istart + 9;
+     var iend = iend + 9;
+    }
+  }
+  else if (direzione == 'Indietro') {
+    if (istart > 0) {
+      var istart = istart - 9;
+      var iend = iend - 9;
+    }
+  }
+  else if ('Inizio') {
+    var istart = 0;
+    var iend = 9;
+  }
+  localStorage.setItem('inizio_foto', istart);
+  localStorage.setItem('fine_foto', iend);
+  $('#riga_gallery').html('');
+  $.each(store_lista_foto.slice(istart,iend), function(idx, obj) {
+    if (obj.descrizione.length > 15) {
+      var descrizione_troncate = jQuery.trim(obj.descrizione).substring(0, 15).trim(this) + "...";
+      }
+      else {
+        var descrizione_troncate = jQuery.trim(obj.descrizione);
+      };
+    var foto= '<div class="col-lg-3 col-md-6 col-xs-6 thumb" id="div_foto_'+ obj.id +'"> \
+      <h4 class="box-title" id="des_breve_'+ obj.id +'">&nbsp;'+ descrizione_troncate +'</h4> \
+      <div class="box-body"> \
+      <a class="thumbnail" href="#" data-dismiss="modal"> \
+      <img class="foto_select" src="'+ obj.foto_media_url +'" data-toggle="modal" data-target="#modifica_media" id="fotoid_'+ obj.id +'"> \
+      </a> \
+      </div> \
+      </div>';
+    // $('#riga_gallery').append(foto).hide().fadeIn(500);
+    $('#riga_gallery').append(foto);
+  });
+};
+
+//gestione click foto Selezionata
+$(document).on('click', '.thumbnail', function(event) {
+  event.preventDefault();
+  $('#logo').hide();
+  $('#anteprima_'+ $my_foto_selezionata).html($(this).html());
+});
+
+
+//---Salva Piatto
+$(document).on('click', '#btn_salva_piatto', function(event) {
+  event.preventDefault();
+  //crea form via javascript
+  var form_data = new FormData();
+  form_data.append("nome", $('#f_nome').val());
+  form_data.append("category", $('#select_categoria').val());
+  form_data.append("lista_ingredienti", $('#f_lista_ingredienti').val());
+  form_data.append("descrizione", $('#f_descrizione').val());
+  form_data.append("lista_allergeni", $('#select_allergeni').val());
+  var anteprima= $('#anteprima_0').children('img').attr('src');
+  if (anteprima != null)
+  {
+    form_data.append("img", $('#anteprima_0').children('img').attr('src'));
+  }
+  var anteprima= $('#anteprima_1').children('img').attr('src');
+  if (anteprima != null)
+  {
+    form_data.append("img1", $('#anteprima_1').children('img').attr('src'));
+  }
+  var anteprima= $('#anteprima_2').children('img').attr('src');
+  if (anteprima != null)
+  {
+    form_data.append("img2", $('#anteprima_2').children('img').attr('src'));
+  }
+  var anteprima= $('#anteprima_3').children('img').attr('src');
+  if (anteprima != null)
+  {
+    form_data.append("img3", $('#anteprima_3').children('img').attr('src'));
+  }
+
+  //---Invio Richiesta Si Salvataggio AL Server
+  $.ajax({
+   type: "POST",
+   url: "/dishes",
+   //dataType: 'script',
+   cache: false,
+   contentType: false,
+   processData: false,
+   data :form_data,
+   //dataType: "json",
+   //contentType: "application/json; charset=utf-8",
+   // data: $('#myform').serialize(),  //funziona solo con un form vero (vedere doc)
+   dataType: 'text',
+   success: function(data) {
+   bootbox.alert("Piatto Salvato Correttamente !");
+   return false;
+   },
+   error: function(data) {
+    bootbox.alert("Attenzione Problemi Durante Il Salvataggio !");
+    return false;
+ }
+});
+});
+</script>
+<% end %>
+
+<!-- ------------------------------------------------------------------------------------------------parte HTML  -->
+
+<!-- Main row -->
+<div class="row">
+  <div class="col-md-12">
+      <!-- general form elements -->
+      <div class="box box-primary">
+          <!-- <div class="box-header">x
+              <h3 class="box-title">Dati Piatto</h3>
+          </div> -->
+          <form role="form">
+          <!-- <%#= form_for @dish  do |f| %> -->
+              <div class="box-body">
+                <div class="form-group">
+                    <label for="input_nome">Nome:</label>
+                    <input type="text" class="form-control" id="f_nome" name="nome" placeholder="Nome Piatto..." value="<%= @dish.nome %>">
+                </div>
+
+                <label for="input_nome">Categoria:</label>
+                <!-- style="width:200px;margin-left:10px;margin-top:5px;" -->
+                <!-- <select class="form-control pull-left" id="select_categoria"> -->
+                <select class="selectpicker" data-width="100%" id="select_categoria" name="category">
+                  <option value="TUTTE">TUTTE</option>
+                  <% @lista_categorie.each do |categoria| %>
+                  <option "<%= categoria.titolo %>"><%= categoria.titolo %></option>
+                  <% end %>
+                </select>
+
+                <br><br>
+
+                <div class="form-group">
+                    <label for="input_telefono">Ingredienti (separati da ,)</label>
+                    <input type="text" class="form-control" id="f_lista_ingredienti" name="lista_ingredienti" placeholder="Ingredienti" value="<%= @dish.lista_ingredienti %>">
+                </div>
+
+                <div class="form-group">
+                    <label>Descrizione</label>
+                    <textarea class="form-control" rows="3" placeholder="Descrizione ..." id="f_descrizione" name="descrizione" value="<%= @dish.descrizione %>"><%= @dish.descrizione %></textarea>
+                </div>
+
+                <label for="input_allergeni">Allergeni:</label>
+                <br>
+                <select class="selectpicker" multiple="true" data-width="100%" multiple title="Seleziona Allergene..." id="select_allergeni" name="lista_allergeni">
+                <% @allergeni.each do |allergene| %>
+                <option value="<%= allergene.nome %>"><%= allergene.nome %></option>
+                <% end %>
+                </select>
+                <br><br><br>
+
+                <!-- finire http://learn.jquery.com/using-jquery-core/faq/how-do-i-get-the-text-value-of-a-selected-option/ -->
+                <!-- http://stackoverflow.com/questions/496052/jquery-setting-the-selected-value-of-a-select-control-via-its-text-description -->
+
+                  <div class="form-group">
+
+                      <label for="exampleInputFile">Foto 1</label>
+                      <br>
+                      <a data-toggle="modal" href="#scegli_foto" class="btn btn-primary" id="f_img_0">Scegli Foto 1</a>
+                      <p class="help-block" id="anteprima_0"></p>
+                      <% if  @dish.img != nil %>
+                      <img src="<%= @dish.img %>" alt="Logo" id="logo" name="img">
+                      <% end %>
+
+
+                      <label for="exampleInputFile">Foto 2</label>
+                      <br>
+                      <a data-toggle="modal" href="#scegli_foto" class="btn btn-primary" id="f_img_1">Scegli Foto 2</a>
+                      <p class="help-block" id="anteprima_1"></p>
+                      <% if  @dish.img != nil %>
+                      <img src="<%= @dish.img %>" alt="Logo" id="logo">
+                      <% end %>
+
+
+                      <label for="exampleInputFile">Foto 3</label>
+                      <br>
+                      <a data-toggle="modal" href="#scegli_foto" class="btn btn-primary" id="f_img_2">Scegli Foto 3</a>
+                      <p class="help-block" id="anteprima_2"></p>
+                      <% if  @dish.img != nil %>
+                      <img src="<%= @dish.ing %>" alt="Logo" id="logo">
+                      <% end %>
+
+
+                      <label for="exampleInputFile">Foto 4</label>
+                      <br>
+                      <a data-toggle="modal" href="#scegli_foto" class="btn btn-primary" id="f_img_3">Scegli Foto 4</a>
+                      <p class="help-block" id="anteprima_3"></p>
+                      <% if  @dish.img != nil %>
+                      <img src="<%= @dish.ing %>" alt="Logo" id="logo">
+                      <% end %>
+
+                  </div>
+
+              </div>
+
+              <div class="box-footer">
+                  <button type="submit" class="btn btn-primary" id="btn_salva_piatto">Salva il Piatto</button>
+                  <!-- <%#= f.submit 'Salva il Piatto', :class => 'btn btn-primary' ,id:"btn_salva_piatto" %> -->
+              </div>
+              <!-- <%# end %> -->
+          </form>
+      </div><!-- /.box -->
+  </div><!--/.col (left) -->
+</div>
+
+
+<div id="scegli_foto" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Scegli La Foto</h4>
+            </div>
+            <div class="modal-body">
+              <br>
+              <input type="text" class="form-control pull-left" id="cerca" placeholder="Cerca ..." style="width:200px;" maxlength="50">
+              <button type="submit" id="cerca_foto" class="btn btn-primary pull-left" style="width:120px;height:35px;display:inline-block;float:none;margin-right:27%;">Cerca</button>
+
+              <button type="button" class="btn btn-default" aria-label="Left Align" id="btn_indietro">
+              <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+              </button>
+
+              <button type="button" class="btn btn-default" aria-label="Left Align" id="btn_avanti">
+              <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+              </button>
+              <br><br>
+              <div id="riga_gallery"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_chiudi_foto">Chiudi</button>
+              <!-- <button type="button" class="btn btn-primary" data-dismiss="no-modal" id="btn_modifica_foto">Scegli</button> -->
+            </div>
+        </div>
+    </div>
+</div>

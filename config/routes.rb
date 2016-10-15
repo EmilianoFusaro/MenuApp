@@ -21,6 +21,8 @@ Rails.application.routes.draw do
   get 'dashboard/index'
   get 'dashboard/azienda'
   get 'dashboard/media'
+  get 'dashboard/dishes'
+  # get 'dashboard/lista_piatti'
   get 'dashboard/lista_categorie'
   post 'dashboard/inserisci_categoria' => "dashboard#inserisci_categoria"
   delete 'dashboard/cancella_categoria/:id' => "dashboard#cancella_categoria"
@@ -43,7 +45,14 @@ Rails.application.routes.draw do
   end
 
   resources :ingredients
-  resources :dishes
+
+  resources :dishes do
+    collection do
+      get 'lista_piatti'
+      get '/lista_piatti_filtra/:nome&:categoria' , to: 'dishes#lista_piatti_filtra'
+    end
+  end
+
   resources :profiles do
     collection do
       get 'detail'
@@ -54,6 +63,7 @@ Rails.application.routes.draw do
       post '/compra/:pacchetto&:periodo', to: 'profiles#payment' , as: :compra
       get '/pickup/:guid', to: 'profiles#pickup', as: :pickup
       put '/aggiungi_dati_azienda' => "profiles#aggiungi_dati_azienda"
+      put '/aggiorna_utente' => "profiles#aggiorna_utente"
       #delete '/cancella_profilo/:id' => "profiles#cancella_profilo"
     end
   end

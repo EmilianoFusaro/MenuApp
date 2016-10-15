@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160919225824) do
+ActiveRecord::Schema.define(version: 20161013215532) do
 
   create_table "allergens", force: :cascade do |t|
     t.string   "nome"
@@ -44,6 +44,9 @@ ActiveRecord::Schema.define(version: 20160919225824) do
     t.integer  "user_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.integer  "ordine"
+    t.string   "category"
+    t.string   "lista_allergeni"
   end
 
   create_table "ingredients", force: :cascade do |t|
