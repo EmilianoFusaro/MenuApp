@@ -37,16 +37,17 @@
         <![endif]-->
 
         <link rel="icon" href="/sito/images/favicon.ico" type="image/x-icon"/>
-        
+
     </head>
 
     <body class="skin-blue">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
-            <a href="index.html" class="logo">
+            <!-- <a href="index" class="logo"> -->
                 <!-- Add the class icon to your logo image or logo icon to add the margining -->
-                MenuApp
-            </a>
+                <!-- MenuApp -->
+            <!-- </a> -->
+            <%= link_to "MenuApp", dashboard_index_url ,class:"logo" %>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->

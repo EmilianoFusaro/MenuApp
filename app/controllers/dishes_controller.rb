@@ -1,5 +1,6 @@
 class DishesController < ApplicationController
-  before_action :set_dish, only: [:show, :edit, :update, :destroy]
+  #before_action :set_dish, only: [:show, :edit, :update, :destroy]
+  before_action :set_dish, only: [:update, :destroy]
   # layout 'dashboard'
   # GET /dishes
   # GET /dishes.json
@@ -10,6 +11,8 @@ class DishesController < ApplicationController
   # GET /dishes/1
   # GET /dishes/1.json
   def show
+    @dish = Dish.find_by_id(params[:id])
+    render layout: "dashboard"
   end
 
   # GET /dishes/new
@@ -22,6 +25,14 @@ class DishesController < ApplicationController
 
   # GET /dishes/1/edit
   def edit
+    #@dish = Dish.find_by_id(params[:id]) #senza first restituisce un dataset non un record
+    #recuper dati piatto
+    @dish = Dish.where(user_id: current_user.id, id:params[:id]).first
+    #recupera lista categoria
+    @lista_categorie = Category.select(:id,:titolo).where(user_id: current_user.id).order(:ordine)
+    #recupera lista allergeni
+    @allergeni = Allergen.all
+    render layout: "dashboard"
   end
 
   # POST /dishes
@@ -66,7 +77,7 @@ class DishesController < ApplicationController
 
   # PATCH/PUT /dishes/1
   # PATCH/PUT /dishes/1.json
-  def update
+  def update_old
     respond_to do |format|
       if @dish.update(dish_params)
         format.html { redirect_to @dish, notice: 'Dish was successfully updated.' }
@@ -75,6 +86,14 @@ class DishesController < ApplicationController
         format.html { render :edit }
         format.json { render json: @dish.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def update
+    #@dish = Dish.find(params[:id])
+    @dish.update_attributes(dish_permetti)
+    respond_to do |format|
+     format.json { head :no_content }
     end
   end
 
@@ -121,6 +140,12 @@ class DishesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def dish_params
-      params.require(:dish).permit(:nome, :descrizione, :lista_ingredienti, :img, :img1, :img2, :img3, :user_id)
+      params.require(:dish).permit(:nome, :descrizione, :category, :lista_ingredienti, :img, :img1, :img2, :img3, :user_id)
     end
+
+    def dish_permetti
+      #senza dish perchè mi arriva da un form generico
+      params.permit(:nome, :descrizione, :lista_ingredienti, :img, :img1, :img2, :img3, :user_id, :ordine, :category, :lista_allergeni)
+    end
+
 end

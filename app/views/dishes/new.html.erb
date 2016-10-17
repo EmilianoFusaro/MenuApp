@@ -98,8 +98,13 @@ function navigaFoto(direzione) {
 //gestione click foto Selezionata
 $(document).on('click', '.thumbnail', function(event) {
   event.preventDefault();
-  $('#logo').hide();
   $('#anteprima_'+ $my_foto_selezionata).html($(this).html());
+});
+
+//cancella selezione foto
+$(document).on('click', '#btn_nessuna_foto', function(event) {
+  event.preventDefault();
+  $('#anteprima_'+ $my_foto_selezionata).html('');
 });
 
 
@@ -162,10 +167,8 @@ $(document).on('click', '#btn_salva_piatto', function(event) {
 
 <!-- ------------------------------------------------------------------------------------------------parte HTML  -->
 
-<!-- Main row -->
 <div class="row">
   <div class="col-md-12">
-      <!-- general form elements -->
       <div class="box box-primary">
           <!-- <div class="box-header">x
               <h3 class="box-title">Dati Piatto</h3>
@@ -175,10 +178,10 @@ $(document).on('click', '#btn_salva_piatto', function(event) {
               <div class="box-body">
                 <div class="form-group">
                     <label for="input_nome">Nome:</label>
-                    <input type="text" class="form-control" id="f_nome" name="nome" placeholder="Nome Piatto..." value="<%= @dish.nome %>">
+                    <input type="text" class="form-control" id="f_nome" name="nome" placeholder="Nome Piatto..." value="">
                 </div>
 
-                <label for="input_nome">Categoria:</label>
+                <label for="input_categoria">Categoria:</label>
                 <!-- style="width:200px;margin-left:10px;margin-top:5px;" -->
                 <!-- <select class="form-control pull-left" id="select_categoria"> -->
                 <select class="selectpicker" data-width="100%" id="select_categoria" name="category">
@@ -191,13 +194,13 @@ $(document).on('click', '#btn_salva_piatto', function(event) {
                 <br><br>
 
                 <div class="form-group">
-                    <label for="input_telefono">Ingredienti (separati da ,)</label>
-                    <input type="text" class="form-control" id="f_lista_ingredienti" name="lista_ingredienti" placeholder="Ingredienti" value="<%= @dish.lista_ingredienti %>">
+                    <label for="input_ingredienti">Ingredienti (separati da ,)</label>
+                    <input type="text" class="form-control" id="f_lista_ingredienti" name="lista_ingredienti" placeholder="Ingredienti" value="">
                 </div>
 
                 <div class="form-group">
                     <label>Descrizione</label>
-                    <textarea class="form-control" rows="3" placeholder="Descrizione ..." id="f_descrizione" name="descrizione" value="<%= @dish.descrizione %>"><%= @dish.descrizione %></textarea>
+                    <textarea class="form-control" rows="3" placeholder="Descrizione ..." id="f_descrizione" name="descrizione" value=""></textarea>
                 </div>
 
                 <label for="input_allergeni">Allergeni:</label>
@@ -213,54 +216,35 @@ $(document).on('click', '#btn_salva_piatto', function(event) {
                 <!-- http://stackoverflow.com/questions/496052/jquery-setting-the-selected-value-of-a-select-control-via-its-text-description -->
 
                   <div class="form-group">
-
-                      <label for="exampleInputFile">Foto 1</label>
-                      <br>
                       <a data-toggle="modal" href="#scegli_foto" class="btn btn-primary" id="f_img_0">Scegli Foto 1</a>
+                      <div class="thumb">
                       <p class="help-block" id="anteprima_0"></p>
-                      <% if  @dish.img != nil %>
-                      <img src="<%= @dish.img %>" alt="Logo" id="logo" name="img">
-                      <% end %>
-
-
-                      <label for="exampleInputFile">Foto 2</label>
+                      </div>
                       <br>
                       <a data-toggle="modal" href="#scegli_foto" class="btn btn-primary" id="f_img_1">Scegli Foto 2</a>
+                      <div class="thumb">
                       <p class="help-block" id="anteprima_1"></p>
-                      <% if  @dish.img != nil %>
-                      <img src="<%= @dish.img %>" alt="Logo" id="logo">
-                      <% end %>
-
-
-                      <label for="exampleInputFile">Foto 3</label>
+                      </div>
                       <br>
                       <a data-toggle="modal" href="#scegli_foto" class="btn btn-primary" id="f_img_2">Scegli Foto 3</a>
+                      <div class="thumb">
                       <p class="help-block" id="anteprima_2"></p>
-                      <% if  @dish.img != nil %>
-                      <img src="<%= @dish.ing %>" alt="Logo" id="logo">
-                      <% end %>
-
-
-                      <label for="exampleInputFile">Foto 4</label>
+                      </div>
                       <br>
                       <a data-toggle="modal" href="#scegli_foto" class="btn btn-primary" id="f_img_3">Scegli Foto 4</a>
+                      <div class="thumb">
                       <p class="help-block" id="anteprima_3"></p>
-                      <% if  @dish.img != nil %>
-                      <img src="<%= @dish.ing %>" alt="Logo" id="logo">
-                      <% end %>
-
-                  </div>
-
-              </div>
-
+                      </div>
+                    <br>
+                 </div>
               <div class="box-footer">
                   <button type="submit" class="btn btn-primary" id="btn_salva_piatto">Salva il Piatto</button>
                   <!-- <%#= f.submit 'Salva il Piatto', :class => 'btn btn-primary' ,id:"btn_salva_piatto" %> -->
               </div>
-              <!-- <%# end %> -->
+            </div>
           </form>
-      </div><!-- /.box -->
-  </div><!--/.col (left) -->
+      </div>
+  </div>
 </div>
 
 
@@ -287,6 +271,7 @@ $(document).on('click', '#btn_salva_piatto', function(event) {
               <div id="riga_gallery"></div>
             </div>
             <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_nessuna_foto">Nessuna</button>
               <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_chiudi_foto">Chiudi</button>
               <!-- <button type="button" class="btn btn-primary" data-dismiss="no-modal" id="btn_modifica_foto">Scegli</button> -->
             </div>

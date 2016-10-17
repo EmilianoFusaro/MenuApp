@@ -581,7 +581,38 @@ http://stackoverflow.com/questions/1086360/how-do-i-wrap-link-to-around-some-htm
 bootstrap elementi di selezione personalizzati
 https://silviomoreto.github.io/bootstrap-select/examples/#customize-options
 https://github.com/silviomoreto/bootstrap-select
+http://stackoverflow.com/questions/28233500/always-show-one-text-in-bootstrap-select
+https://silviomoreto.github.io/bootstrap-select/examples/
+http://plugins.upbootstrap.com/bootstrap-select/
+come manipolare i dati
+https://silviomoreto.github.io/bootstrap-select/options/
+https://silviomoreto.github.io/bootstrap-select/methods/
+https://teamtreehouse.com/community/bootstrap-select-option-default-value
+http://stackoverflow.com/questions/14804253/how-to-set-selected-value-on-select-using-selectpicker-plugin-from-bootstrap
+http://stackoverflow.com/questions/22822427/bootstrap-select-dropdown-list-placeholder
+https://silviomoreto.github.io/bootstrap-select/examples/
+https://silviomoreto.github.io/bootstrap-select/
+http://jsfiddle.net/2ywms/
+http://stackoverflow.com/questions/32560328/angularjs-bootstrap-select-picker-default-value
+http://formvalidation.io/examples/bootstrap-select/
+http://www.jqueryrain.com/2012/11/set-default-value-for-select-lists-using-value-attribute-with-jquery/
+http://plugins.upbootstrap.com/bootstrap-select/
+https://css-tricks.com/snippets/jquery/run-javascript-only-after-entire-page-has-loaded/
 
+strumenti per il check delle pagine html
+http://validator.w3.org/check
+http://validator.w3.org/
+
+
+metodo rails per passare stringhe array al javascript
+http://apidock.com/rails/ActionView/Helpers/RawOutputHelper/raw
+http://stackoverflow.com/questions/8375059/ruby-array-to-javascript-array
+https://prograils.com/posts/active-record-brief-introduction-for-beginners
+
+
+formattare stringa per richiesta http
+encodeURIComponent
+http://stackoverflow.com/questions/6544564/url-encode-a-string-in-jquery-for-an-ajax-request
 
 per avviare rails da iphone:
 http://stackoverflow.com/questions/29132719/rails-application-not-visible-to-local-network

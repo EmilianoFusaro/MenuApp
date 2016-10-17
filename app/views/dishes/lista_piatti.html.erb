@@ -33,7 +33,9 @@
         <div class="tools">
            <!-- <button type="button" class="btn btn-primary btn-sm" style="padding-bottom:-30px">Modifica</button>
            <button type="button" class="btn btn-primary btn-sm">Elimina</button> -->
-            <i id="modifica_piatto_<%= piatto.id %>" class="fa fa-edit" style="font-size:25px;font-weight:bold;" data-toggle="modal" data-target="#modifica_piatto"></i>
+           <%#= link_to new_dish_path do %>
+            <i id="modifica_piatto_<%= piatto.id %>" class="fa fa-edit" style="font-size:25px;font-weight:bold;"></i>
+           <%# end %>
             <i id="elimina_piatto_<%= piatto.id %>" class="fa fa-trash-o" style="font-size:25px;font-weight:bold;"></i>
         </div>
     </li>
@@ -42,54 +44,6 @@
 </ul>
 
 </div><!-- /.box-body -->
-
-
-<!-- Modal Aggiungi Nuova piatto-->
-<div class="modal fade" id="aggiungi_piatto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Inserisci piatto</h4>
-      </div>
-      <div class="modal-body">
-        <label for="usr">Nome:</label>
-        <input type="text" class="form-control" style="font-weight:bold;" id="frm_nome">
-        <label for="usr">Descrizione:</label>
-        <input type="text" class="form-control" style="font-weight:bold;" id="frm_descrizione">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_chiudi_add">Chiudi</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" id="btn_aggiungi_piatto">Salva</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Modal Modifica piatto-->
-<div class="modal fade" id="modifica_piatto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel2">Inserisci piatto</h4>
-      </div>
-      <div class="modal-body">
-        <label for="usr">Nome:</label>
-        <input type="text" class="form-control" style="font-weight:bold;" id="frm_nome_m">
-        <label for="usr">Descrizione:</label>
-        <input type="text" class="form-control" style="font-weight:bold;" id="frm_descrizione_m">
-      </div>
-      <div id="frm_nascosto_id" style="display:none;"></div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_chiudi_add_m">Chiudi</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" id="btn_modifica_piatto">Salva</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 
 
 <script>

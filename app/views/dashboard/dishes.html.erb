@@ -20,9 +20,9 @@
      var txt_des=$('#txt_descrizione').val().trim();
      var sel_cat=$("#select_categoria option:selected").text()  //valore selezionato nella option
      if (txt_des!="") {
-       $('#lista_piatti').load('/dishes/lista_piatti_filtra/'+ $('#txt_descrizione').val() + '&' + sel_cat ).hide().fadeIn(500);
+       $('#lista_piatti').load('/dishes/lista_piatti_filtra/'+ $('#txt_descrizione').val() + '&' + encodeURIComponent(sel_cat) ).hide().fadeIn(500);
      } else {
-       $('#lista_piatti').load('/dishes/lista_piatti_filtra/'+ 'XXXX' + '&' + sel_cat).hide().fadeIn(500);
+       $('#lista_piatti').load('/dishes/lista_piatti_filtra/'+ 'XXXX' + '&' + encodeURIComponent(sel_cat)).hide().fadeIn(500);
        }
    });
 
@@ -44,6 +44,11 @@
    });
    });
 
+   //Action Modifica Piatto
+   $(document).on('click', '[id*="modifica_piatto_"]', function() {
+     var indice=this.id.split('_')[2];
+     window.location.href = "/dishes/" + indice +"/edit";
+   });
 
 </script>
 <% end %>
