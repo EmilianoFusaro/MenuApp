@@ -1,0 +1,35 @@
+<h1>Sono in Show</h1>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nome:</strong>
+  <%= @template.nome %>
+</p>
+
+<p>
+  <strong>Descrizione:</strong>
+  <%= @template.descrizione %>
+</p>
+
+<p>
+  <strong>Img:</strong>
+  <%= @template.img %>
+</p>
+
+<p>
+  <strong>Ordine:</strong>
+  <%= @template.ordine %>
+</p>
+
+<p>
+  <strong>Variabile a:</strong>
+  <%= @template.variabile_a %>
+</p>
+
+<p>
+  <strong>Variabile b:</strong>
+  <%= @template.variabile_b %>
+</p>
+
+<%= link_to 'Edit', edit_template_path(@template) %> |
+<%= link_to 'Back', templates_path %>

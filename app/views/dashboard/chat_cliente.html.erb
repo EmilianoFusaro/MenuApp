@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Cliente</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+        var ws = new WebSocket("ws://localhost:8181");
+        //var ws = new WebSocket("ws://192.168.1.7:8181");
+        //var ws = new WebSocket("ws://192.168.1.6:8181");
+        //var ws = new WebSocket("ws://192.168.1.5:8181");
+
+        ws.onopen = function(e) {
+          //alert('connessione aperta');
+          // $('#cliente').html(prompt('Come Ti Chiami:', ''));
+          $('#cliente').html('<%= current_user.email %>');
+          //debugger;
+          console.log('Connection to server opened');
+        }
+
+        function appendLog(message) {
+          var messages =  document.getElementById('messages');
+          var messageElem = document.createElement("li");
+          messageElem.innerHTML = "<h2><span class=\"label label-success\">*</span>&nbsp;&nbsp;" + message + " </h2>";
+          messages.appendChild(messageElem);
+        }
+
+        ws.onmessage = function(e) {
+          //debugger;
+          var data = JSON.parse(e.data);
+          //var data = e.data;
+          if (data.message=="pippo")
+          {
+            alert('pippo');
+          }
+          else if (data.message=="chiama")
+          {
+           //non devi fare niente
+          }
+          else {
+          appendLog(data.message);
+          console.log("ID: [%s] = %s", data.id, data.message);
+          }
+        }
+
+        ws.onclose = function(e) {
+          appendLog("Connection closed");
+          console.log("Connection closed");
+        }
+
+        function sendMessage() {
+            //debugger;
+            if(ws.readyState === WebSocket.OPEN) {
+                ws.send($('#message').val());
+            }
+            $('#message').val('');
+            $('#message').focus();
+        }
+
+        function sendPippo() {
+            //debugger;
+            if(ws.readyState === WebSocket.OPEN) {
+                ws.send('pippo');
+            }
+        }
+
+
+        function sendChiama() {
+            //debugger;
+            if(ws.readyState === WebSocket.OPEN) {
+                ws.send('chiama' +'-'+ $('#cliente').html() );
+            }
+        }
+
+
+        function disconnect() {
+          ws.close();
+        }
+
+    </script>
+</head>
+<body lang="en">
+    <div class="vertical-center">
+    <div class="container">
+    <h1>Sono il cliente: <span id="cliente"></span></h1>
+    <%#= current_user.email %>
+    <ul id="messages" class="list-unstyled">
+
+    </ul>
+    <hr />
+    <form role="form" id="chat_form" onsubmit="sendMessage(); return false;">
+      <!--<form role="form" id="chat_form">-->
+        <div class="form-group">
+        <input class="form-control" type="text" name="message" id="message"
+          placeholder="Inserisci il messaggio..." value="" autofocus/>
+      </div>
+        <button type="button" id="send" class="btn btn-primary" onclick="sendMessage();">Invia</button>
+
+        <button type="button" id="send" class="btn btn-primary" onclick="sendPippo();">Pippo</button>
+
+        <button type="button" id="send" class="btn btn-primary" onclick="sendChiama();">Chiamata</button>
+
+        <input type="button" class="btn btn-danger" value="Disconnetti" onclick="disconnect();" />
+
+    </form>
+    </div>
+    </div>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</body>
+</html>

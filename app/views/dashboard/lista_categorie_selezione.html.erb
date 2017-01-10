@@ -1,0 +1,53 @@
+<div class="box-body">
+<ul class="todo-list" id="lista_categorie">
+
+<% @lista_categorie.each do |categoria| %>
+    <li id="lista_categorie_<%= categoria.id %>" class="item_categoria">
+        <!-- drag handle -->
+        <span class="handle">
+            <i class="fa fa-ellipsis-v"></i>
+            <i class="fa fa-ellipsis-v"></i>
+        </span>
+        <!-- checkbox -->
+        <input type="checkbox" value="" name="" class="casella" id="ckx_cat_<%= categoria.id %>"/>
+        <!-- todo text -->
+        <span id="titolo_<%= categoria.id %>" class="text" style="font-size:22px;font-weight:bold;"><%= categoria.titolo %></span>
+        <div class="tools">
+           <button type="button" id="scegli_piatti_<%= categoria.id %>" class="btn btn-primary btn-sm" style="padding-bottom:-30px;font-size:18px;font-weight:bold;">Scegli Piatti</button>
+           <!-- <button type="button" class="btn btn-primary btn-sm">Elimina</button> -->
+            <!-- <i id="modifica_categoria_<%= categoria.id %>" class="fa fa-edit" style="font-size:25px;font-weight:bold;" data-toggle="modal" data-target="#modifica_categoria"></i>
+            <i id="elimina_categoria_<%= categoria.id %>" class="fa fa-trash-o" style="font-size:25px;font-weight:bold;"></i> -->
+        </div>
+    </li>
+<%end%>
+
+</ul>
+
+</div><!-- /.box-body -->
+<div class="box-footer clearfix no-border">
+</div>
+
+
+<script>
+//imposta lo stile
+$("input[type='checkbox'].casella, input[type='radio']").iCheck({
+     checkboxClass: 'icheckbox_minimal',
+     radioClass: 'iradio_minimal'
+ });
+$(".todo-list").sortable();  //disattivo ordinamento categorie
+$(".todo-list").disableSelection();
+//sposta contenitori colorati
+$(".small-box").draggable();
+//debugger;
+$("li.menu").removeClass("active");
+$("li.menu.index").addClass("active");
+
+
+//Gestione Azioni
+  //imposta lo stile per la lista appena aggiunta
+  $("input[type='checkbox'].casella, input[type='radio']").iCheck({
+       checkboxClass: 'icheckbox_minimal',
+       radioClass: 'iradio_minimal'
+   });
+
+</script>

@@ -119,6 +119,10 @@ $(document).on('click', '#btn_salva_piatto', function(event) {
   form_data.append("lista_ingredienti", $('#f_lista_ingredienti').val());
   form_data.append("descrizione", $('#f_descrizione').val());
   form_data.append("lista_allergeni", $('#select_allergeni').val());
+  if ($('#f_prezzo').val() == null || $('#f_prezzo').val() == '') {
+     $('#f_prezzo').val('0');
+  }
+  form_data.append("prezzo", $('#f_prezzo').val());
   var anteprima= $('#anteprima_0').children('img').attr('src');
   if (anteprima != null)
   {
@@ -195,7 +199,8 @@ $(document).on('click', '#btn_salva_piatto', function(event) {
 //al caricamento della pagina altro esempio
 $(window).bind("load", function() {
   <% unless @dish.category.to_s.empty? %>
-    $('#select_categoria').selectpicker('val', '<%= @dish.category %>');
+    // $('#select_categoria').selectpicker('val', '<%= @dish.category %>');
+    $('#select_categoria').selectpicker('val', '<%= @cat %>');
   <% end %>
   //$('#select_allergeni').selectpicker('val', ['Uova','Crostacei']);
   //convertendo in stringa prima di verificare empty è come utilizzare il c# string.IsNullOrEmpty(myString)
@@ -233,7 +238,7 @@ $(function() {
                 <!-- style="width:200px;margin-left:10px;margin-top:5px;" -->
                 <!-- <select class="form-control pull-left" id="select_categoria"> -->
                 <select class="selectpicker" data-width="100%" id="select_categoria" name="category">
-                  <option value="TUTTE">TUTTE</option>
+                  <!--<option value="TUTTE">TUTTE</option>-->
                   <% @lista_categorie.each do |categoria| %>
                   <option "<%= categoria.titolo %>"><%= categoria.titolo %></option>
                   <% end %>
@@ -259,6 +264,12 @@ $(function() {
                 <option value="<%= allergene.nome %>"><%= allergene.nome %></option>
                 <% end %>
                 </select>
+
+                <br><br>
+                <label for="input_nome">Prezzo €:</label>
+                <input type="number" min="0" class="form-control" id="f_prezzo" name="Prezzo" placeholder="Prezzo Piatto..." value="<%= @dish.prezzo %>">
+                <!-- <input type="text" min="0" class="form-control" id="f_prezzo" name="Prezzo" placeholder="Prezzo Piatto..." value="<%#= number_to_currency(@dish.prezzo, precision: 0, unit:"€ ") %>"> -->
+
                 <br><br><br>
 
                 <!-- finire http://learn.jquery.com/using-jquery-core/faq/how-do-i-get-the-text-value-of-a-selected-option/ -->

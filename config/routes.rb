@@ -1,12 +1,28 @@
 Rails.application.routes.draw do
 
+
+  #resources :templates  #risorsa semplice
+
+  resources :templates do
+    collection do
+      get 'cerca'
+    end
+  end
+
+
   resources :receives do
     collection do
       post '/registra' => "receives#registra"
     end
   end
 
-  resources :menus
+  #resources :menus
+  resources :menus do
+    collection do
+      #attenzione menus#lista_menus_filtra indica che controller usare e che action
+      get '/lista_menus_filtra/:nome' , to: 'menus#lista_menus_filtra'
+    end
+  end
 
   resources :media do
     collection  do
@@ -22,8 +38,13 @@ Rails.application.routes.draw do
   get 'dashboard/azienda'
   get 'dashboard/media'
   get 'dashboard/dishes'
+  get 'dashboard/menus'
+  #esempio chat con node
+  get 'dashboard/chat_cliente'
+  get 'dashboard/chat_amministratore'
   # get 'dashboard/lista_piatti'
   get 'dashboard/lista_categorie'
+  get 'dashboard/lista_categorie_selezione'
   post 'dashboard/inserisci_categoria' => "dashboard#inserisci_categoria"
   delete 'dashboard/cancella_categoria/:id' => "dashboard#cancella_categoria"
   put 'dashboard/aggiorna_ordine_categoria' => "dashboard#aggiorna_ordine_categoria"
@@ -46,10 +67,14 @@ Rails.application.routes.draw do
 
   resources :ingredients
 
-  resources :dishes do
+  #posso includere o escludere solo alcune action del controller
+  #:except => [:new, :index, :delete]
+  #:only => [:show, :edit]
+  resources :dishes, :except => [:show] do
     collection do
       get 'lista_piatti'
-      get '/lista_piatti_filtra/:nome&:categoria' , to: 'dishes#lista_piatti_filtra'
+      get '/lista_piatti_filtra/:nome&:categoria' , to: 'dishes#lista_piatti_filtra'        #usata nei piatti
+      get '/lista_piatti_seleziona/:nome&:categoria' , to: 'dishes#lista_piatti_seleziona'  #usata nei menu
     end
   end
 
@@ -151,4 +176,14 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+
+# match "*path", :to => proc {|env| [200, {
+# 'Access-Control-Allow-Origin' => '*',
+# 'Access-Control-Allow-Methods' => 'GET, POST, PUT, DELETE, OPTIONS',
+# 'Access-Control-Allow-Credentials' => 'true',
+# 'Access-Control-Request-Method' => '*',
+# 'Access-Control-Allow-Headers' => 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+# 'Content-Type' => 'text/plain'
+# }, ["CORS Preflight"]] }, :via => [:options]
+
 end

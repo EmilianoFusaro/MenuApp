@@ -152,6 +152,7 @@ https://git.heroku.com/vast-dawn-46286.git
 
 bundle install --without production
 
+git init  (solo la prima volta)
 git status
 git add .
 git commit -m "menuapp gestione piatti completata"
@@ -250,3 +251,11 @@ Login:
 (Controller) users->session_controller.rb
 (View) users->sessions->new.html.erb
 (Layout) layouts>login.html.erb
+
+
+
+www.apress.com/9781484217085
+37.117.97.59  accesso router di casa
+
+fare queste ricerche per pdf
+vk.com ruby on rails 5 pdf

@@ -57,7 +57,7 @@
   <%#="Ciao #{current_user.name}" %>
   <%#= link_to "LogOut", destroy_user_session_path , method: :delete %>
 <%# end %>
-
+<%= yield :script_view %>
 
 </body>
 </html>

@@ -140,10 +140,30 @@
                         </li>
 
                         <li>
+                            <%= link_to dashboard_menus_path ,:class=>"menu" do %>
+                                <i class="fa fa-file"></i> <span>Menu</span>
+                            <% end %>
+                        </li>
+
+                        <li>
                             <%= link_to dashboard_dishes_path ,:class=>"menu" do %>
                                 <i class="fa fa-th"></i> <span>Piatti</span>
                             <% end %>
                         </li>
+
+                        <li>
+                            <%= link_to dashboard_chat_cliente_path ,:class=>"menu" do %>
+                                <i class="fa fa-cutlery"></i> <span>Ordine</span>
+                            <% end %>
+                        </li>
+
+                        <% if current_user.name=="admin" %>
+                        <li>
+                            <%= link_to dashboard_chat_amministratore_path ,:class=>"menu" do %>
+                                <i class="fa fa-group"></i> <span>Cassa</span>
+                            <% end %>
+                        </li>
+                        <% end %>
 
                         <li class="treeview">
                             <a href="#">

@@ -31,6 +31,8 @@ https://github.com/dejan/rails_panel
 https://github.com/charliesome/better_errors
 http://blog.honeybadger.io/remote-debugging-with-byebug-rails-and-pow/
 https://github.com/deivid-rodriguez/byebug
+comandi debugger byebug
+https://github.com/deivid-rodriguez/byebug
 
 
 devise
@@ -186,7 +188,8 @@ Cleanest way to create a Hash from an Array
 http://stackoverflow.com/questions/412771/cleanest-way-to-create-a-hash-from-an-array
 How to access JSON in Rails?
 http://stackoverflow.com/questions/28245039/how-to-access-json-in-rails
-
+JSON.stringify()
+https://developer.mozilla.org/it/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
 
 Active record join senza relazione
 http://stackoverflow.com/questions/15230568/how-to-make-active-record-join-to-return-unique-objects
@@ -443,6 +446,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 http://stackoverflow.com/questions/1181575/determine-whether-an-array-contains-a-value
 http://stackoverflow.com/questions/2672380/how-do-i-check-if-a-javascript-array-value-is-empty-or-null
 http://stackoverflow.com/questions/1181575/determine-whether-an-array-contains-a-value
+https://css-tricks.com/snippets/jquery/remove-specific-value-from-array/
 
 
 configurare console cloud9 sqlite,mysql
@@ -599,7 +603,7 @@ http://www.jqueryrain.com/2012/11/set-default-value-for-select-lists-using-value
 http://plugins.upbootstrap.com/bootstrap-select/
 https://css-tricks.com/snippets/jquery/run-javascript-only-after-entire-page-has-loaded/
 
-strumenti per il check delle pagine html
+strumenti per il check delle pagine html debug pagina
 http://validator.w3.org/check
 http://validator.w3.org/
 
@@ -614,6 +618,104 @@ formattare stringa per richiesta http
 encodeURIComponent
 http://stackoverflow.com/questions/6544564/url-encode-a-string-in-jquery-for-an-ajax-request
 
+
+active record formattazione denaro money euro
+http://stackoverflow.com/questions/1019939/what-is-the-best-method-of-handling-currency-money
+http://api.rubyonrails.org/v4.1/classes/ActionView/Helpers/NumberHelper.html#method-i-number_to_currency
+
+
+checkbox problema con admin template
+http://seegatesite.com/checked-checkbox-adminlte-bootstrap-in-jquery/
+http://stackoverflow.com/questions/1414365/disable-enable-an-input-with-jquery
+http://stackoverflow.com/questions/34394774/checkbox-change-using-jquery-javascript-not-working-inside-bootstrap-modal
+http://stackoverflow.com/questions/17949235/listen-to-bootstrap-checkbox-being-checked
+http://stackoverflow.com/questions/901712/how-to-check-if-a-checkbox-is-checked-in-jquery
+
+
+exit debugger
+http://stackoverflow.com/questions/8015531/how-do-i-step-out-of-a-loop-with-ruby-pry
+
+javascript varie
+https://learn.jquery.com/using-jquery-core/document-ready/
+http://stackoverflow.com/questions/1420707/array-of-ids-how-to-select-with-javascript-jquery
+
+come risolvere Us ing bundle exec may solve this?
+http://stackoverflow.com/questions/8809878/using-bundle-exec-may-solve-this
+$ gem install rubygems-bundler
+$ gem regenerate_binstubs
+
+localStorage
+http://stackoverflow.com/questions/5410820/how-can-i-show-all-the-localstorage-saved-variables
+http://stackoverflow.com/questions/10710674/html5-localstorage-remove-clear-all-data
+
+ActiveRecord undefined
+http://kakubei.blogspot.it/2014/01/determining-whether-variable-or-method.html
+http://blog.plataformatec.com.br/2013/02/active-record-scopes-vs-class-methods/
+
+
+Differenza tra JSON.stringify e JSON.parse
+http://stackoverflow.com/questions/17785592/difference-between-json-stringify-and-json-parse
+JSON.stringify trasforma un oggetto JavaScript in testo JSON e JSON negozi che di testo in una stringa.
+JSON.stringify()è quello di creare una stringa JSON di un oggetto / array.
+JSON.parse trasforma una stringa di testo JSON in un oggetto Javascript.
+JSON.parse()è per "l'analisi" qualcosa che è stato ricevuto come JSON.
+
+esempio parse
+var store_lista_foto = JSON.parse(localStorage.getItem("lista_foto"));
+var istart = parseInt(localStorage.getItem("inizio_foto"));
+var iend = parseInt(localStorage.getItem("fine_foto"));
+
+esempio stringify
+$.getJSON("/media/gallery_scegli/"+ "XXXX", function (data) {
+    localStorage.setItem("lista_foto", JSON.stringify(data));
+    navigaFoto('Inizio');
+});
+if (localStorage.getItem(categ)==null) {
+  var a = [];
+  //a[0] = "0";
+  localStorage.setItem(categ, JSON.stringify(a));
+}
+https://developer.mozilla.org/it/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
+
+
+
+rails return json to javascript
+http://stackoverflow.com/questions/16892602/convert-nested-array-to-json
+http://stackoverflow.com/questions/5410682/parsing-a-json-string-in-ruby
+http://stackoverflow.com/questions/33162084/how-to-save-json-array-with-objects-inside-rails-json-column
+http://stackoverflow.com/questions/22421501/pass-rails-json-variable-to-javascript-variable
+http://stackoverflow.com/questions/35852337/ruby-on-rails-rendering-json-in-js-erb
+
+ricerca in file json
+http://stackoverflow.com/questions/4992383/use-jquerys-find-on-json-object
+http://api.jquery.com/jquery.grep/
+http://stackoverflow.com/questions/19590063/get-specific-json-object-by-id-from-json-array-in-angularjs
+
+
+generare uid
+http://stackoverflow.com/questions/18228324/i-need-to-generate-uuid-for-my-rails-application-what-are-the-optionsgems-i-h
+https://msdn.microsoft.com/it-it/library/system.guid.newguid(v=vs.110).aspx
+https://api.jqueryui.com/uniqueId/
+
+
+Configurare SideKiq
+http://stackoverflow.com/questions/22958188/how-to-run-sidekiq-in-production-server
+
+ruby convertire oggetti in json  (.to_json)
+http://stackoverflow.com/questions/10829473/ruby-how-can-i-convert-a-array-data-to-hash-and-to-json-format
+http://stackoverflow.com/questions/4464050/ruby-objects-and-json-serialization-without-rails
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+angela galleria
+http://newsarttoday.tv/expo/catherine-thery-galerie-teodora/
+
+Advance Open File
+Hit Cmd-Alt-O / Ctrl-Alt-O to open the file list to the directory of the current file.
+As you edit the path the file list will automatically show matching files and directories. Hit Tab to autocomplete the path.
+
+
 per avviare rails da iphone:
 http://stackoverflow.com/questions/29132719/rails-application-not-visible-to-local-network
 rails server --binding=0.0.0.0  #avviare il server in questo modo per essere fruibile da iphone
@@ -621,3 +723,23 @@ ping lo recuperi da utility network
 esempio da lucchetta :
 192.168.1.115:3000  (senza http://)
 192.168.0.2 casa
+
+github
+https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/
+
+------------------------------------------------------------------------------------------------------------------------Heroku
+solo prima volta
+heroku create
+https://vast-dawn-46286.herokuapp.com/
+https://git.heroku.com/vast-dawn-46286.git
+bundle install --without production
+
+git init  (solo la prima volta)
+git status
+git add .
+git commit -m "menuapp gestione piatti completata"
+git push origin master
+
+git push heroku master
+heroku rename menuapp
+heroku rake db:migrate

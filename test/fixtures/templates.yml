@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nome: MyString
+  descrizione: MyText
+  img: MyString
+  ordine: 1
+  variabile_a: MyText
+  variabile_b: MyText
+
+two:
+  nome: MyString
+  descrizione: MyText
+  img: MyString
+  ordine: 1
+  variabile_a: MyText
+  variabile_b: MyText

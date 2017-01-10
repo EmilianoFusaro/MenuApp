@@ -17,12 +17,13 @@
 
    $(document).on('click', '#btn_cerca_piatto', function(event) {
     $('#lista_piatti').html('');
-     var txt_des=$('#txt_descrizione').val().trim();
-     var sel_cat=$("#select_categoria option:selected").text()  //valore selezionato nella option
+     //codifica caratteri speciale e spazi vuoti
+     var txt_des=encodeURIComponent($('#txt_descrizione').val().trim());
+     var sel_cat=encodeURIComponent($("#select_categoria option:selected").text())  //valore selezionato nella option
      if (txt_des!="") {
-       $('#lista_piatti').load('/dishes/lista_piatti_filtra/'+ $('#txt_descrizione').val() + '&' + encodeURIComponent(sel_cat) ).hide().fadeIn(500);
+       $('#lista_piatti').load('/dishes/lista_piatti_filtra/'+ txt_des + '&' + sel_cat).hide().fadeIn(500);
      } else {
-       $('#lista_piatti').load('/dishes/lista_piatti_filtra/'+ 'XXXX' + '&' + encodeURIComponent(sel_cat)).hide().fadeIn(500);
+       $('#lista_piatti').load('/dishes/lista_piatti_filtra/'+ 'XXXX' + '&' + sel_cat).hide().fadeIn(500);
        }
    });
 

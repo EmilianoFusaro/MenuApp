@@ -50,7 +50,7 @@ group :development, :test do
 
 end
 
-
+#gem 'eventmachine', '~> 1.2', '>= 1.2.1'
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
@@ -74,3 +74,6 @@ group :production do
   gem 'pg'
   gem 'rails_12factor'
 end
+
+#permette di effettuare richieste esterne
+gem 'rack-cors' , :require => 'rack/cors'

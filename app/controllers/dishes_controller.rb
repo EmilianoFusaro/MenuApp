@@ -28,6 +28,12 @@ class DishesController < ApplicationController
     #@dish = Dish.find_by_id(params[:id]) #senza first restituisce un dataset non un record
     #recuper dati piatto
     @dish = Dish.where(user_id: current_user.id, id:params[:id]).first
+    #@categoria = Category.find_by_id(@dish.category)
+    @cat = Category.select(:id,:titolo).where(id: @dish.category).first
+    #defined? @Category.id
+    if @cat.respond_to?(:titolo) #se il metodo id esiste ed ha un valore
+      @cat = @cat.titolo
+    end
     #recupera lista categoria
     @lista_categorie = Category.select(:id,:titolo).where(user_id: current_user.id).order(:ordine)
     #recupera lista allergeni
@@ -56,11 +62,18 @@ class DishesController < ApplicationController
   # POST /dishes.json
   # CREATE modificata
   def create
-      puts params
+      #puts params
+      #debugger
       #@dish = Profile.find_by_user_id(current_user.id)
       @dish = Dish.new
       @dish.nome=params[:nome]
-      @dish.category=params[:category]
+      #@dish.category=params[:category]
+      cat = Category.select(:id).where(titolo: params[:category],user_id:current_user.id).first
+      if cat !=nil
+        @dish.category=cat.id
+      else
+        @dish.category=nil
+      end
       @dish.lista_ingredienti=params[:lista_ingredienti]
       @dish.descrizione=params[:descrizione]
       @dish.lista_allergeni=params[:lista_allergeni]
@@ -69,6 +82,7 @@ class DishesController < ApplicationController
       @dish.img2=params[:img2]
       @dish.img3=params[:img3]
       @dish.user_id=current_user.id
+      @dish.prezzo=params[:prezzo]
       @dish.save
       respond_to do |format|
        format.json { head :no_content }
@@ -91,7 +105,16 @@ class DishesController < ApplicationController
 
   def update
     #@dish = Dish.find(params[:id])
-    @dish.update_attributes(dish_permetti)
+    #debugger
+    @catid = Category.select(:id).where(titolo: dish_permetti[:category]).first
+    @appo_dish_permetti=dish_permetti
+    if @catid.respond_to?(:id) #se il metodo id esiste ed ha un valore
+      @appo_dish_permetti[:category] = @catid.id
+    else
+      @appo_dish_permetti[:category] = nil
+    end
+    #debugger
+    @dish.update_attributes(@appo_dish_permetti)
     respond_to do |format|
      format.json { head :no_content }
     end
@@ -118,6 +141,40 @@ class DishesController < ApplicationController
 
 
   def lista_piatti_filtra
+    categoria = Category.select(:id).where(titolo: params[:categoria],user_id:current_user.id).first
+    if categoria !=nil
+      categoria=categoria.id
+    else
+      categoria=nil
+    end
+    #debugger
+    #puts params
+    #puts "categoria #{categoria}"
+    if params[:nome] != "XXXX" and categoria != nil
+      @dish = Dish.where("lower(nome) Like lower(?) and category=(?) and user_id=?", "%#{params[:nome]}%","%#{categoria}%",current_user.id)
+    elsif params[:nome] != "XXXX" and categoria == nil
+      @dish = Dish.where("lower(nome) Like lower(?) and user_id=?", "%#{params[:nome]}%",current_user.id)
+    elsif params[:nome] == "XXXX" and categoria != nil
+      puts "ENTER"
+      @dish = Dish.where("category = (?) and user_id=?", "#{categoria}",current_user.id)
+    else # =="XXXX" and =="TUTTE"
+      @dish = Dish.where(user_id: current_user.id)
+    end
+    @dish ||= Dish.none  #se nullo assegno ActiveRecord
+    render 'dishes/lista_piatti_filtra' , :layout => false
+  end
+
+
+  def lista_piatti_seleziona
+    #debugger
+    @cat_sel = Category.find_by_id(params[:categoria])
+    if @cat_sel!=nil
+      @cat_id=@cat_sel.id
+      @cat_sel=@cat_sel.titolo
+    else
+      @cat_id=nil
+      @cat_sel=nil
+    end
     if params[:nome] != "XXXX" and params[:categoria] != "TUTTE"
       @dish = Dish.where("lower(nome) Like lower(?) and lower(category) Like lower(?) and user_id=?", "%#{params[:nome]}%","%#{params[:categoria]}%",current_user.id)
     elsif params[:nome] != "XXXX" and params[:categoria] == "TUTTE"
@@ -128,7 +185,7 @@ class DishesController < ApplicationController
       @dish = Dish.where(user_id: current_user.id)
     end
     @dish ||= Dish.none  #se nullo assegno ActiveRecord
-    render 'dishes/lista_piatti_filtra' , :layout => false
+    render 'dishes/lista_piatti_seleziona' , :layout => false
   end
 
 
@@ -145,7 +202,8 @@ class DishesController < ApplicationController
 
     def dish_permetti
       #senza dish perchè mi arriva da un form generico
-      params.permit(:nome, :descrizione, :lista_ingredienti, :img, :img1, :img2, :img3, :user_id, :ordine, :category, :lista_allergeni)
+      params.permit(:nome, :descrizione, :lista_ingredienti, :img, :img1, :img2, :img3, :user_id, :ordine, :category, :lista_allergeni, :prezzo)
+      #params.permit(:id, :nome, :descrizione, :lista_ingredienti, :img, :img1, :img2, :img3, :user_id, :ordine, :category, :lista_allergeni, :prezzo)
     end
 
 end

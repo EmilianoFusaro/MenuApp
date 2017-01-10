@@ -1,5 +1,409 @@
-<h1>New Menu</h1>
+<!-- Variabili Locali Della View Sul Layout -->
+<% provide(:v_titolo, "I Tuoi Menu") %>
+<% provide(:v_minides, "Menu") %>
 
-<%= render 'form' %>
+<%# content_for :v_lindex do %>
+<!-- class="active" -->
+<%# end %>
+ <%#= yield :v_lindex %>
+<%# content_for(:title, " class=&quot;active&quot;") %>
 
-<%= link_to 'Back', menus_path %>
+
+<!-- ------------------------------------------------------------------------------------------------parte Javascript Iniettata  -->
+<% content_for :script_view do %>
+<script>
+
+//attenzione disattiva check
+$(function() {
+  $('#lista_categorie').load('/dashboard/lista_categorie_selezione').hide().fadeIn(1000);
+ });
+
+
+$(window).bind("load", function() {
+   $('#ckb_abilita_totale').prop('checked', false);
+   $("#f_prezzo_totale").prop('disabled', true);
+   //localStorage.removeItem('primi'); //al caricamento della pagina viene rimosso
+   //rimuovo tutti i localStorage
+   localStorage.clear();
+   //ricreo i vari localstorage
+   $('.item_categoria').each(function (index, value) {
+     var categ=$("#titolo_"+ this.id.split("_")[2]).html();
+     //setto a vuoto tutte le categorie
+     localStorage.setItem(categ, JSON.stringify([]));
+   });
+});
+
+//$('#ckb_abilita_totale').is(':checked')     mi dice se ccheck attivato
+//$('#ckb_abilita_totale').iCheck('check')    attiva check
+//$('#ckb_abilita_totale').iCheck('uncheck')  disattiva check
+
+//con lista categorie visibile queste azioni non funzionano
+$('#ckb_abilita_totale').on('ifChecked', function(event){
+   //alert(event.type + ' attivo');
+   $("#f_prezzo_totale").prop('disabled', false);
+});
+$('#ckb_abilita_totale').on('ifUnchecked', function(event){
+   //alert(event.type + ' disattivo');
+   $("#f_prezzo_totale").prop('disabled', true);
+});
+
+
+$(document).on('click', '[id*=f_img_]', function(event) {
+  event.preventDefault();
+  $my_foto_selezionata = this.id.split("_")[2]; //recupera in una variabile globale l'indice del bottone cliccato
+  $.getJSON("/media/gallery_scegli/"+ "XXXX", function (data) {
+      localStorage.setItem("lista_foto", JSON.stringify(data));
+      navigaFoto('Inizio');
+  });
+});
+
+//gestione evento avanti-foto
+$(document).on('click', '#btn_avanti', function(event) {
+  event.preventDefault();
+  navigaFoto('Avanti');
+});
+
+//gestione evento indietro-foto
+$(document).on('click', '#btn_indietro', function(event) {
+  event.preventDefault();
+  navigaFoto('Indietro');
+});
+
+
+//gestione filtro cerca foto
+$(document).on('click', '#cerca_foto', function(event) {
+  event.preventDefault();
+  if ($('#cerca').val().trim()!="") {
+    var filtro_ricerca=$('#cerca').val();
+  }
+  else {
+    var filtro_ricerca='XXXX';
+  }
+  $.getJSON("/media/gallery_scegli/"+ filtro_ricerca, function (data) {
+      localStorage.setItem("lista_foto", JSON.stringify(data));
+      navigaFoto('Inizio');
+  });
+});
+
+//gestione gallery anteprima
+function navigaFoto(direzione) {
+
+  var store_lista_foto = JSON.parse(localStorage.getItem("lista_foto"));
+  var istart = parseInt(localStorage.getItem("inizio_foto"));
+  var iend = parseInt(localStorage.getItem("fine_foto"));
+
+  if (direzione == 'Avanti') {
+    if (iend < store_lista_foto.length) {
+     var istart = istart + 9;
+     var iend = iend + 9;
+    }
+  }
+  else if (direzione == 'Indietro') {
+    if (istart > 0) {
+      var istart = istart - 9;
+      var iend = iend - 9;
+    }
+  }
+  else if ('Inizio') {
+    var istart = 0;
+    var iend = 9;
+  }
+  localStorage.setItem('inizio_foto', istart);
+  localStorage.setItem('fine_foto', iend);
+  $('#riga_gallery').html('');
+  $.each(store_lista_foto.slice(istart,iend), function(idx, obj) {
+    if (obj.descrizione.length > 15) {
+      var descrizione_troncate = jQuery.trim(obj.descrizione).substring(0, 15).trim(this) + "...";
+      }
+      else {
+        var descrizione_troncate = jQuery.trim(obj.descrizione);
+      };
+    var foto= '<div class="col-lg-3 col-md-6 col-xs-6 thumb" id="div_foto_'+ obj.id +'"> \
+      <h4 class="box-title" id="des_breve_'+ obj.id +'">&nbsp;'+ descrizione_troncate +'</h4> \
+      <div class="box-body"> \
+      <a class="thumbnail" href="#" data-dismiss="modal"> \
+      <img class="foto_select" src="'+ obj.foto_media_url +'" data-toggle="modal" data-target="#modifica_media" id="fotoid_'+ obj.id +'"> \
+      </a> \
+      </div> \
+      </div>';
+    // $('#riga_gallery').append(foto).hide().fadeIn(500);
+    $('#riga_gallery').append(foto);
+  });
+};
+
+//gestione click foto Selezionata
+$(document).on('click', '.thumbnail', function(event) {
+  event.preventDefault();
+  $('#anteprima_'+ $my_foto_selezionata).html($(this).html());
+});
+
+//cancella selezione foto
+$(document).on('click', '#btn_nessuna_foto', function(event) {
+  event.preventDefault();
+  $('#anteprima_'+ $my_foto_selezionata).html('');
+});
+
+
+//---Salva Menu
+$(document).on('click', '#btn_salva_menu', function(event) {
+  event.preventDefault();
+  //crea form via javascript
+  //debugger;
+  var form_data = new FormData();
+  if ($('#f_nome').val() == null || $('#f_nome').val() == '') {
+    bootbox.alert("Attenzione il nome è obbligatorio !");
+     return false; //esce dalla funzione
+  }
+  form_data.append("nome", $('#f_nome').val());
+  form_data.append("descrizione", $('#f_descrizione').val());
+  // form_data.append("abilitaprezzo", $('#ckb_abilita_totale').val());
+  form_data.append("abilitaprezzo", $('#ckb_abilita_totale').is(':checked'));
+  form_data.append("prezzo", $('#f_prezzo_totale').val());
+
+  //prepara la lista delle categorie
+  //debugger
+  var lista_categorie_ordine = [];
+  var conta =0;
+  $('.item_categoria').each(function (index, value) {
+    conta +=1;
+    //debugger;
+    if ($(this).find('.casella').is(':checked')) {
+      lista_categorie_ordine.push({
+          id: parseInt(this.id.split('_')[2]),
+          selezione: $(this).find('.casella').is(':checked'),
+         ordine: conta
+      });
+     }
+  });
+  var jsonListaCategorie = JSON.stringify(lista_categorie_ordine);
+  //debugger;
+  form_data.append("categorie", jsonListaCategorie);
+
+  //appende la lista piatti
+  var lista_piatti = [];
+  $('.item_categoria').each(function (index, value) {
+    var categ=$("#titolo_"+ this.id.split("_")[2]).html();
+    //localStorage.setItem(categ, JSON.stringify([]));
+    lista_piatti.push({
+      id: parseInt(this.id.split('_')[2]),
+      piatti: JSON.parse(localStorage.getItem(categ))
+    });
+    //piatti: localStorage.getItem(categ)
+    //localStorage.getItem(categ)
+  });
+  //debugger;
+  form_data.append("piatti", JSON.stringify(lista_piatti));
+
+
+  // var anteprima= $('#anteprima_0').children('img').attr('src');
+  // if (anteprima != null)
+  // {
+  //   form_data.append("img", $('#anteprima_0').children('img').attr('src'));
+  // }
+
+  //---Invio Richiesta Si Salvataggio AL Server
+  $.ajax({
+   type: "POST",
+   url: "/menus",
+   //dataType: 'script',
+   cache: false,
+   contentType: false,
+   processData: false,
+   data :form_data,
+   //contentType: "application/json; charset=utf-8",
+   //dataType: "json",
+   //contentType: "application/json; charset=utf-8",
+   // data: $('#myform').serialize(),  //funziona solo con un form vero (vedere doc)
+   //contentType: "application/json; charset=utf-8",
+   //dataType: "json",
+   dataType: 'text',
+   success: function(data) {
+   bootbox.alert("Menu Salvato Correttamente !");
+   return false;
+   },
+   error: function(data) {
+    bootbox.alert("Attenzione Problemi Durante Il Salvataggio !");
+    return false;
+ }
+});
+});
+
+$(document).on('click', '[id*=scegli_piatti_]', function(event) {
+  event.preventDefault();
+  //alert(this.id.split("_")[2]);
+  //$(this).html()  //viene trasformato in html
+  //debugger;
+  $('#des_scegli_categorie').hide(300);
+  $('#lista_categorie').hide(300);
+  $('#btn_salva_menu').hide(300);
+  //$("#titolo_"+this.id.split("_")[2]).html()
+  var categ=$("#titolo_"+this.id.split("_")[2]).html();  //nome piatto
+  var categ_id=this.id.split("_")[2];  //solo id piatto
+  $('#des_scegli_piatti').html("Categoria: <strong>"+ categ.toUpperCase() + "</strong> Scegli I Piatti:");
+  $('#des_scegli_piatti').show(300);
+  $('#cerca_piatto').show(300);
+  //debugger;
+  //$('#scegli_piatti').load('/dishes/lista_piatti_seleziona/'+ 'XXXX&' + $.trim(categ)).hide().fadeIn(300);
+  $('#scegli_piatti').load('/dishes/lista_piatti_seleziona/'+ 'XXXX&' + categ_id).hide().fadeIn(300);
+  $('#div_indientro_menu').show(300);
+  //alert($('#lista_categorie_130').find('#titolo_130').html());
+  //creo il localstorage della categoria se non esiste
+  //debugger;
+  if (localStorage.getItem(categ)==null) {
+    var a = [];
+    //a[0] = "0";
+    localStorage.setItem(categ, JSON.stringify(a));
+  }
+
+});
+
+$(document).on('click', '#btn_indietro_menu', function(event) {
+  event.preventDefault();
+  $('#div_indientro_menu').hide(300);
+  $('#cerca_piatto').hide(300);
+  $('#des_scegli_piatti').hide(300);
+  $('#scegli_piatti').hide();
+  $('#des_scegli_categorie').show(300);
+  $('#lista_categorie').show(300);
+  $('#btn_salva_menu').show(300);
+});
+
+
+$(document).on('click', '#btn_cerca_menu', function(event) {
+  event.preventDefault();
+  var categoria_selezionata=$('#categoria_selezionata').text();
+  var txt_des=encodeURIComponent($('#txt_descrizione').val().trim());
+  $('#scegli_piatti').html('');
+  if (txt_des!="") {
+    $('#scegli_piatti').load('/dishes/lista_piatti_seleziona/'+ txt_des + '&' + categoria_selezionata).hide().fadeIn(300);
+  } else {
+    $('#scegli_piatti').load('/dishes/lista_piatti_seleziona/'+ 'XXXX' + '&' + categoria_selezionata).hide().fadeIn(300);
+  }
+});
+
+
+// $(document).on('click', '#txt_descrizione', function(event) {
+//   event.preventDefault();
+//   alert('descrizione');
+// });
+
+
+
+</script>
+<% end %>
+
+<!-- ------------------------------------------------------------------------------------------------parte HTML  -->
+
+<div class="row">
+  <div class="col-md-12">
+      <div class="box box-primary">
+          <!-- <div class="box-header">x
+              <h3 class="box-title">Dati menu</h3>
+          </div> -->
+          <form role="form">
+          <!-- <%#= form_for @menu  do |f| %> -->
+              <div class="box-body">
+                <div class="form-group">
+                    <label for="input_nome">Nome:</label>
+                    <input type="text" class="form-control" id="f_nome" name="nome" placeholder="Nome menu..." value="">
+                </div>
+
+                <div class="form-group">
+                    <label>Descrizione</label>
+                    <textarea class="form-control" rows="3" placeholder="Descrizione ..." id="f_descrizione" name="descrizione" value=""></textarea>
+                </div>
+
+                <h4>Prezzo Totale Menù:</h4>
+                <div class="input-group">
+                  <span class="input-group-addon">
+                  <input type="checkbox" id="ckb_abilita_totale">
+                  </span>
+                  <input type="number" class="form-control" id="f_prezzo_totale">
+                </div>
+
+                <br>
+                <!-- <div id="div_indientro_menu" hidden="true">
+                <button type="submit" class="btn btn-primary" id="btn_indietro_menu" style="font-size:18px;font-weight:bold;">Torna Alle Categorie</button>
+                </div> -->
+                <h4 id="des_scegli_categorie">Scegli Le Categorie:</h4>
+
+                <div id="lista_categorie"></div>
+
+                <h4 id="des_scegli_piatti" hidden="true"></h4>
+                <div id="cerca_piatto" hidden="true">
+                  <input type="text" id="txt_descrizione" class="form-control pull-left" name="txt_descrizione" placeholder="Cerca menu ..." style="width:200px;margin-left:10px;margin-top:1px;" maxlength="50">
+                  <div class="box-tools  pull-left">
+                       <button id="btn_cerca_menu" class="btn btn-default pull-left"><i class="fa fa-search" style="font-size:20px;font-weight:bold;"></i><strong>Cerca</strong></button>
+                  </div>
+                </div>
+
+                <div id="scegli_piatti"></div>  <!-- Popolata da Jquery  -->
+
+                <!-- <hr> -->
+                <!-- finire http://learn.jquery.com/using-jquery-core/faq/how-do-i-get-the-text-value-of-a-selected-option/ -->
+                <!-- http://stackoverflow.com/questions/496052/jquery-setting-the-selected-value-of-a-select-control-via-its-text-description -->
+
+                    <!-- <div class="form-group">
+                        <a data-toggle="modal" href="#scegli_foto" class="btn btn-primary" id="f_img_0">Scegli Foto 1</a>
+                        <div class="thumb">
+                        <p class="help-block" id="anteprima_0"></p>
+                        </div>
+                        <br>
+                   </div> -->
+
+                   <label for="input_categoria">Template:</label>
+                   <!-- style="width:200px;margin-left:10px;margin-top:5px;" -->
+                   <!-- <select class="form-control pull-left" id="select_categoria"> -->
+                   <select class="selectpicker" data-width="100%" id="select_template" name="template">
+                   <!-- <option value="TUTTE">TUTTE</option> -->
+                   <%# @lista_categorie.each do |categoria| %>
+                     <option "<%#= categoria.titolo %>"><%#= categoria.titolo %></option>
+                   <%# end %>
+                   </select>
+
+              <div class="box-footer">
+                  <button type="submit" class="btn btn-primary" id="btn_salva_menu" style="font-size:18px;font-weight:bold;">Salva il menu</button>
+                  <!-- <%#= f.submit 'Salva il menu', :class => 'btn btn-primary' ,id:"btn_salva_menu" %> -->
+                  <br><br>
+                  <div id="div_indientro_menu" hidden="true">
+                  <button type="submit" class="btn btn-primary" id="btn_indietro_menu" style="font-size:18px;font-weight:bold;">Torna Alle Categorie</button>
+                  </div>
+              </div>
+              
+            </div>
+          </form>
+      </div>
+  </div>
+</div>
+
+
+<div id="scegli_foto" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Scegli La Foto</h4>
+            </div>
+            <div class="modal-body">
+              <br>
+              <input type="text" class="form-control pull-left" id="cerca" placeholder="Cerca ..." style="width:200px;" maxlength="50">
+              <button type="submit" id="cerca_foto" class="btn btn-primary pull-left" style="width:120px;height:35px;display:inline-block;float:none;margin-right:27%;">Cerca</button>
+
+              <button type="button" class="btn btn-default" aria-label="Left Align" id="btn_indietro">
+              <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+              </button>
+
+              <button type="button" class="btn btn-default" aria-label="Left Align" id="btn_avanti">
+              <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+              </button>
+              <br><br>
+              <div id="riga_gallery"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_nessuna_foto">Nessuna</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_chiudi_foto">Chiudi</button>
+              <!-- <button type="button" class="btn btn-primary" data-dismiss="no-modal" id="btn_modifica_foto">Scegli</button> -->
+            </div>
+        </div>
+    </div>
+</div>

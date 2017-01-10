@@ -1518,7 +1518,7 @@ Sizzle.attr = function( elem, name ) {
 };
 
 Sizzle.error = function( msg ) {
-	throw new Error( "Syntax error, unrecognized expression: " + msg );
+	throw new Error( 'Syntax error, unrecognized expression: ' + msg );
 };
 
 /**

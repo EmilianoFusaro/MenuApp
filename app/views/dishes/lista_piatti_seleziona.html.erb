@@ -1,0 +1,98 @@
+<div class="box-body col-xs-12">
+<div hidden id="categoria_selezionata"><%= @cat_id %></div> 
+<ul class="todo-list" id="lista_piatti" contenteditable="false">
+<% @dish.each do |piatto| %>
+    <li id="lista_piatti_<%= piatto.id %>" class="item_piatto" style="height:50px;" contenteditable="false" ordine="<%= piatto.ordine %>">
+        <!-- drag handle -->
+        <span class="handle">
+            <i class="fa fa-ellipsis-v"></i>
+            <i class="fa fa-ellipsis-v"></i>
+            <i class="fa fa-ellipsis-v"></i>
+        </span>
+        <input type="checkbox" value="" name="" class="casella_piatti" id="ck_<%= piatto.id %>"/>
+        <span id="nome_<%= piatto.id %>" class="text" style="font-size:22px;font-weight:bold;" contenteditable="false"><%= piatto.nome %></span>
+        <!-- <div class="tools">
+            <i id="modifica_piatto_<%= piatto.id %>" class="fa fa-edit" style="font-size:25px;font-weight:bold;"></i>
+            <i id="elimina_piatto_<%= piatto.id %>" class="fa fa-trash-o" style="font-size:25px;font-weight:bold;"></i>
+        </div> -->
+    </li>
+<%end%>
+</ul>
+</div>
+<div class="box-footer clearfix no-border">
+</div>
+
+
+<script type="text/javascript">
+  //$(".todo-list").sortable({handle: ".handle"});  //il drag & drop funziona solo su la parte specificata
+  $(".todo-list").disableSelection();
+  $("li.menu").removeClass("active");
+  $("li.menu.index").addClass("active");
+
+  //imposta lo stile per la lista appena aggiunta
+  $("input[type='checkbox'].casella_piatti, input[type='radio']").iCheck({
+       checkboxClass: 'icheckbox_minimal',
+       radioClass: 'iradio_minimal'
+   });
+
+
+  // funzione per determinare posizione di partenza e posizione finale
+  // $(".todo-list").sortable({
+  //      stop: function() {
+  //         var order = $("#sortable").sortable("serialize", {key:'order[]'});
+  //      },
+  //      start: function(e, ui) {
+  //      var old_position = ui.item.index();
+  //      alert('vecchia posizione: ' + old_position);
+  //      },
+  //
+  //      update: function (event, ui) {
+  //      var new_position = ui.item.index();
+  //      alert('nuona posizione: ' +  new_position);
+  //       //var data = $(this).sortable('serialize');
+  //       //debugger;
+  //       //ui.item restituisce <li> spostato
+  //       //ui.item.attr('id') restituisce id dell <li> spostato
+  //       //$("#lista_piatti_3").index()   restituisce il suo ordine nella lista
+  //      }
+  //  });
+
+  //al caricamento della pagina fleggo la lista selezionata
+  $(document).ready(function() {
+      //debugger;
+      $permetti_check = false;
+      a=JSON.parse(localStorage.getItem("<%= @cat_sel %>")).join(',#');
+      $('#' + a).iCheck('check');
+      $permetti_check = true;
+  });
+
+  //al selzionare del piatto
+  $('.casella_piatti').on('ifChecked', function(event){
+     //alert(event.type + ' attivo');
+     //debugger;
+     if ($permetti_check==true){
+       //alert('selezionata');
+       var a = [];
+       a = JSON.parse(localStorage.getItem("<%= @cat_sel %>"))  ;
+       a.push(this.id);
+       localStorage.setItem("<%= @cat_sel %>", JSON.stringify(a));
+       //localStorage.setItem("<%= @cat_sel %>", a);
+     }
+  });
+
+  //al deselezionare del piatto
+  $('.casella_piatti').on('ifUnchecked', function(event){
+     //alert(event.type + ' disattivo');
+     //alert('deselezionata');
+     //debugger;
+     var a = [];
+     a = JSON.parse(localStorage.getItem("<%= @cat_sel %>"))  ;
+     a = $(a).not([this.id]).get(); //rimuove elementi di array
+     localStorage.setItem("<%= @cat_sel %>", JSON.stringify(a));
+     //localStorage.setItem("<%= @cat_sel %>", a);
+  });
+
+
+
+
+</script>

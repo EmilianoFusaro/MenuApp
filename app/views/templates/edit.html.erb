@@ -1,0 +1,139 @@
+
+<p id="notice"><%= notice %></p>
+
+
+<!-- ====== Menu Section ====== -->
+<section id="menu">
+  <div class="navigation">
+    <div id="main-nav" class="navbar navbar-default" role="navigation">
+      <div class="container">
+
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">MenuApp</a>
+        </div> <!-- end .navbar-header -->
+
+        <div class="navbar-collapse collapse">
+          <ul id="ulnav" class="nav navbar-nav navbar-right">
+            <li><a href="/">Home</a></li>
+            <li><a href="/dashboard/index">Dashboard</a></li>
+            <li>
+            <%if user_signed_in? %>
+              <%#= link_to "#{current_user.name} LogOut", destroy_user_session_path , method: :delete %>
+              <%= link_to "Esci", destroy_user_session_path , method: :delete %>
+            <% end %>
+            </li>
+          </ul>
+        </div><!-- end .navbar-collapse -->
+
+      </div> <!-- end .container -->
+    </div> <!-- end #main-nav -->
+  </div> <!-- end .navigation -->
+</section>
+<!-- ====== End Menu Section ====== -->
+
+
+<!-- ====== Subscribe Section ====== -->
+<div class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <h1>Gestione Template</h1>
+                <div class="row">
+                  <div class="col-md-12">
+                    <!--<div class="form-group">-->
+                    <!-- <label for="name" class="sr-only">Filtro</label> -->
+                    <%= form_tag({controller: "profiles", action: "cerca"}, method: "get") do %>
+                    <input type="text" class="form-control pull-left" id="descrizione" name="descrizione" placeholder="Filtra Utente ..." style="width:300px;" maxlength="50">
+                    <button type="submit" id="cerca_template" class="btn btn-primary" style="width:150px;">Cerca</button>
+                    <!-- <button type="submit" id="nuovo_template" class="btn btn-success" style="width:150px;">Nuovo</button> -->
+                    <%= link_to 'Nuovo', new_template_path ,class:"btn btn-success" ,style:"width:150px;"%>
+                    <% end %>
+                    <!--</div>-->
+                  </div>
+                  <br>
+                  <br>
+                  <br>
+                  <br>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="subscribe">
+  <p id="notice"><%= notice %></p>
+  <table class="table table-bordered table-condensed table-hover table-striped">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Nome</th>
+        <th>Descrizione</th>
+        <th>Tipo</th>
+        <th colspan="3">Azioni</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @templates.each do |template| %>
+      <tr>
+      <td><%= template.id %></td>
+      <td><%= template.nome %></td>
+      <td><%= template.descrizione %></td>
+      <td><%= template.tipo %></td>
+      <td style="width:170px;">
+      <%= link_to 'Modifica', template ,class:"btn btn-primary btnrs" ,style:"width:75px;"%>
+      <%= link_to 'Elimina', template, method: :delete, data: { confirm: 'Sei Sicuro Di Voler Eliminare Questo Utente?'} ,id:"elimina_#{template.id}", class:"btn btn-danger btnrs" ,style:"width:75px;"%>
+      </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <div class="subscribe section-padding"></div>
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</section>
+<!--======E nd Subscribe Section======-->
+
+
+
+<footer> <!--class="navbar-fixed-bottom">-->
+  <section class="copyright dark-bg">
+    <div class="container">
+       <p>© 2016
+       <a href="#">MenuApp</a>, All Rights Reserved</p>
+    </div>
+  </section>
+</footer>
+
+
+<!-- <%= link_to 'New Profile', new_profile_path %>
+<script src="https://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).on('click', '[id*="elimina_"]', function(event) {
+  event.preventDefault();
+  debugger;
+  var indice=this.id.split('_')[1];
+//  bootbox.confirm("Sei sicuro di voler eliminare  la categoria: "+ $("#titolo_" + indice).text() + " ?", function(result) {
+//   if (result==true) {
+      $.ajax({
+          url: "/profiles/" + indice,
+          type: 'DELETE',
+          success: function(){
+            alert('Utente Eliminato!');
+          }
+      });
+//    }
+  });
+</script> -->

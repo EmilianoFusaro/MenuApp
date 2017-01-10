@@ -1,0 +1,147 @@
+<% content_for :script_view do %>
+<script>
+// $(function() {
+//   //debugger;
+//   $('#express').load('http://localhost:8000/');
+//  });
+</script>
+<% end %>
+
+
+<!-- ====== Menu Section ====== -->
+<section id="menu">
+  <div class="navigation">
+    <div id="main-nav" class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">MenuApp</a>
+        </div> <!-- end .navbar-header -->
+
+        <div class="navbar-collapse collapse">
+          <ul id="ulnav" class="nav navbar-nav navbar-right">
+            <li><a href="/">Home</a></li>
+            <li><a href="/dashboard/index">Dashboard</a></li>
+            <li>
+            <%if user_signed_in? %>
+              <%#= link_to "#{current_user.name} LogOut", destroy_user_session_path , method: :delete %>
+              <%= link_to "Esci", destroy_user_session_path , method: :delete %>
+            <% end %>
+            </li>
+          </ul>
+        </div><!-- end .navbar-collapse -->
+
+      </div> <!-- end .container -->
+    </div> <!-- end #main-nav -->
+  </div> <!-- end .navigation -->
+</section>
+<!-- ====== End Menu Section ====== -->
+
+
+<!-- ====== Subscribe Section ====== -->
+<section id="mostra">
+  <div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Modifica Templates: <%#= @utente.name %></h1>
+      <div class="row">
+        <div class="col-md-12">
+        <p id="notice"><strong><%= notice %></strong></p>
+        <%= form_for (@template) do |f| %>
+        <%#= form_for @utente, :url => url_for(:controller => 'profiles', :action => 'aggiorna_utente') , :html => {:method => :put}  do |f| %>
+        <%#= form_for @utente, :url => url_for(:controller => 'profiles', :action => 'aggiorna_utente') do |f| %>
+        <%#= form_for(@profile) do |f| %>
+          <table class="table table-bordered table-condensed table-hover table-striped">
+            <thead>
+              <tr>
+                <th>Campo Template</th>
+                <th>Valore</th>
+              </tr>
+            </thead>
+            <tr>
+            <td>Template Id:</td>
+            <td><%= @template.id %></td>
+            <%= f.hidden_field :id %>
+            </tr>
+            <tr>
+            <td>Nome:</td>
+            <td contenteditable="false"><%= f.text_field :nome , class:"testo_enter"%></td>
+            </tr>
+            <tr>
+            <td>Descrizione:</td>
+            <td contenteditable="false"><%= f.text_field :descrizione , class:"testo_enter"%></td>
+            </tr>
+            <tr>
+            <td>Img:</td>
+            <td contenteditable="false"><%= f.text_field :img , class:"testo_enter"%></td>
+            </tr>
+            <tr>
+            <td>Ordine:</td>
+            <td contenteditable="false"><%= f.text_field :ordine %></td>
+            <tr>
+            <td>Variabile A:</td>
+            <td contenteditable="false"><%= f.text_area :variabile_a , class:"testo_enter"%></td>
+            <tr>
+            <td>Variabile B:</td>
+            <td contenteditable="false"><%= f.text_area :variabile_b , class:"testo_enter"%></td>
+            </tr>
+            <td>Tipo:</td>
+            <td contenteditable="false"><%= f.text_field :tipo , class:"testo_enter"%></td>
+            </tr>
+            <td>Sorgente:</td>
+            <td contenteditable="false"><%= f.text_area :sorgente , class:"testo_enter"%></td>
+            <tr>
+            <td>Sezioni:</td>
+            <td contenteditable="false"><%= f.text_area :sezioni , class:"testo_enter"%></td>
+            <tr>
+          </table>
+          <!-- <button type="button" class="btn btn-success">Salva Utente</button> -->
+          <%= f.submit 'Salva Template', :class => 'btn btn-success' %>
+          <% end %>
+          <hr>
+          <%#= link_to 'Edit', edit_profile_path(@profile) %>
+          <strong><%= link_to '<--Back', templates_path %></strong>
+          <br><br><br>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- <div id="express"></div> -->
+
+<footer> <!--class="navbar-fixed-bottom">-->
+  <section class="copyright dark-bg">
+    <div class="container">
+       <p>© 2016
+       <a href="#">MenuApp</a>, All Rights Reserved</p>
+    </div>
+  </section>
+</footer>
+
+
+<!-- <%= link_to 'New Profile', new_profile_path %>
+<script src="https://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).on('click', '[id*="elimina_"]', function(event) {
+  event.preventDefault();
+  debugger;
+  var indice=this.id.split('_')[1];
+//  bootbox.confirm("Sei sicuro di voler eliminare  la categoria: "+ $("#titolo_" + indice).text() + " ?", function(result) {
+//   if (result==true) {
+      $.ajax({
+          url: "/profiles/" + indice,
+          type: 'DELETE',
+          success: function(){
+            alert('Utente Eliminato!');
+          }
+      });
+//    }
+  });
+</script> -->

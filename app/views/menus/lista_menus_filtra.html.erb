@@ -1,0 +1,77 @@
+<div class="box-body col-xs-12">
+<ul class="todo-list" id="lista_menu" contenteditable="false">
+<% @menu.each do |m| %>
+    <li id="lista_menu_<%= m.id %>" class="item_menu" style="height:50px;" contenteditable="false" ordine="<%= m.ordine %>">
+        <!-- drag handle -->
+        <span class="handle">
+            <i class="fa fa-ellipsis-v"></i>
+            <i class="fa fa-ellipsis-v"></i>
+            <i class="fa fa-ellipsis-v"></i>
+        </span>
+        <span id="nome_<%= m.id %>" class="text" style="font-size:22px;font-weight:bold;" contenteditable="false"><%= m.nome %></span>
+        <div class="tools">
+            <i id="modifica_menu_<%= m.id %>" class="fa fa-edit" style="font-size:25px;font-weight:bold;"></i>
+            <i id="elimina_menu_<%= m.id %>" class="fa fa-trash-o" style="font-size:25px;font-weight:bold;"></i>
+        </div>
+    </li>
+<%end%>
+</ul>
+</div>
+
+<!-- Esempio WebSocket -->
+<!-- <div class="vertical-center"> <div class="container">
+<p>&nbsp;</p>
+<form role="form" id="chat_form" onsubmit="sendMessage(); return false;">
+<div class="form-group">
+<input class="form-control" type="text" name="message" id="message" placeholder="Type text to echo in here" value="" autofocus/>
+</div>
+<button type="button" id="send" class="btn btn-primary" onclick="sendMessage();">Send!</button>
+</form>
+</div>
+</div>
+<script src="http://bit.ly/cdn-bootstrap-minjs"></script> -->
+
+</body>
+</html>
+
+
+<script type="text/javascript">
+  $(".todo-list").sortable({handle: ".handle"});  //il drag & drop funziona solo su la parte specificata
+  $(".todo-list").disableSelection();
+  $("li.menu").removeClass("active");
+  $("li.menu.index").addClass("active");
+
+
+  // funzione per determinare posizione di partenza e posizione finale
+  // $(".todo-list").sortable({
+  //      stop: function() {
+  //         var order = $("#sortable").sortable("serialize", {key:'order[]'});
+  //      },
+  //      start: function(e, ui) {
+  //      var old_position = ui.item.index();
+  //      alert('vecchia posizione: ' + old_position);
+  //      },
+  //
+  //      update: function (event, ui) {
+  //      var new_position = ui.item.index();
+  //      alert('nuona posizione: ' +  new_position);
+  //       //var data = $(this).sortable('serialize');
+  //       //debugger;
+  //       //ui.item restituisce <li> spostato
+  //       //ui.item.attr('id') restituisce id dell <li> spostato
+  //       //$("#lista_piatti_3").index()   restituisce il suo ordine nella lista
+  //      }
+  //  });
+</script>
+
+
+<!-- Esempio WebSocket -->
+<!-- <script type="text/javascript">
+var ws = new WebSocket("ws://localhost:8181");
+    ws.onopen = function(e) {
+        console.log('Connection to server opened');
+      }
+function sendMessage() {
+ws.send($('#message').val());
+}
+</script> -->

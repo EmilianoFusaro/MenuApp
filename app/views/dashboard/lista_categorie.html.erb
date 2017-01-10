@@ -9,7 +9,7 @@
             <i class="fa fa-ellipsis-v"></i>
         </span>
         <!-- checkbox -->
-        <input type="checkbox" value="" name=""/>
+        <input type="checkbox" value="" name="" class="casella"/>
         <!-- todo text -->
         <span id="titolo_<%= categoria.id %>" class="text"><%= categoria.titolo %></span>
         <!-- Emphasis label -->
@@ -62,7 +62,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel2">Inserisci Categoria</h4>
+        <h4 class="modal-title" id="myModalLabel2">Modifica Categoria</h4>
       </div>
       <div class="modal-body">
         <label for="usr">Nome:</label>
@@ -83,7 +83,7 @@
 
 <script>
 //imposta lo stile
-$("input[type='checkbox'], input[type='radio']").iCheck({
+$("input[type='checkbox'].casella, input[type='radio']").iCheck({
      checkboxClass: 'icheckbox_minimal',
      radioClass: 'iradio_minimal'
  });
@@ -181,7 +181,7 @@ function aggiungi_categoria_data(data) {
             <i class="fa fa-ellipsis-v"></i> \
             <i class="fa fa-ellipsis-v"></i> \
         </span> \
-        <input type="checkbox" value="" name=""/> \
+        <input type="checkbox" value="" name="" class="casella"/> \
         <span id="titolo_'+ data.id +'" class="text">' + data.titolo +'</span> \
         <div class="tools"> \
             <i id="modifica_categoria_'+ data.id +'" class="fa fa-edit" style="font-size:25px;font-weight:bold;" data-toggle="modal" data-target="#modifica_categoria"></i> \
@@ -200,7 +200,7 @@ function aggiungi_categoria_data(data) {
   }
 
   //imposta lo stile per la lista appena aggiunta
-  $("input[type='checkbox'], input[type='radio']").iCheck({
+  $("input[type='checkbox'].casella, input[type='radio']").iCheck({
        checkboxClass: 'icheckbox_minimal',
        radioClass: 'iradio_minimal'
    });

@@ -19,7 +19,7 @@ class ProfilesController < ApplicationController
 
 
   def cerca
-    puts params
+    #puts params
     #debugger
     #@profiles = Profile.joins(:user).where("users.name like '%a%'") #occhio al plurale
     if params[:descrizione].strip.size==0

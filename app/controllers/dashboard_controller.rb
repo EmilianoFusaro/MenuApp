@@ -25,14 +25,36 @@ class DashboardController < ApplicationController
       @lista_categorie = Category.select(:id,:titolo).where(user_id: current_user.id).order(:ordine)
   end
 
+  def menus #Menu
+    #puts "Enter Menu"
+  end
+
   def lista_categorie
+    # Test Processo Lento
+    # def compito
+    #   out_file = File.new("out.txt", "w")
+    #   counter=0
+    #   for counter in 0..10
+    #     out_file.puts("write your stuff here")
+    #     sleep(1)
+    #   end
+    #   out_file.close
+    # end
+    # t1=Thread.new{compito()}
+    # t1.join
+
     #questa query limita il filtro ad un risultato
-    #@lista_categorie = Category.find_by(user_id: current_user.id)
+    #@lista _categorie = Category.find_by(user_id: current_user.id)
     @lista_categorie = Category.where(user_id: current_user.id).order(:ordine)
     #specifico senza layout
     render layout: false
     # specifico senza layout ma vista da renderizzare
     # render 'dashboard/_lista_categorie' , :layout => false
+  end
+
+  def lista_categorie_selezione
+    @lista_categorie = Category.where(user_id: current_user.id).order(:ordine)
+    render layout: false
   end
 
   #def lista_piatti
@@ -85,6 +107,7 @@ class DashboardController < ApplicationController
 
 
   def aggiorna_ordine_categoria
+    #debugger
     #puts params
     #puts params[:_json][1].class
     #puts JSON.parse(params[:_json][1])
@@ -114,6 +137,22 @@ class DashboardController < ApplicationController
     @categoria.save
     respond_to do |format|
      format.json { head :no_content }
+    end
+  end
+
+
+  def chat_cliente
+    #esempio chat con node
+    render layout: false
+  end
+
+  def chat_amministratore
+    #esempio chat con node
+    if current_user.name=="admin"
+      render layout: false
+    else
+      redirect_to :controller=>'dashboard', :action => 'chat_cliente'
+      #render file: "#{Rails.root}/public/404", layout: false, status: :not_found
     end
   end
 

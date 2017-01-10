@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161013215532) do
+ActiveRecord::Schema.define(version: 20161214234521) do
 
   create_table "allergens", force: :cascade do |t|
     t.string   "nome"
@@ -42,11 +42,12 @@ ActiveRecord::Schema.define(version: 20161013215532) do
     t.string   "img2"
     t.string   "img3"
     t.integer  "user_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
     t.integer  "ordine"
     t.string   "category"
     t.string   "lista_allergeni"
+    t.decimal  "prezzo",            precision: 8, scale: 2
   end
 
   create_table "ingredients", force: :cascade do |t|
@@ -77,11 +78,14 @@ ActiveRecord::Schema.define(version: 20161013215532) do
   create_table "menus", force: :cascade do |t|
     t.string   "nome"
     t.text     "descrizione"
-    t.string   "categorie"
-    t.string   "piatti"
+    t.text     "categorie"
+    t.text     "piatti"
     t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
+    t.boolean  "abilitaprezzo",                         default: false
+    t.decimal  "prezzo",        precision: 8, scale: 2
+    t.integer  "ordine"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -112,6 +116,20 @@ ActiveRecord::Schema.define(version: 20161013215532) do
     t.text     "messaggio"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "templates", force: :cascade do |t|
+    t.string   "nome"
+    t.text     "descrizione"
+    t.string   "img"
+    t.integer  "ordine"
+    t.text     "variabile_a"
+    t.text     "variabile_b"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "tipo"
+    t.text     "sorgente"
+    t.text     "sezioni"
   end
 
   create_table "users", force: :cascade do |t|

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Amministratore</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+        var ws = new WebSocket("ws://192.168.1.7:8181");
+
+        ws.onopen = function(e) {
+          //alert('connessione aperta');
+          console.log('Connessione Amministratore');
+        }
+
+        function appendLog(message) {
+          var messages =  document.getElementById('messages');
+          var messageElem = document.createElement("li");
+          messageElem.innerHTML = "<h2><span class=\"label label-success\">*</span>&nbsp;&nbsp;" + message + " </h2>";
+          messages.appendChild(messageElem);
+        }
+
+        ws.onmessage = function(e) {
+          debugger;
+          var data = JSON.parse(e.data);
+          if (data.message=='chiama') {
+            //appendLog(data.message + ' ' + data.id);
+            appendLog('Sta Chiamando: ' + data.utente + ' id: ' +data.id.slice(0,8));
+            console.log("ID: [%s] = %s", data.id, data.message);
+          }
+        }
+
+        ws.onclose = function(e) {
+          appendLog("Connection closed");
+          console.log("Connection closed");
+        }
+
+        function sendMessage() {
+            debugger;
+            if(ws.readyState === WebSocket.OPEN) {
+                ws.send($('#message').val());
+            }
+            $('#message').val('');
+            $('#message').focus();
+        }
+
+
+        function disconnect() {
+          ws.close();
+        }
+
+    </script>
+</head>
+<body lang="en">
+    <div class="vertical-center">
+    <div class="container">
+    <h1>Sono L'Amministratore</h1>
+    <ul id="messages" class="list-unstyled">
+    </ul>
+
+    <hr />
+    <form role="form" id="chat_form" onsubmit="sendMessage(); return false;">
+      <!--<form role="form" id="chat_form">-->
+        <div class="form-group">
+        <!--<input class="form-control" type="text" name="message" id="message" placeholder="Type text to echo in here" value="" autofocus/>-->
+      </div>
+
+        <input type="button" class="btn btn-danger" value="Disconnect" onclick="disconnect();" />
+    
+    </form>
+    </div>
+    </div>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</body>
+</html>
