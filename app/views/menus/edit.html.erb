@@ -5,11 +5,11 @@
 <%# content_for :v_lindex do %>
 <!-- class="active" -->
 <%# end %>
- <%#= yield :v_lindex %>
+<%#= yield :v_lindex %>
 <%# content_for(:title, " class=&quot;active&quot;") %>
 
 
-<!-- ------------------------------------------------------------------------------------------------parte Javascript Iniettata  -->
+<!-- parte Javascript Iniettata  -->
 <% content_for :script_view do %>
 <script>
 
@@ -21,19 +21,19 @@ $(window).bind("load", function() {
   //$("#f_prezzo_totale").prop('disabled', false);
   $('#ckb_abilita_totale').iCheck('check');
   $("#f_prezzo_totale").prop('disabled', false);
-   <% else %>
+  <% else %>
   $('#ckb_abilita_totale').iCheck('uncheck');
   $("#f_prezzo_totale").prop('disabled', true);
   //$('#ckb_abilita_totale').prop('checked', false);
   //$("#f_prezzo_totale").prop('disabled', true);
-<% end %>
+  <% end %>
   //var app_cat = JSON.parse(<%#= @menu.categorie %>)
   //var app_cat = <%#= @menu.categorie.to_json %>
   var app_cat = <%= @menu.categorie.html_safe %>
 
   $.each(app_cat, function(key,val) {
     if (val.selezione==true) {
-       $('#ckx_cat_'+val.id).iCheck('check');
+      $('#ckx_cat_'+val.id).iCheck('check');
     }
   });
 
@@ -73,12 +73,12 @@ $(function() {
 
 //con lista categorie visibile queste azioni non funzionano
 $('#ckb_abilita_totale').on('ifChecked', function(event){
-   //alert(event.type + ' attivo');
-   $("#f_prezzo_totale").prop('disabled', false);
+  //alert(event.type + ' attivo');
+  $("#f_prezzo_totale").prop('disabled', false);
 });
 $('#ckb_abilita_totale').on('ifUnchecked', function(event){
-   //alert(event.type + ' disattivo');
-   $("#f_prezzo_totale").prop('disabled', true);
+  //alert(event.type + ' disattivo');
+  $("#f_prezzo_totale").prop('disabled', true);
 });
 
 
@@ -86,8 +86,8 @@ $(document).on('click', '[id*=f_img_]', function(event) {
   event.preventDefault();
   $my_foto_selezionata = this.id.split("_")[2]; //recupera in una variabile globale l'indice del bottone cliccato
   $.getJSON("/media/gallery_scegli/"+ "XXXX", function (data) {
-      localStorage.setItem("lista_foto", JSON.stringify(data));
-      navigaFoto('Inizio');
+    localStorage.setItem("lista_foto", JSON.stringify(data));
+    navigaFoto('Inizio');
   });
 });
 
@@ -114,8 +114,8 @@ $(document).on('click', '#cerca_foto', function(event) {
     var filtro_ricerca='XXXX';
   }
   $.getJSON("/media/gallery_scegli/"+ filtro_ricerca, function (data) {
-      localStorage.setItem("lista_foto", JSON.stringify(data));
-      navigaFoto('Inizio');
+    localStorage.setItem("lista_foto", JSON.stringify(data));
+    navigaFoto('Inizio');
   });
 });
 
@@ -128,8 +128,8 @@ function navigaFoto(direzione) {
 
   if (direzione == 'Avanti') {
     if (iend < store_lista_foto.length) {
-     var istart = istart + 9;
-     var iend = iend + 9;
+      var istart = istart + 9;
+      var iend = iend + 9;
     }
   }
   else if (direzione == 'Indietro') {
@@ -148,18 +148,18 @@ function navigaFoto(direzione) {
   $.each(store_lista_foto.slice(istart,iend), function(idx, obj) {
     if (obj.descrizione.length > 15) {
       var descrizione_troncate = jQuery.trim(obj.descrizione).substring(0, 15).trim(this) + "...";
-      }
-      else {
-        var descrizione_troncate = jQuery.trim(obj.descrizione);
-      };
+    }
+    else {
+      var descrizione_troncate = jQuery.trim(obj.descrizione);
+    };
     var foto= '<div class="col-lg-3 col-md-6 col-xs-6 thumb" id="div_foto_'+ obj.id +'"> \
-      <h4 class="box-title" id="des_breve_'+ obj.id +'">&nbsp;'+ descrizione_troncate +'</h4> \
-      <div class="box-body"> \
-      <a class="thumbnail" href="#" data-dismiss="modal"> \
-      <img class="foto_select" src="'+ obj.foto_media_url +'" data-toggle="modal" data-target="#modifica_media" id="fotoid_'+ obj.id +'"> \
-      </a> \
-      </div> \
-      </div>';
+    <h4 class="box-title" id="des_breve_'+ obj.id +'">&nbsp;'+ descrizione_troncate +'</h4> \
+    <div class="box-body"> \
+    <a class="thumbnail" href="#" data-dismiss="modal"> \
+    <img class="foto_select" src="'+ obj.foto_media_url +'" data-toggle="modal" data-target="#modifica_media" id="fotoid_'+ obj.id +'"> \
+    </a> \
+    </div> \
+    </div>';
     // $('#riga_gallery').append(foto).hide().fadeIn(500);
     $('#riga_gallery').append(foto);
   });
@@ -186,13 +186,14 @@ $(document).on('click', '#btn_salva_menu', function(event) {
   var form_data = new FormData();
   if ($('#f_nome').val() == null || $('#f_nome').val() == '') {
     bootbox.alert("Attenzione il nome è obbligatorio !");
-     return false; //esce dalla funzione
+    return false; //esce dalla funzione
   }
   form_data.append("nome", $('#f_nome').val());
   form_data.append("descrizione", $('#f_descrizione').val());
   // form_data.append("abilitaprezzo", $('#ckb_abilita_totale').val());
   form_data.append("abilitaprezzo", $('#ckb_abilita_totale').is(':checked'));
   form_data.append("prezzo", $('#f_prezzo_totale').val());
+  form_data.append("template_id", $('#select_template').val());
 
   //prepara la lista delle categorie
   //debugger
@@ -203,11 +204,11 @@ $(document).on('click', '#btn_salva_menu', function(event) {
     //debugger;
     if ($(this).find('.casella').is(':checked')) {
       lista_categorie_ordine.push({
-          id: parseInt(this.id.split('_')[2]),
-          selezione: $(this).find('.casella').is(':checked'),
-         ordine: conta
+        id: parseInt(this.id.split('_')[2]),
+        selezione: $(this).find('.casella').is(':checked'),
+        ordine: conta
       });
-     }
+    }
   });
   var jsonListaCategorie = JSON.stringify(lista_categorie_ordine);
   //debugger;
@@ -238,29 +239,29 @@ $(document).on('click', '#btn_salva_menu', function(event) {
 
   //---Invio Richiesta Si Salvataggio AL Server
   $.ajax({
-   type: "PUT",
-   url: "/menus/<%= @menu.id %>",
-   //dataType: 'script',
-   cache: false,
-   contentType: false,
-   processData: false,
-   data :form_data,
-   //contentType: "application/json; charset=utf-8",
-   //dataType: "json",
-   //contentType: "application/json; charset=utf-8",
-   // data: $('#myform').serialize(),  //funziona solo con un form vero (vedere doc)
-   //contentType: "application/json; charset=utf-8",
-   //dataType: "json",
-   dataType: 'text',
-   success: function(data) {
-   bootbox.alert("Menu Salvato Correttamente !");
-   return false;
-   },
-   error: function(data) {
-    bootbox.alert("Attenzione Problemi Durante Il Salvataggio !");
-    return false;
- }
-});
+    type: "PUT",
+    url: "/menus/<%= @menu.id %>",
+    //dataType: 'script',
+    cache: false,
+    contentType: false,
+    processData: false,
+    data :form_data,
+    //contentType: "application/json; charset=utf-8",
+    //dataType: "json",
+    //contentType: "application/json; charset=utf-8",
+    // data: $('#myform').serialize(),  //funziona solo con un form vero (vedere doc)
+    //contentType: "application/json; charset=utf-8",
+    //dataType: "json",
+    dataType: 'text',
+    success: function(data) {
+      bootbox.alert("Menu Salvato Correttamente !");
+      return false;
+    },
+    error: function(data) {
+      bootbox.alert("Attenzione Problemi Durante Il Salvataggio !");
+      return false;
+    }
+  });
 });
 
 $(document).on('click', '[id*=scegli_piatti_]', function(event) {
@@ -303,112 +304,270 @@ $(document).on('click', '#btn_indietro_menu', function(event) {
   $('#btn_salva_menu').show(300);
 });
 
+//anteprima img template:
+$('#select_template').on('change', function(){
+  var selected = $('.selectpicker option:selected').val();
+  //alert(selected);
+  //img fissa deve prendere tutte quelle disponibili da template
+  //$.get("ajax/test.html", function(data) {
+  //  $(".result").html(data);
+  //});
+
+  //  $.getJSON( "test.js", { name: "John", time: "2pm" } )
+  //   .done(function( json ) {
+  //     console.log( "JSON Data: " + json.users[ 3 ].name );
+  //   })
+  //   .fail(function( jqxhr, textStatus, error ) {
+  //     var err = textStatus + ", " + error;
+  //     console.log( "Request Failed: " + err );
+  //   });
+
+  //recupera dati del template
+  $.getJSON("/templates/datitemplate/"+ selected, function (data) {
+    $('#img0').attr('src','/sito/images/' + data.img)
+  });
+});
+
+//al caricamento della pagina altro esempio
+$(window).bind("load", function() {
+  $('#select_template').selectpicker('val', '<%= @menu.template_id %>');
+  //$('#pagina_edit').show();
+});
+
+
+//Form Dinamico
+var counter = 1;
+var limit = 3;
+function addInput(divName){
+  if (counter == limit)  {
+    alert("Hai Raggiunto il limite di campi " + counter + " inputs");
+  }
+  else {
+    var newdiv = document.createElement('div');
+    newdiv.innerHTML = "Entry " + (counter + 1) + " <br><input type='text' name='myInputs[]'>";
+    document.getElementById(divName).appendChild(newdiv);
+    counter++;
+  }
+}
+
+//Form Dinamico 2
+var conta_var=0;
+function addAllInputs(divName, inputType){
+  var newdiv = document.createElement('div');
+  switch(inputType) {
+    case 'text':
+    //newdiv.innerHTML = "Entry " + (counterText + 1) + " <br><input type='text' name='myInputs[]'>";
+    //newdiv.innerHTML  = "<div class='row'><div class='col-md-6'>";
+    //newdiv.innerHTML = "<input type='text' class='form-control' id='var_txt_" + (counterText + 1) + "' name='var_txt_'"+ (counterText + 1) +" placeholder='' value=''>";
+    newdiv.innerHTML =  "<b>Casella Di Testo:</b>";
+    newdiv.innerHTML +=  "<input type='text' class='form-control' id='txt_nome_var_" + conta_var + "' name='txt_nome_var_'"+ conta_var +" placeholder='Nome' value=''>";
+    newdiv.innerHTML += "<input type='text' class='form-control' id='txt_val_var_" + conta_var + "' name='txt_val_var_'"+ conta_var +" placeholder='Valore' value=''>";
+    newdiv.innerHTML += "<br>"
+    //newdiv.innerHTML += "</div></div>";
+    conta_var++;
+    break;
+    case 'radio':
+    newdiv.innerHTML = "Entry " + (counterRadioButton + 1) + " <br><input type='radio' name='myRadioButtons[]'>";
+    conta_var++;
+    break;
+    case 'checkbox':
+    newdiv.innerHTML =  "<b>CheckBox:</b>";
+    newdiv.innerHTML +=  "<input type='text' class='form-control' id='ckx_nome_var_" + conta_var + "' name='ckx_nome_var_'"+ conta_var +" placeholder='Nome' value=''>";
+    newdiv.innerHTML += "<input type='text' class='form-control' id='ckx_var_val_" + conta_var + "' name='ckx_var_val_  '"+ conta_var +" placeholder='Valore' value=''>";
+    newdiv.innerHTML += "<br>"
+    //newdiv.innerHTML +=  "Entry " + conta_var + " <br><input type='checkbox' name='myCheckBoxes[]'>";
+    conta_var++;
+    break;
+    case 'textarea':
+    newdiv.innerHTML = "Entry " + (counterTextArea + 1) + " <br><textarea name='myTextAreas[]'>type here...</textarea>";
+    conta_var++;
+    break;
+  }
+  document.getElementById(divName).appendChild(newdiv);
+}
+
+
+//Aggiungi Campo Dinamico Personalizzato
+$(document).on('click', '#btn_agg_dinamico', function(event) {
+  event.preventDefault();
+  //debugger;
+  //bootbox.alert("pronti per il dinamco ?");
+  addAllInputs('dynamicInputs', $('#inputSelect').val());
+});
 
 
 </script>
 <% end %>
 
-<!-- ------------------------------------------------------------------------------------------------parte HTML  -->
+<!-- parte HTML  -->
 
 <div class="row" id="pagina_edit" hidden>
   <div class="col-md-12">
-      <div class="box box-primary">
-          <!-- <div class="box-header">x
-              <h3 class="box-title">Dati menu</h3>
-          </div> -->
-          <form role="form">
-          <!-- <%#= form_for @menu  do |f| %> -->
-              <div class="box-body">
-                <div class="form-group">
-                    <label for="input_nome">Nome:</label>
-                    <input type="text" class="form-control" id="f_nome" name="nome" placeholder="Nome menu..." value="<%= @menu.nome %>">
-                </div>
+    <div class="box box-primary">
+      <!-- <div class="box-header">x
+      <h3 class="box-title">Dati menu</h3>
+    </div> -->
+    <form role="form">
+      <!-- <%#= form_for @menu  do |f| %> -->
+      <div class="box-body">
+        <div class="form-group">
+          <label for="input_nome">Nome:</label>
+          <input type="text" class="form-control" id="f_nome" name="nome" placeholder="Nome menu..." value="<%= @menu.nome %>">
+        </div>
 
-                <div class="form-group">
-                    <label>Descrizione</label>
-                    <textarea class="form-control" rows="3" placeholder="Descrizione ..." id="f_descrizione" name="descrizione" value="<%= @menu.descrizione %>"><%= @menu.descrizione %></textarea>
-                </div>
+        <div class="form-group">
+          <label>Descrizione</label>
+          <textarea class="form-control" rows="3" placeholder="Descrizione ..." id="f_descrizione" name="descrizione" value="<%= @menu.descrizione %>"><%= @menu.descrizione %></textarea>
+        </div>
 
-                <h4>Prezzo Totale Menù:</h4>
-                <div class="input-group">
-                  <span class="input-group-addon">
-                  <input type="checkbox" id="ckb_abilita_totale">
-                  </span>
-                  <input type="number" class="form-control" id="f_prezzo_totale" value="<%= @menu.prezzo %>">
-                </div>
+        <h4>Prezzo Totale Menù:</h4>
+        <div class="input-group">
+          <span class="input-group-addon">
+            <input type="checkbox" id="ckb_abilita_totale">
+          </span>
+          <input type="number" class="form-control" id="f_prezzo_totale" value="<%= @menu.prezzo %>">
+        </div>
 
-                <br>
-                <!-- <div id="div_indientro_menu" hidden="true">
-                <button type="submit" class="btn btn-primary" id="btn_indietro_menu" style="font-size:18px;font-weight:bold;">Torna Alle Categorie</button>
-                </div> -->
-                <h4 id="des_scegli_categorie">Scegli Le Categorie:</h4>
+        <br>
+        <!-- <div id="div_indientro_menu" hidden="true">
+        <button type="submit" class="btn btn-primary" id="btn_indietro_menu" style="font-size:18px;font-weight:bold;">Torna Alle Categorie</button>
+      </div> -->
+      <h4 id="des_scegli_categorie">Scegli Le Categorie:</h4>
 
-                <div id="lista_categorie"></div>
+      <div id="lista_categorie"></div>
 
-                <h4 id="des_scegli_piatti" hidden="true"></h4>
-                <div id="cerca_piatto" hidden="true">
-                  <input type="text" id="txt_descrizione" class="form-control pull-left" name="txt_descrizione" placeholder="Cerca menu ..." style="width:200px;margin-left:10px;margin-top:1px;" maxlength="50">
-                  <div class="box-tools  pull-left">
-                     <button id="btn_cerca_menu" class="btn btn-default pull-left"><i class="fa fa-search" style="font-size:20px;font-weight:bold;"></i><strong>Cerca</strong></button>
-                  </div>
-                </div>
-
-                <div id="scegli_piatti"></div>  <!-- Popolata da Jquery  -->
-
-                <!-- <hr> -->
-                <!-- finire http://learn.jquery.com/using-jquery-core/faq/how-do-i-get-the-text-value-of-a-selected-option/ -->
-                <!-- http://stackoverflow.com/questions/496052/jquery-setting-the-selected-value-of-a-select-control-via-its-text-description -->
-
-                    <!-- <div class="form-group">
-                        <a data-toggle="modal" href="#scegli_foto" class="btn btn-primary" id="f_img_0">Scegli Foto 1</a>
-                        <div class="thumb">
-                        <p class="help-block" id="anteprima_0"></p>
-                        </div>
-                        <br>
-                   </div> -->
-
-              <div class="box-footer">
-                  <button type="submit" class="btn btn-primary" id="btn_salva_menu" style="font-size:18px;font-weight:bold;">Salva il menu</button>
-                  <!-- <%#= f.submit 'Salva il menu', :class => 'btn btn-primary' ,id:"btn_salva_menu" %> -->
-                  <div id="div_indientro_menu" hidden="true">
-                  <button type="submit" class="btn btn-primary" id="btn_indietro_menu" style="font-size:18px;font-weight:bold;">Torna Alle Categorie</button>
-                  </div>
-
-              </div>
-            </div>
-          </form>
+      <h4 id="des_scegli_piatti" hidden="true"></h4>
+      <div id="cerca_piatto" hidden="true">
+        <input type="text" id="txt_descrizione" class="form-control pull-left" name="txt_descrizione" placeholder="Cerca menu ..." style="width:200px;margin-left:10px;margin-top:1px;" maxlength="50">
+        <div class="box-tools  pull-left">
+          <button id="btn_cerca_menu" class="btn btn-default pull-left"><i class="fa fa-search" style="font-size:20px;font-weight:bold;"></i><strong>Cerca</strong></button>
+        </div>
       </div>
+
+      <div id="scegli_piatti"></div>  <!-- Popolata da Jquery  -->
+
+      <!-- <hr> -->
+      <!-- finire http://learn.jquery.com/using-jquery-core/faq/how-do-i-get-the-text-value-of-a-selected-option/ -->
+      <!-- http://stackoverflow.com/questions/496052/jquery-setting-the-selected-value-of-a-select-control-via-its-text-description -->
+
+      <!-- <div class="form-group">
+      <a data-toggle="modal" href="#scegli_foto" class="btn btn-primary" id="f_img_0">Scegli Foto 1</a>
+      <div class="thumb">
+      <p class="help-block" id="anteprima_0"></p>
+    </div>
+    <br>
+  </div> -->
+
+  <!-- seleziona il template -->
+  <!-- <select class="form-control pull-left" id="select_template" style="width:200px;margin-left:10px;margin-top:5px;"> -->
+  <%# @lista_categorie.each do |categoria| %>
+  <!--<option><%#= categoria.titolo %></option>-->
+  <%# end %>
+  <!-- </section> -->
+  <h4>Selezione Template:</h4>
+  <%= select_tag "templates", options_from_collection_for_select(@template, "id", "nome") , {class:"selectpicker", "data-width" => "100%" ,id:"select_template", name:"template"} %>
+  <br><br>
+  <%# if  @dish.img != nil %>
+  <% unless  @menu.template.img.to_s.empty? %>
+  <img src="/sito/images/<%= @menu.template.img.to_s %>" alt="img0" id="img0" name="img0" style="width:300px;">
+  <% end %>
+
+  <!--
+  <label for="input_template">Template:</label>
+  <select class="selectpicker" data-width="100%" id="select_template" name="template">
+  <option "Template 1">Template 1</option>
+  <option "Template 2">Template 2</option>
+  <option "Template 3">Template 3</option>
+  <option "Template 4">Template 4</option>
+  <option "Template 5">Template 5</option>
+  <option "Template 6">Template 6</option>
+</select>
+-->
+
+<br><br><br>
+
+<!--  Form Dinamico -->
+
+<!-- Form Dinamico Semplice (solo textbox) commentato -->
+<!-- <form method="POST">
+<div id="dynamicInput">
+Entry 1<br><input type="text" name="myInputs[]">
+</div>
+<input type="button" value="Add another text input" onClick="addInput('dynamicInput');">
+</form> -->
+
+<!-- Form Dinamico Articolato commentato -->
+<!-- <form name="myForm" method="POST">
+<div id="dynamicInputs">
+Let&#8217;s start adding some inputs of different types.
+</div>
+<p><select name='inputSelect'>
+<option value ="text">text field</option>
+<option value ="radio">radio button</option>
+<option value ="checkbox">checkbox</option>
+<option value ="textarea">textarea</option></select><br/>
+<input type="button" value="Add selected input" onClick="addAllInputs('dynamicInputs', document.myForm.inputSelect.value);"><br />
+</form> -->
+
+  <label for="input_tipo_variabile">Variabili:</label><br>
+  <div id="dynamicInputs" class="col-md-6">
+  <!-- <div id="dynamicInputs"> -->
+    <!-- Segnaposto campi aggiunti dinamicamente  -->
   </div>
+
+    <!--  Form Dinamico -->
+    <br><br>
+
+    <select class="selectpicker" data-width="80%" id="inputSelect" name="inputSelect">
+      <option value="text">TextBox</option>
+      <option value="radio">Radio Button</option>
+      <option value="checkbox">CheckBox</option>
+      <option value="textarea">TextArea</option>
+    </select>
+    <button type="submit" class="btn btn-primary" id="btn_agg_dinamico" style="font-size:18px;font-weight:bold;">Aggiungi Variabile</button>
+
+  <div class="box-footer">
+    <button type="submit" class="btn btn-primary" id="btn_salva_menu" style="font-size:18px;font-weight:bold;">Salva il menu</button>
+    <!-- <%#= f.submit 'Salva il menu', :class => 'btn btn-primary' ,id:"btn_salva_menu" %> -->
+    <div id="div_indientro_menu" hidden="true">
+      <button type="submit" class="btn btn-primary" id="btn_indietro_menu" style="font-size:18px;font-weight:bold;">Torna Alle Categorie</button>
+    </div>
+  </div>
+
+</div>
+</form>
+</div>
+</div>
 </div>
 
 
 <div id="scegli_foto" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Scegli La Foto</h4>
-            </div>
-            <div class="modal-body">
-              <br>
-              <input type="text" class="form-control pull-left" id="cerca" placeholder="Cerca ..." style="width:200px;" maxlength="50">
-              <button type="submit" id="cerca_foto" class="btn btn-primary pull-left" style="width:120px;height:35px;display:inline-block;float:none;margin-right:27%;">Cerca</button>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Scegli La Foto</h4>
+      </div>
+      <div class="modal-body">
+        <br>
+        <input type="text" class="form-control pull-left" id="cerca" placeholder="Cerca ..." style="width:200px;" maxlength="50">
+        <button type="submit" id="cerca_foto" class="btn btn-primary pull-left" style="width:120px;height:35px;display:inline-block;float:none;margin-right:27%;">Cerca</button>
 
-              <button type="button" class="btn btn-default" aria-label="Left Align" id="btn_indietro">
-              <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
-              </button>
+        <button type="button" class="btn btn-default" aria-label="Left Align" id="btn_indietro">
+          <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+        </button>
 
-              <button type="button" class="btn btn-default" aria-label="Left Align" id="btn_avanti">
-              <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
-              </button>
-              <br><br>
-              <div id="riga_gallery"></div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_nessuna_foto">Nessuna</button>
-              <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_chiudi_foto">Chiudi</button>
-              <!-- <button type="button" class="btn btn-primary" data-dismiss="no-modal" id="btn_modifica_foto">Scegli</button> -->
-            </div>
-        </div>
+        <button type="button" class="btn btn-default" aria-label="Left Align" id="btn_avanti">
+          <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+        </button>
+        <br><br>
+        <div id="riga_gallery"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_nessuna_foto">Nessuna</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_chiudi_foto">Chiudi</button>
+        <!-- <button type="button" class="btn btn-primary" data-dismiss="no-modal" id="btn_modifica_foto">Scegli</button> -->
+      </div>
     </div>
+  </div>
 </div>

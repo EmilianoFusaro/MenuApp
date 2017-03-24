@@ -159,6 +159,7 @@ $(document).on('click', '#btn_salva_menu', function(event) {
   // form_data.append("abilitaprezzo", $('#ckb_abilita_totale').val());
   form_data.append("abilitaprezzo", $('#ckb_abilita_totale').is(':checked'));
   form_data.append("prezzo", $('#f_prezzo_totale').val());
+  form_data.append("template_id", $('#select_template').val());
 
   //prepara la lista delle categorie
   //debugger
@@ -254,7 +255,6 @@ $(document).on('click', '[id*=scegli_piatti_]', function(event) {
     //a[0] = "0";
     localStorage.setItem(categ, JSON.stringify(a));
   }
-
 });
 
 $(document).on('click', '#btn_indietro_menu', function(event) {
@@ -288,6 +288,20 @@ $(document).on('click', '#btn_cerca_menu', function(event) {
 // });
 
 
+//anteprima img template:
+$('#select_template').on('change', function(){
+   var selected = $('.selectpicker option:selected').val();
+    // recupera dati del template
+    $.getJSON("/templates/datitemplate/"+ selected, function (data) {
+      $('#img0').attr('src','/sito/images/' + data.img);
+      $('#img0').show(300);
+   });
+});
+
+//al caricamento della pagina altro esempio
+//$(window).bind("load", function() {
+//    $('#select_template').selectpicker('val', '<%= @menu.template_id %>');
+//});
 
 </script>
 <% end %>
@@ -351,15 +365,21 @@ $(document).on('click', '#btn_cerca_menu', function(event) {
                         <br>
                    </div> -->
 
-                   <label for="input_categoria">Template:</label>
+                   <!--<label for="input_categoria">Template:</label>-->
                    <!-- style="width:200px;margin-left:10px;margin-top:5px;" -->
                    <!-- <select class="form-control pull-left" id="select_categoria"> -->
-                   <select class="selectpicker" data-width="100%" id="select_template" name="template">
+                   <!--<select class="selectpicker" data-width="100%" id="select_template" name="template">-->
                    <!-- <option value="TUTTE">TUTTE</option> -->
                    <%# @lista_categorie.each do |categoria| %>
-                     <option "<%#= categoria.titolo %>"><%#= categoria.titolo %></option>
+                     <!--<option "<%#= categoria.titolo %>"><%#= categoria.titolo %></option>-->
                    <%# end %>
-                   </select>
+                   <!--</select>-->
+
+                   <h4>Selezione Template:</h4>
+                   <%= select_tag "templates", options_from_collection_for_select(@template, "id", "nome") , {class:"selectpicker", "data-width" => "100%" ,id:"select_template", name:"template"} %>
+
+                   <img src="#" alt="img0" id="img0" name="img0" style="width:300px;" hidden="true">
+
 
               <div class="box-footer">
                   <button type="submit" class="btn btn-primary" id="btn_salva_menu" style="font-size:18px;font-weight:bold;">Salva il menu</button>
@@ -369,7 +389,7 @@ $(document).on('click', '#btn_cerca_menu', function(event) {
                   <button type="submit" class="btn btn-primary" id="btn_indietro_menu" style="font-size:18px;font-weight:bold;">Torna Alle Categorie</button>
                   </div>
               </div>
-              
+
             </div>
           </form>
       </div>

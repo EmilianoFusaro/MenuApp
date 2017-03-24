@@ -5,10 +5,16 @@ class DashboardController < ApplicationController
   layout 'dashboard'
 
   def index
+    byebug
     @menu_creati=User.find(current_user.id).menus.count
     @categorie_create=User.find(current_user.id).categories.count
     @piatti_creati=User.find(current_user.id).dishes.count
     @ingredienti_creati=User.find(current_user.id).ingredients.count
+    #esempio eseguire node processo separato
+    #fork {exec('node','test.js')}
+    #@pippo=fork {exec('node','test.js')}
+    #@pippo=Aw.fork! { 6 * 7 }   #(aw libreria esterna che restituisce un valore dal fork)
+    #render js:'alert("hello world");'
   end
 
   def azienda
@@ -129,7 +135,6 @@ class DashboardController < ApplicationController
     end
   end
 
-
   def modifica_categoria
     #puts params[:category][:titolo]
     @categoria = Category.find(params[:id])
@@ -139,7 +144,6 @@ class DashboardController < ApplicationController
      format.json { head :no_content }
     end
   end
-
 
   def chat_cliente
     #esempio chat con node

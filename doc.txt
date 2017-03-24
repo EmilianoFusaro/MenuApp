@@ -652,6 +652,11 @@ ActiveRecord undefined
 http://kakubei.blogspot.it/2014/01/determining-whether-variable-or-method.html
 http://blog.plataformatec.com.br/2013/02/active-record-scopes-vs-class-methods/
 
+selectpicker
+http://stackoverflow.com/questions/25720986/bootstrap-select-how-to-fire-event-on-change
+http://stackoverflow.com/questions/3442322/jquery-checkbox-event-handling
+
+
 
 Differenza tra JSON.stringify e JSON.parse
 http://stackoverflow.com/questions/17785592/difference-between-json-stringify-and-json-parse
@@ -706,6 +711,19 @@ http://stackoverflow.com/questions/10829473/ruby-how-can-i-convert-a-array-data-
 http://stackoverflow.com/questions/4464050/ruby-objects-and-json-serialization-without-rails
 
 
+tag helper con parametri personalizzati
+http://stackoverflow.com/questions/31993695/how-to-add-data-attribute-in-rails-form-select-tag
+
+
+esempi di associazioni
+https://launchschool.com/blog/understanding-polymorphic-associations-in-rails
+
+
+concorrenza ruby on rails
+there are in ruby too much more options to make concurrency, thread,fiber,evented programming.
+jruby, thin,cool.io,eventmachine,revactor,zbatery,rainbows,cramp,fiberbool,async-sinatra,async-rails.
+In this period there is much work on make ruby really concurrent
+
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 angela galleria
@@ -723,6 +741,13 @@ ping lo recuperi da utility network
 esempio da lucchetta :
 192.168.1.115:3000  (senza http://)
 192.168.0.2 casa
+
+
+eseguire su linux ubuntu
+emilianofusaro@ubuntu:/media/psf/Home/Desktop/   (dove si trova il desktop in comune)
+eseguire rails così rails server --binding=0.0.0.0
+da opzioni in alto a destra System Settings Network (recuperare indirozzo ip)
+
 
 github
 https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/

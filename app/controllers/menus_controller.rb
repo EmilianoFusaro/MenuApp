@@ -18,12 +18,14 @@ class MenusController < ApplicationController
   # GET /menus/new
   def new
     @menu = Menu.new
+    @template = Template.all
     render layout: "dashboard"
   end
 
   # GET /menus/1/edit
   def edit
     @menu = Menu.where(user_id: current_user.id, id:params[:id]).first
+    @template = Template.all
     #@pluto = @menu.categorie.to_json
     render layout: "dashboard"
   end
@@ -131,7 +133,7 @@ class MenusController < ApplicationController
 
     def menu_permetti
       #senza menu perchè mi arriva da un form generico
-      params.permit(:nome, :descrizione, :categorie, :piatti, :user_id, :abilitaprezzo, :prezzo, :ordine)
+      params.permit(:nome, :descrizione, :categorie, :piatti, :user_id, :abilitaprezzo, :prezzo, :ordine, :template_id)
     end
 
 end

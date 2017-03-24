@@ -1,6 +1,6 @@
 class TemplatesController < ApplicationController
   before_action :set_template, only: [:show, :edit, :update, :destroy]
-  before_action :check_superuser ,except: [:detail]
+  before_action :check_superuser ,except: [:detail,:datitemplate]
 
 
   # GET /templates
@@ -49,9 +49,10 @@ class TemplatesController < ApplicationController
   # PATCH/PUT /templates/1
   # PATCH/PUT /templates/1.json
   def update
+    #debugger
     respond_to do |format|
       if @template.update(template_params)
-        format.html { redirect_to @template, notice: 'Il Template è stato aggiornato con successo.' }
+        format.html { redirect_to @template, notice: "Il Template è stato aggiornato con successo." }
         format.json { render :show, status: :ok, location: @template }
       else
         format.html { render :edit }
@@ -71,13 +72,20 @@ class TemplatesController < ApplicationController
   end
 
   def cerca
-    debugger
+    #debugger
     if params[:descrizione].strip.size==0
       redirect_to templates_url  #forza azione controller
     else
       @templates = Template.where(" descrizione like ? ","%#{params[:descrizione]}%")
       render :index
     end
+  end
+
+  def datitemplate
+    #debugger
+    @template=Template.find_by_id(params[:id])
+    #render json:@media.to_json(:only =>  [:id,:descrizione], :methods => [:foto_media_url]) , status: :ok
+    render json:@template.to_json() , status: :ok
   end
 
   private

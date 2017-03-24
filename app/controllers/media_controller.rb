@@ -74,8 +74,7 @@ class MediaController < ApplicationController
   # POST /media
   # POST /media.json
   def create
-
-    debugger
+    #debugger
     #puts medium_params
     #puts "------"
     #puts params
@@ -118,8 +117,7 @@ class MediaController < ApplicationController
    #    @medium.save
    #end
    #redirect_to @medium, notice: 'Medium was successfully created.'
-
-end
+  end
 
   # PATCH/PUT /media/1
   # PATCH/PUT /media/1.json

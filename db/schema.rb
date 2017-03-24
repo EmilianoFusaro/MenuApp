@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161214234521) do
+ActiveRecord::Schema.define(version: 20170119230342) do
 
   create_table "allergens", force: :cascade do |t|
     t.string   "nome"
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(version: 20161214234521) do
     t.boolean  "abilitaprezzo",                         default: false
     t.decimal  "prezzo",        precision: 8, scale: 2
     t.integer  "ordine"
+    t.integer  "template_id"
   end
 
   create_table "profiles", force: :cascade do |t|

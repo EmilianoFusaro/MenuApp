@@ -9,9 +9,11 @@
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
-        var ws = new WebSocket("ws://localhost:8181");
+        //per trovare eseguire utility network
+        //var ws = new WebSocket("ws://localhost:8181");
         //var ws = new WebSocket("ws://192.168.1.7:8181");
         //var ws = new WebSocket("ws://192.168.1.6:8181");
+        var ws = new WebSocket("ws://192.168.1.7:8181");
         //var ws = new WebSocket("ws://192.168.1.5:8181");
 
         ws.onopen = function(e) {

@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   resources :templates do
     collection do
       get 'cerca'
+      #get '/datitemplate/:id' , to: 'templates#datitemplate'
+      get 'datitemplate/:id', to: 'templates#datitemplate'
     end
   end
 

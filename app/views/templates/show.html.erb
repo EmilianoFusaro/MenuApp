@@ -4,6 +4,69 @@
 //   //debugger;
 //   $('#express').load('http://localhost:8000/');
 //  });
+
+
+//elimina variabile
+$(document).on('click', '[id*="elimina_variabile_"]', function() {
+var indice=this.id.split('_')[2];
+ bootbox.confirm("Sei sicuro di voler eliminare la variabile: "+ indice + " ?" , function(result) {
+ if (result==true) {
+      // $('#variabile_' + indice).fadeOut(600, function(){ $(this).children().remove() });
+      // $('#variabile_' + indice).fadeOut(600, function(){ $(this).html("") });
+      $('#variabile_' + indice).fadeOut(600, function(){ $(this).remove() });
+      // $('#variabile_' + indice).fadeOut(600, function(){ $(this).empty() });
+      // $('#txt_nome_var_' + indice).fadeOut(600, function(){ $(this).remove() });
+      };
+  });
+ //bootbox.alert("ok " + indice);
+});
+
+//Form Dinamico
+var conta_var=0;
+function addAllInputs(divName, inputType){
+  var newdiv = document.createElement('div');
+  switch(inputType) {
+    case 'text':
+    //newdiv.innerHTML = "Entry " + (counterText + 1) + " <br><input type='text' name='myInputs[]'>";
+    //newdiv.innerHTML  = "<div class='row'><div class='col-md-6'>";
+    //newdiv.innerHTML = "<input type='text' class='form-control' id='var_txt_" + (counterText + 1) + "' name='var_txt_'"+ (counterText + 1) +" placeholder='' value=''>";
+    newdiv.innerHTML = "<b>Casella Di Testo:</b>";
+    newdiv.innerHTML +=  "<input type='text' class='form-control' id='txt_nome_var_" + conta_var + "' name='txt_nome_var_'"+ conta_var +" placeholder='Nome' value=''>";
+    newdiv.innerHTML +=  "<input type='text' class='form-control' id='txt_val_var_" + conta_var + "' name='txt_val_var_'"+ conta_var +" placeholder='Valore' value=''>";
+    newdiv.innerHTML +=  "<button type='button' class='btn btn-danger pull-right' id='elimina_variabile_" + conta_var + "'>Elimina</button>";
+    newdiv.innerHTML += "<br>"
+    newdiv.setAttribute("id","variabile_"+ conta_var);
+    //newdiv.innerHTML += "</div></div>";
+    conta_var++;
+    break;
+    case 'radio':
+    newdiv.innerHTML = "Entry " + (counterRadioButton + 1) + " <br><input type='radio' name='myRadioButtons[]'>";
+    conta_var++;
+    break;
+    case 'checkbox':
+    newdiv.innerHTML =  "<b>CheckBox:</b>";
+    newdiv.innerHTML +=  "<input type='text' class='form-control' id='ckx_nome_var_" + conta_var + "' name='ckx_nome_var_'"+ conta_var +" placeholder='Nome' value=''>";
+    newdiv.innerHTML += "<input type='text' class='form-control' id='ckx_var_val_" + conta_var + "' name='ckx_var_val_  '"+ conta_var +" placeholder='Valore' value=''>";
+    newdiv.innerHTML += "<br>"
+    //newdiv.innerHTML +=  "Entry " + conta_var + " <br><input type='checkbox' name='myCheckBoxes[]'>";
+    conta_var++;
+    break;
+    case 'textarea':
+    newdiv.innerHTML = "Entry " + (counterTextArea + 1) + " <br><textarea name='myTextAreas[]'>type here...</textarea>";
+    conta_var++;
+    break;
+  }
+  document.getElementById(divName).appendChild(newdiv);
+}
+
+//Aggiungi Campo Dinamico Personalizzato
+$(document).on('click', '#btn_agg_dinamico', function(event) {
+  event.preventDefault();
+  //debugger;
+  //bootbox.alert("pronti per il dinamco ?");
+  addAllInputs('dynamicInputs', $('#inputSelect').val());
+});
+
 </script>
 <% end %>
 
@@ -83,24 +146,49 @@
             <tr>
             <td>Ordine:</td>
             <td contenteditable="false"><%= f.text_field :ordine %></td>
+            </tr>
             <tr>
             <td>Variabile A:</td>
             <td contenteditable="false"><%= f.text_area :variabile_a , class:"testo_enter"%></td>
+            </tr>
             <tr>
             <td>Variabile B:</td>
             <td contenteditable="false"><%= f.text_area :variabile_b , class:"testo_enter"%></td>
             </tr>
+            <tr>
             <td>Tipo:</td>
             <td contenteditable="false"><%= f.text_field :tipo , class:"testo_enter"%></td>
             </tr>
+            <tr>
             <td>Sorgente:</td>
             <td contenteditable="false"><%= f.text_area :sorgente , class:"testo_enter"%></td>
+            </tr>
             <tr>
             <td>Sezioni:</td>
             <td contenteditable="false"><%= f.text_area :sezioni , class:"testo_enter"%></td>
-            <tr>
+            </tr>
           </table>
+
+          <label for="input_tipo_variabile">Variabili:</label><br>
+          <div id="dynamicInputs" class="col-md-6">
+          <!-- <div id="dynamicInputs"> -->
+            <!-- Segnaposto campi aggiunti dinamicamente  -->
+          </div>
+          <!--  Form Dinamico -->
+          <br>
+
+        </div><!-- questo div è sbagliato ma fa funzionare il layout  -->
+
+          <select class="selectpicker" data-width="80%" id="inputSelect" name="inputSelect">
+            <option value="text">TextBox</option>
+            <option value="radio">Radio Button</option>
+            <option value="checkbox">CheckBox</option>
+            <option value="textarea">TextArea</option>
+          </select>
+          <button type="submit" class="btn btn-primary" id="btn_agg_dinamico">Aggiungi Variabile</button>
+
           <!-- <button type="button" class="btn btn-success">Salva Utente</button> -->
+          <br><br><br>
           <%= f.submit 'Salva Template', :class => 'btn btn-success' %>
           <% end %>
           <hr>
@@ -111,7 +199,7 @@
       </div>
     </div>
   </div>
-  </div>
+</div>
 </section>
 
 <!-- <div id="express"></div> -->
